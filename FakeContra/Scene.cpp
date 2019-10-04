@@ -5,10 +5,10 @@
 #include "Game.h"
 
 
-#define SCREEN_X 32
-#define SCREEN_Y 16
+#define SCREEN_X 0
+#define SCREEN_Y 0
 
-#define INIT_PLAYER_X_TILES 4
+#define INIT_PLAYER_X_TILES 10
 #define INIT_PLAYER_Y_TILES 3
 
 
@@ -43,6 +43,7 @@ void Scene::update(int deltaTime)
 {
 	currentTime += deltaTime;
 	player->update(deltaTime);
+	projection = glm::ortho(player->getPosX() - ((SCREEN_WIDTH - 1) / 2), player->getPosX() + ((SCREEN_WIDTH-1)/2), float(SCREEN_HEIGHT - 1), 0.f);
 }
 
 void Scene::render()
@@ -52,7 +53,6 @@ void Scene::render()
 	texProgram.setUniformMatrix4f("projection", projection);
 	texProgram.setUniform4f("color", 1.0f, 1.0f, 1.0f, 1.0f);
 	modelview = glm::mat4(1.0f);
-	modelview = glm::translate(modelview, glm::vec3(-player->getPosX(), 0.f, 0.f));
 	texProgram.setUniformMatrix4f("modelview", modelview);
 	texProgram.setUniform2f("texCoordDispl", 0.f, 0.f);
 	map->render();

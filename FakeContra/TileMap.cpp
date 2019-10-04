@@ -2,7 +2,10 @@
 #include <fstream>
 #include <sstream>
 #include <vector>
+#include <GL/glew.h>
+#include <GL/glut.h>
 #include "TileMap.h"
+#include "Game.h"
 
 
 using namespace std;
@@ -190,14 +193,17 @@ bool TileMap::collisionMoveDown(const glm::ivec2 &pos, const glm::ivec2 &size, i
 	y = (pos.y + size.y - 1) / tileSize;
 	for(int x=x0; x<=x1; x++)
 	{
-		if(map[y*mapSize.x+x] == 1 || map[y * mapSize.x + x] == 2)
-		{
-			if(*posY - tileSize * y + size.y <= 4)
+		if (!Game::instance().getSpecialKey(GLUT_KEY_DOWN)) {
+			if (map[y * mapSize.x + x] == 1 || map[y * mapSize.x + x] == 2 || map[y * mapSize.x + x] == 36 || map[y * mapSize.x + x] == 37)
 			{
-				*posY = tileSize * y - size.y;
-				return true;
+				if (*posY - tileSize * y + size.y <= 4)
+				{
+					*posY = tileSize * y - size.y;
+					return true;
+				}
 			}
 		}
+		
 	}
 	
 	return false;
