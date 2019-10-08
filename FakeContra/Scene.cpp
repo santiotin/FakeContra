@@ -2,12 +2,7 @@
 #include <cmath>
 #include <glm/gtc/matrix_transform.hpp>
 #include "Scene.h"
-#include <Windows.h>
-#include <mmsystem.h>
-/*#include <irrklang/irrKlang.h>
-using namespace irrklang;
-
-ISoundEngine* SoundEngine = createIrrKlangDevice();*/
+#include "Game.h"
 
 
 
@@ -43,8 +38,6 @@ void Scene::init()
 	player->setTileMap(map);
 	projection = glm::ortho(0.f, float(SCREEN_WIDTH - 1), float(SCREEN_HEIGHT - 1), 0.f);
 	currentTime = 0.0f;
-	//sndPlaySound(TEXT("level01.wav"), SND_ASYNC);
-	//SoundEngine->play2D("level01.wav", GL_TRUE);
 }
 
 void Scene::update(int deltaTime)
