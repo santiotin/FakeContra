@@ -22,7 +22,7 @@ void Player::init(const glm::ivec2 &tileMapPos, ShaderProgram &shaderProgram)
 {
 	bJumping = false;
 	spritesheet.loadFromFile("images/player.png", TEXTURE_PIXEL_FORMAT_RGBA);
-	sprite = Sprite::createSprite(glm::ivec2(48, 48), glm::vec2(0.1666, 0.25), &spritesheet, &shaderProgram);
+	sprite = Sprite::createSprite(glm::ivec2(48, 32), glm::vec2(0.1666, 0.25), &spritesheet, &shaderProgram);
 	sprite->setNumberAnimations(6);
 	
 		sprite->setAnimationSpeed(STAND_LEFT, 8);
@@ -51,7 +51,7 @@ void Player::init(const glm::ivec2 &tileMapPos, ShaderProgram &shaderProgram)
 		sprite->addKeyframe(JUMP_LEFT, glm::vec2(0.0000f, 0.75f));
 		sprite->addKeyframe(JUMP_LEFT, glm::vec2(0.1666f, 0.75f));
 		sprite->addKeyframe(JUMP_LEFT, glm::vec2(0.3333f, 0.75f));
-		sprite->addKeyframe(JUMP_LEFT, glm::vec2(0.5555f, 0.75f));
+		sprite->addKeyframe(JUMP_LEFT, glm::vec2(0.5000f, 0.75f));
 
 		sprite->setAnimationSpeed(JUMP_RIGHT, 8);
 		sprite->addKeyframe(JUMP_RIGHT, glm::vec2(0.0000f, 0.5f));
@@ -126,7 +126,8 @@ void Player::update(int deltaTime)
 		posPlayer.y += FALL_STEP;
 		if(map->collisionMoveDown(posPlayer, glm::ivec2(32, 32), &posPlayer.y))
 		{
-			if(Game::instance().getSpecialKey(GLUT_KEY_UP))
+			//if(Game::instance().getSpecialKey(GLUT_KEY_UP))
+			if(Game::instance().getKey(int('z')))
 			{
 				bJumping = true;
 				jumpAngle = 0;
