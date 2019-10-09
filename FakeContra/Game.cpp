@@ -1,6 +1,8 @@
 #include <GL/glew.h>
 #include <GL/glut.h>
 #include "Game.h"
+#include <Windows.h>
+#include <mmsystem.h>
 
 
 void Game::init()
@@ -8,6 +10,7 @@ void Game::init()
 	bPlay = true;
 	glClearColor(0.3f, 0.3f, 0.3f, 1.0f);
 	scene.init();
+	sndPlaySound(TEXT("musica/lvl01.wav"), SND_ASYNC);
 }
 
 bool Game::update(int deltaTime)
