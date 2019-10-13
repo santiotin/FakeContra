@@ -43,6 +43,8 @@ enum PlayerAnims
 void Player::init(const glm::ivec2 &tileMapPos, ShaderProgram &shaderProgram)
 {
 	bJumping = false;
+	bSwim = false;
+
 	spritesheet.loadFromFile("images/personaje.png", TEXTURE_PIXEL_FORMAT_RGBA);
 	sprite = Sprite::createSprite(glm::ivec2(96, 96), glm::vec2(0.05, 0.05), &spritesheet, &shaderProgram);
 	sprite->setNumberAnimations(37);
@@ -197,59 +199,32 @@ void Player::update(int deltaTime)
 {
 	sprite->update(deltaTime);
 
-	if (Game::instance().getSpecialKey(GLUT_KEY_LEFT) && Game::instance().getSpecialKey(GLUT_KEY_UP) && !bJumping) {
+	bSwim = map->inWaterToSwim(posPlayer, glm::ivec2(32, 32));
+
+	if (Game::instance().getSpecialKey(GLUT_KEY_LEFT)) {
 		bDir = false;
-		if (sprite->animation() != DIAG_UP_LEFT_NS_SH) sprite->changeAnimation(DIAG_UP_LEFT_NS_SH);
-		
-		posPlayer.x -= WALK_STEP;
-		if (map->collisionMoveLeft(posPlayer, glm::ivec2(32, 32)))
-		{
-			posPlayer.x += WALK_STEP;
-			if (!bJumping) sprite->changeAnimation(STAND_FORW_LEFT_NS);
+
+		if (!bJumping && !bSwim) {
+			if (Game::instance().getSpecialKey(GLUT_KEY_UP)) {
+				if (sprite->animation() != DIAG_UP_LEFT_NS_SH) sprite->changeAnimation(DIAG_UP_LEFT_NS_SH);
+			}
+			else if (Game::instance().getSpecialKey(GLUT_KEY_DOWN)) {
+				if (sprite->animation() != DIAG_DOWN_LEFT_NS_SH) sprite->changeAnimation(DIAG_DOWN_LEFT_NS_SH);
+			}
+			else {
+				if (Game::instance().getKey(int('x')) && sprite->animation() != MOVE_LEFT_SH) sprite->changeAnimation(MOVE_LEFT_SH);
+				else if (!Game::instance().getKey(int('x')) && sprite->animation() != MOVE_LEFT_NS) sprite->changeAnimation(MOVE_LEFT_NS);
+			}
 		}
-	}
-
-	else if (Game::instance().getSpecialKey(GLUT_KEY_RIGHT) && Game::instance().getSpecialKey(GLUT_KEY_UP) && !bJumping) {
-		bDir = true;
-		if (sprite->animation() != DIAG_UP_RIGHT_NS_SH) sprite->changeAnimation(DIAG_UP_RIGHT_NS_SH);
-
-		posPlayer.x += WALK_STEP;
-		if (map->collisionMoveRight(posPlayer, glm::ivec2(32, 32)))
-		{
-			posPlayer.x -= WALK_STEP;
-			if (!bJumping) sprite->changeAnimation(STAND_FORW_RIGHT_NS);
-		}
-	}
-
-	else if (Game::instance().getSpecialKey(GLUT_KEY_LEFT) && Game::instance().getSpecialKey(GLUT_KEY_DOWN) && !bJumping) {
-		bDir = false;
-		if (sprite->animation() != DIAG_DOWN_LEFT_NS_SH) sprite->changeAnimation(DIAG_DOWN_LEFT_NS_SH);
-
-		posPlayer.x -= WALK_STEP;
-		if (map->collisionMoveLeft(posPlayer, glm::ivec2(32, 32)))
-		{
-			posPlayer.x += WALK_STEP;
-			if (!bJumping) sprite->changeAnimation(STAND_FORW_LEFT_NS);
-		}
-	}
-
-	else if (Game::instance().getSpecialKey(GLUT_KEY_RIGHT) && Game::instance().getSpecialKey(GLUT_KEY_DOWN) && !bJumping) {
-		bDir = true;
-		if (sprite->animation() != DIAG_DOWN_RIGHT_NS_SH) sprite->changeAnimation(DIAG_DOWN_RIGHT_NS_SH);
-
-		posPlayer.x += WALK_STEP;
-		if (map->collisionMoveRight(posPlayer, glm::ivec2(32, 32)))
-		{
-			posPlayer.x -= WALK_STEP;
-			if (!bJumping) sprite->changeAnimation(STAND_FORW_RIGHT_NS);
-		}
-	}
-
-	else if (Game::instance().getSpecialKey(GLUT_KEY_LEFT)) {
-		bDir = false;
-		if (!bJumping) {
-			if (Game::instance().getKey(int('x')) && sprite->animation() != MOVE_LEFT_SH) sprite->changeAnimation(MOVE_LEFT_SH);
-			else if (!Game::instance().getKey(int('x')) && sprite->animation() != MOVE_LEFT_NS) sprite->changeAnimation(MOVE_LEFT_NS);
+		else if (bSwim) {
+			if (Game::instance().getSpecialKey(GLUT_KEY_UP)) {
+				if (Game::instance().getKey(int('x')) && sprite->animation() != SWIM_DIAG_UP_LEFT_SH) sprite->changeAnimation(SWIM_DIAG_UP_LEFT_SH);
+				else if (!Game::instance().getKey(int('x')) && sprite->animation() != SWIM_DIAG_UP_LEFT_NS) sprite->changeAnimation(SWIM_DIAG_UP_LEFT_NS);
+			}
+			else {
+				if (Game::instance().getKey(int('x')) && sprite->animation() != SWIM_FORW_LEFT_SH) sprite->changeAnimation(SWIM_FORW_LEFT_SH);
+				else if (!Game::instance().getKey(int('x')) && sprite->animation() != SWIM_FORW_LEFT_NS) sprite->changeAnimation(SWIM_FORW_LEFT_NS);
+			}
 		}
 		
 		posPlayer.x -= WALK_STEP;
@@ -262,9 +237,29 @@ void Player::update(int deltaTime)
 
 	else if (Game::instance().getSpecialKey(GLUT_KEY_RIGHT)) {
 		bDir = true;
-		if (!bJumping) {
-			if (Game::instance().getKey(int('x')) && sprite->animation() != MOVE_RIGHT_SH) sprite->changeAnimation(MOVE_RIGHT_SH);
-			else if (!Game::instance().getKey(int('x')) && sprite->animation() != MOVE_RIGHT_NS) sprite->changeAnimation(MOVE_RIGHT_NS);
+		if (!bJumping && !bSwim) {
+
+			if (Game::instance().getSpecialKey(GLUT_KEY_UP)) {
+				if (sprite->animation() != DIAG_UP_RIGHT_NS_SH) sprite->changeAnimation(DIAG_UP_RIGHT_NS_SH);
+			}
+			else if (Game::instance().getSpecialKey(GLUT_KEY_DOWN)) {
+				if (sprite->animation() != DIAG_DOWN_RIGHT_NS_SH) sprite->changeAnimation(DIAG_DOWN_RIGHT_NS_SH);
+			}
+			else {
+				if (Game::instance().getKey(int('x')) && sprite->animation() != MOVE_RIGHT_SH) sprite->changeAnimation(MOVE_RIGHT_SH);
+				else if (!Game::instance().getKey(int('x')) && sprite->animation() != MOVE_RIGHT_NS) sprite->changeAnimation(MOVE_RIGHT_NS);
+			}
+		}
+		else if (bSwim) {
+			if (Game::instance().getSpecialKey(GLUT_KEY_UP)) {
+				if (Game::instance().getKey(int('x')) && sprite->animation() != SWIM_DIAG_UP_RIGHT_SH) sprite->changeAnimation(SWIM_DIAG_UP_RIGHT_SH);
+				else if (!Game::instance().getKey(int('x')) && sprite->animation() != SWIM_DIAG_UP_RIGHT_NS) sprite->changeAnimation(SWIM_DIAG_UP_RIGHT_NS);
+
+			}
+			else {
+				if (Game::instance().getKey(int('x')) && sprite->animation() != SWIM_FORW_RIGHT_SH) sprite->changeAnimation(SWIM_FORW_RIGHT_SH);
+				else if (!Game::instance().getKey(int('x')) && sprite->animation() != SWIM_FORW_RIGHT_NS) sprite->changeAnimation(SWIM_FORW_RIGHT_NS);
+			}
 		}
 		
 		posPlayer.x += WALK_STEP;
@@ -275,32 +270,52 @@ void Player::update(int deltaTime)
 		}
 	}
 
-	else if (Game::instance().getSpecialKey(GLUT_KEY_DOWN) && !bJumping) {
-		if (bDir) {
-			if (Game::instance().getKey(int('x'))) sprite->changeAnimation(BEND_RIGHT_SH);
-			else sprite->changeAnimation(BEND_RIGHT_NS);
+	else if (Game::instance().getSpecialKey(GLUT_KEY_DOWN)) {
+
+		if (!bJumping && !bSwim) {
+			if (bDir) {
+				if (Game::instance().getKey(int('x'))) sprite->changeAnimation(BEND_RIGHT_SH);
+				else sprite->changeAnimation(BEND_RIGHT_NS);
+			}
+			else {
+				if (Game::instance().getKey(int('x'))) sprite->changeAnimation(BEND_LEFT_SH);
+				else sprite->changeAnimation(BEND_LEFT_NS);
+			}
 		}
-		else {
-			if (Game::instance().getKey(int('x'))) sprite->changeAnimation(BEND_LEFT_SH);
-			else sprite->changeAnimation(BEND_LEFT_NS);
+		else if (bSwim) {
+			sprite->changeAnimation(SWIM_BEND);
 		}
+		
 
 	}
 
-	else if (Game::instance().getSpecialKey(GLUT_KEY_UP) && !bJumping) {
-		if (bDir) {
-			if (Game::instance().getKey(int('x'))) sprite->changeAnimation(STAND_UP_RIGHT_SH);
-			else sprite->changeAnimation(STAND_UP_RIGHT_NS);
+	else if (Game::instance().getSpecialKey(GLUT_KEY_UP)) {
+		if (!bJumping && !bSwim) {
+			if (bDir) {
+				if (Game::instance().getKey(int('x'))) sprite->changeAnimation(STAND_UP_RIGHT_SH);
+				else sprite->changeAnimation(STAND_UP_RIGHT_NS);
+			}
+			else {
+				if (Game::instance().getKey(int('x'))) sprite->changeAnimation(STAND_UP_LEFT_SH);
+				else sprite->changeAnimation(STAND_UP_LEFT_NS);
+			}
 		}
-		else {
-			if (Game::instance().getKey(int('x'))) sprite->changeAnimation(STAND_UP_LEFT_SH);
-			else sprite->changeAnimation(STAND_UP_LEFT_NS);
+		else if (bSwim) {
+			if (bDir) {
+				if (Game::instance().getKey(int('x'))) sprite->changeAnimation(SWIM_UP_RIGHT_SH);
+				else sprite->changeAnimation(SWIM_UP_RIGHT_NS);
+			}
+			else {
+				if (Game::instance().getKey(int('x'))) sprite->changeAnimation(SWIM_UP_LEFT_SH);
+				else sprite->changeAnimation(SWIM_UP_LEFT_NS);
+			}
 		}
+		
 	}
 	
 	else
 	{
-		if (!bJumping) {
+		if (!bJumping && !bSwim) {
 			if (bDir) {
 				if (Game::instance().getKey(int('x'))) sprite->changeAnimation(STAND_FORW_RIGHT_SH);
 				else sprite->changeAnimation(STAND_FORW_RIGHT_NS);
@@ -309,6 +324,17 @@ void Player::update(int deltaTime)
 				if (Game::instance().getKey(int('x'))) sprite->changeAnimation(STAND_FORW_LEFT_SH);
 				else sprite->changeAnimation(STAND_FORW_LEFT_NS);
 				
+			}
+		} 
+		else if (bSwim) {
+			if (bDir) {
+				if (Game::instance().getKey(int('x'))) sprite->changeAnimation(SWIM_FORW_RIGHT_SH);
+				else sprite->changeAnimation(SWIM_FORW_RIGHT_NS);
+			}
+			else {
+				if (Game::instance().getKey(int('x'))) sprite->changeAnimation(SWIM_FORW_LEFT_SH);
+				else sprite->changeAnimation(SWIM_FORW_LEFT_NS);
+
 			}
 		}
 	}
