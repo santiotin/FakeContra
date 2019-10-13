@@ -24,7 +24,7 @@ public:
 	float getPosX();
 	
 private:
-	bool bJumping;
+	bool bJumping, bDir, bSwim;
 	glm::ivec2 tileMapDispl, posPlayer;
 	int jumpAngle, startY;
 	Texture spritesheet;
