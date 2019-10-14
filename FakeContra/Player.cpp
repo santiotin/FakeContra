@@ -395,6 +395,7 @@ void Player::setPosition(const glm::vec2 &pos)
 
 float Player::getPosX() 
 {
+	//prova de canvi de branca
 	return float(posPlayer.x);
 }
 
