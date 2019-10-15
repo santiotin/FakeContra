@@ -39,11 +39,12 @@ enum PlayerAnims
 	SWIM_BEND,
 };
 
-
-void Player::init(const glm::ivec2 &tileMapPos, ShaderProgram &shaderProgram)
+ 
+void Player::init(const glm::ivec2& tileMapPos, ShaderProgram& shaderProgram, BulletManager *bMg)
 {
 	bJumping = false;
 	bSwim = false;
+	bManager = bMg;
 
 	spritesheet.loadFromFile("images/personaje.png", TEXTURE_PIXEL_FORMAT_RGBA);
 	sprite = Sprite::createSprite(glm::ivec2(96, 96), glm::vec2(0.05, 0.05), &spritesheet, &shaderProgram);
@@ -201,6 +202,10 @@ void Player::update(int deltaTime)
 
 	bSwim = map->inWaterToSwim(posPlayer, glm::ivec2(32, 32));
 
+	if (Game::instance().getKey(int('x'))) {
+		//bManager->createBullet(posPlayer.x + 40, posPlayer.y - 40, 6.0, 0.0);
+	}
+
 	if (Game::instance().getSpecialKey(GLUT_KEY_LEFT)) {
 		bDir = false;
 
@@ -240,13 +245,14 @@ void Player::update(int deltaTime)
 		if (!bJumping && !bSwim) {
 
 			if (Game::instance().getSpecialKey(GLUT_KEY_UP)) {
-				if (sprite->animation() != DIAG_UP_RIGHT_NS_SH) sprite->changeAnimation(DIAG_UP_RIGHT_NS_SH);
+				if (sprite->animation() != DIAG_UP_RIGHT_NS_SH)sprite->changeAnimation(DIAG_UP_RIGHT_NS_SH);
 			}
 			else if (Game::instance().getSpecialKey(GLUT_KEY_DOWN)) {
 				if (sprite->animation() != DIAG_DOWN_RIGHT_NS_SH) sprite->changeAnimation(DIAG_DOWN_RIGHT_NS_SH);
 			}
 			else {
 				if (Game::instance().getKey(int('x')) && sprite->animation() != MOVE_RIGHT_SH) sprite->changeAnimation(MOVE_RIGHT_SH);
+				
 				else if (!Game::instance().getKey(int('x')) && sprite->animation() != MOVE_RIGHT_NS) sprite->changeAnimation(MOVE_RIGHT_NS);
 			}
 		}
@@ -274,11 +280,17 @@ void Player::update(int deltaTime)
 
 		if (!bJumping && !bSwim) {
 			if (bDir) {
-				if (Game::instance().getKey(int('x'))) sprite->changeAnimation(BEND_RIGHT_SH);
+				if (Game::instance().getKey(int('x'))) {
+					sprite->changeAnimation(BEND_RIGHT_SH);
+					bManager->createBullet(posPlayer.x + 60, posPlayer.y - 13, 6.0, 0.0);
+				}
 				else sprite->changeAnimation(BEND_RIGHT_NS);
 			}
 			else {
-				if (Game::instance().getKey(int('x'))) sprite->changeAnimation(BEND_LEFT_SH);
+				if (Game::instance().getKey(int('x'))) {
+					sprite->changeAnimation(BEND_LEFT_SH);
+					bManager->createBullet(posPlayer.x, posPlayer.y - 13, -6.0, 0.0);
+				}
 				else sprite->changeAnimation(BEND_LEFT_NS);
 			}
 		}
@@ -292,21 +304,33 @@ void Player::update(int deltaTime)
 	else if (Game::instance().getSpecialKey(GLUT_KEY_UP)) {
 		if (!bJumping && !bSwim) {
 			if (bDir) {
-				if (Game::instance().getKey(int('x'))) sprite->changeAnimation(STAND_UP_RIGHT_SH);
+				if (Game::instance().getKey(int('x'))) {
+					sprite->changeAnimation(STAND_UP_RIGHT_SH);
+					bManager->createBullet(posPlayer.x + 20, posPlayer.y - 80, 0.0, -6.0);
+				}
 				else sprite->changeAnimation(STAND_UP_RIGHT_NS);
 			}
 			else {
-				if (Game::instance().getKey(int('x'))) sprite->changeAnimation(STAND_UP_LEFT_SH);
+				if (Game::instance().getKey(int('x'))) {
+					sprite->changeAnimation(STAND_UP_LEFT_SH);
+					bManager->createBullet(posPlayer.x + 5, posPlayer.y - 80, 0.0, -6.0);
+				}
 				else sprite->changeAnimation(STAND_UP_LEFT_NS);
 			}
 		}
 		else if (bSwim) {
 			if (bDir) {
-				if (Game::instance().getKey(int('x'))) sprite->changeAnimation(SWIM_UP_RIGHT_SH);
+				if (Game::instance().getKey(int('x'))) {
+					sprite->changeAnimation(SWIM_UP_RIGHT_SH);
+					bManager->createBullet(posPlayer.x + 25, posPlayer.y - 50, 0.0, -6.0);
+				}
 				else sprite->changeAnimation(SWIM_UP_RIGHT_NS);
 			}
 			else {
-				if (Game::instance().getKey(int('x'))) sprite->changeAnimation(SWIM_UP_LEFT_SH);
+				if (Game::instance().getKey(int('x'))) {
+					sprite->changeAnimation(SWIM_UP_LEFT_SH);
+					bManager->createBullet(posPlayer.x + 5, posPlayer.y - 50, 0.0, -6.0);
+				}
 				else sprite->changeAnimation(SWIM_UP_LEFT_NS);
 			}
 		}
