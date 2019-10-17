@@ -11,11 +11,12 @@ enum BulletAnims
 };
 
 
-void Bullet::init(const glm::ivec2& tileMapPos, ShaderProgram& shaderProgram, float dx, float dy)
+void Bullet::init(const glm::ivec2& tileMapPos, ShaderProgram& shaderProgram, glm::vec2 posBullet, glm::vec2 dirBullet, float s)
 {
-	desplX = dx;
-	desplY = dy;
+	pos = posBullet;
+	dir = dirBullet;
 	die = false;
+	speed = s;
 	tileMapDispl = tileMapPos;
 
 	spritesheet.loadFromFile("images/personaje.png", TEXTURE_PIXEL_FORMAT_RGBA);
@@ -26,28 +27,30 @@ void Bullet::init(const glm::ivec2& tileMapPos, ShaderProgram& shaderProgram, fl
 	sprite->addKeyframe(BULLET_LIVE, glm::vec2(0.60f, 0.00f));
 
 	sprite->changeAnimation(0);
-	sprite->setPosition(glm::vec2(float(tileMapDispl.x + posX), float(tileMapDispl.y + posY)));
+	sprite->setPosition(glm::vec2(float(tileMapDispl.x + pos.x), float(tileMapDispl.y + pos.y)));
 
 }
 
-void Bullet::setPosition(float x, float y)
-{
-	posX = x;
-	posY = y;
-	sprite->setPosition(glm::vec2(float(tileMapDispl.x + posX), float(tileMapDispl.y + posY)));
-}
 
 void Bullet::update(int deltaTime)
 {
 	sprite->update(deltaTime);
 
-	posX += desplX;
-	posY += desplY;
+	pos.x += dir.x * speed;
+	pos.y += dir.y * speed;
 
-	sprite->setPosition(glm::vec2(float(tileMapDispl.x + posX), float(tileMapDispl.y + posY)));
+	sprite->setPosition(glm::vec2(float(tileMapDispl.x + pos.x), float(tileMapDispl.y + pos.y)));
 }
 
 void Bullet::render()
 {
 	sprite->render();
+}
+
+glm::vec2 Bullet::getDirection() {
+	return dir;
+}
+
+glm::vec2 Bullet::getPosition() {
+	return pos;
 }

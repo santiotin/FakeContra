@@ -17,11 +17,12 @@ class BulletManager
 public:
 
 	void init(const glm::ivec2& tileMapPos, ShaderProgram& shaderProgram);
-	void update(int deltaTime);
+	void update(int deltaTime, float posPlayerX);
 	void render();
 	void setTileMap(TileMap* tileMap);
 
-	void createBullet(float px, float py, float dx, float dy);
+	void createBullet(glm::vec2 posBullet, glm::vec2 dirBullet, float speed);
+	bool isBulletInside(float boxBottomLeftX, float boxBottomRightX, float boxBottomLeftY, float boxTopRightY);
 
 private:
 

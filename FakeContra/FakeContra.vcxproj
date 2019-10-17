@@ -23,6 +23,7 @@
     <ClInclude Include="Sprite.h" />
     <ClInclude Include="Texture.h" />
     <ClInclude Include="TileMap.h" />
+    <ClInclude Include="Time.h" />
     <ClInclude Include="TorRafaga1.h" />
     <ClInclude Include="Turret1.h" />
   </ItemGroup>
@@ -39,6 +40,7 @@
     <ClCompile Include="Sprite.cpp" />
     <ClCompile Include="Texture.cpp" />
     <ClCompile Include="TileMap.cpp" />
+    <ClCompile Include="Time.cpp" />
     <ClCompile Include="TorRafaga1.cpp" />
     <ClCompile Include="Turret1.cpp" />
   </ItemGroup>

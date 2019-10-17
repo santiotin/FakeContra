@@ -137,7 +137,7 @@ void Scene::init()
 void Scene::update(int deltaTime)
 {
 	currentTime += deltaTime;
-	bManager->update(deltaTime);
+	bManager->update(deltaTime, player->getPosX());
 	player->update(deltaTime);
 
 	turret1->update(deltaTime,player->getPosX());
