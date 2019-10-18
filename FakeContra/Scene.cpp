@@ -19,8 +19,6 @@ Scene::Scene()
 	map = NULL;
 	bManager = NULL;
 	player = NULL;
-	turret1 = NULL;
-	torrafaga1 = NULL;
 	menu = NULL;
 }
 
