@@ -448,6 +448,11 @@ float Player::getPosX()
 	return float(posPlayer.x);
 }
 
+float Player::getPosY()
+{
+	return float(posPlayer.y);
+}
+
 void Player::doShoot(float desplX, float desplY, float dirX, float dirY, float speed) {
 	if (lastShoot == 0) {
 		glm::vec2 pos = glm::vec2(posPlayer.x + desplX, posPlayer.y + desplY);
@@ -464,8 +469,6 @@ void Player::doShoot(float desplX, float desplY, float dirX, float dirY, float s
 		}
 	}
 }
-
-
 
 
 

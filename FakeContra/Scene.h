@@ -9,6 +9,7 @@
 #include "BulletManager.h"
 #include "Turret1.h"
 #include "TorRafaga1.h"
+#include "EnemyManager.h"
 #include "Menu.h"
 
 
@@ -35,21 +36,12 @@ private:
 	TileMap *map;
 
 	Player *player;
+	
+	EnemyManager *enemyManager;
 
 	Menu *menu;
 
 	BulletManager *bManager;
-
-	Turret *turret1;
-	Turret* turret2;
-	Turret* turret3;
-	Turret* turret4;
-	Turret* turret5;
-	Turret* turret6;
-
-	TorRafaga *torrafaga1;
-	TorRafaga* torrafaga2;
-	TorRafaga* torrafaga3;
 
 	ShaderProgram texProgram;
 	float currentTime;

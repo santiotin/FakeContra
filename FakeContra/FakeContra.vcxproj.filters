@@ -48,6 +48,7 @@
     <ClInclude Include="TorRafaga1.h">
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>
+    <ClInclude Include="EnemyManager.h">
     <ClInclude Include="Bullet.h">
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>
@@ -95,6 +96,7 @@
     <ClCompile Include="TorRafaga1.cpp">
       <Filter>Archivos de código fuente</Filter>
     </ClCompile>
+    <ClCompile Include="EnemyManager.cpp">
     <ClCompile Include="Bullet.cpp">
       <Filter>Archivos de código fuente</Filter>
     </ClCompile>

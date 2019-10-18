@@ -5,6 +5,7 @@
 #include "Turret1.h"
 #include "Game.h"
 
+#define PI 3.141592654
 
 
 
@@ -22,41 +23,41 @@ void Turret::init(const glm::ivec2& tileMapPos, ShaderProgram& shaderProgram)
 	sprite->setNumberAnimations(12);
 
 
-	sprite->setAnimationSpeed(POINT_1, 8);
-	sprite->addKeyframe(POINT_1, glm::vec2(0.00f, 0.00f));
-
-	sprite->setAnimationSpeed(POINT_2, 8);
-	sprite->addKeyframe(POINT_2, glm::vec2(0.00f, 0.25f));
+	sprite->setAnimationSpeed(POINT_9, 8);
+	sprite->addKeyframe(POINT_9, glm::vec2(0.00f, 0.00f));
 
 	sprite->setAnimationSpeed(POINT_3, 8);
-	sprite->addKeyframe(POINT_3, glm::vec2(0.00f, 0.50f));
-
-	sprite->setAnimationSpeed(POINT_4, 8);
-	sprite->addKeyframe(POINT_4, glm::vec2(0.00f, 0.75f));
-
-	sprite->setAnimationSpeed(POINT_5, 8);
-	sprite->addKeyframe(POINT_5, glm::vec2(0.33f, 0.00f));
-
-	sprite->setAnimationSpeed(POINT_6, 8);
-	sprite->addKeyframe(POINT_6, glm::vec2(0.33f, 0.25f));
-
-	sprite->setAnimationSpeed(POINT_7, 8);
-	sprite->addKeyframe(POINT_7, glm::vec2(0.33f, 0.50f));
-
-	sprite->setAnimationSpeed(POINT_8, 8);
-	sprite->addKeyframe(POINT_8, glm::vec2(0.33f, 0.75f));
-
-	sprite->setAnimationSpeed(POINT_9, 8);
-	sprite->addKeyframe(POINT_9, glm::vec2(0.66f, 0.00f));
-
-	sprite->setAnimationSpeed(POINT_10, 8);
-	sprite->addKeyframe(POINT_10, glm::vec2(0.66f, 0.25f));
-
-	sprite->setAnimationSpeed(POINT_11, 8);
-	sprite->addKeyframe(POINT_11, glm::vec2(0.66f, 0.50f));
+	sprite->addKeyframe(POINT_3, glm::vec2(0.25f, 0.00f));
 
 	sprite->setAnimationSpeed(POINT_12, 8);
-	sprite->addKeyframe(POINT_12, glm::vec2(0.66f, 0.75f));
+	sprite->addKeyframe(POINT_12, glm::vec2(0.50f, 0.00f));
+
+	sprite->setAnimationSpeed(POINT_6, 8);
+	sprite->addKeyframe(POINT_6, glm::vec2(0.75f, 0.00f));
+
+	sprite->setAnimationSpeed(POINT_10, 8);
+	sprite->addKeyframe(POINT_10, glm::vec2(0.00f, 0.33f));
+
+	sprite->setAnimationSpeed(POINT_11, 8);
+	sprite->addKeyframe(POINT_11, glm::vec2(0.25f, 0.33f));
+
+	sprite->setAnimationSpeed(POINT_1, 8);
+	sprite->addKeyframe(POINT_1, glm::vec2(0.50f, 0.33f));
+
+	sprite->setAnimationSpeed(POINT_2, 8);
+	sprite->addKeyframe(POINT_2, glm::vec2(0.75f, 0.33f));
+
+	sprite->setAnimationSpeed(POINT_8, 8);
+	sprite->addKeyframe(POINT_8, glm::vec2(0.00f, 0.66f));
+
+	sprite->setAnimationSpeed(POINT_7, 8);
+	sprite->addKeyframe(POINT_7, glm::vec2(0.25f, 0.66f));
+
+	sprite->setAnimationSpeed(POINT_5, 8);
+	sprite->addKeyframe(POINT_5, glm::vec2(0.50f, 0.66f));
+
+	sprite->setAnimationSpeed(POINT_4, 8);
+	sprite->addKeyframe(POINT_4, glm::vec2(0.75f, 0.66f));
 
 
 	sprite->changeAnimation(0);
@@ -65,15 +66,51 @@ void Turret::init(const glm::ivec2& tileMapPos, ShaderProgram& shaderProgram)
 
 }
 
-void Turret::update(int deltaTime, int posPlayerX)
+void Turret::update(int deltaTime, float posPlayerX, float posPlayerY)
 {
 	sprite->update(deltaTime);
-	if (Game::instance().getSpecialKey(GLUT_KEY_LEFT))
-	{
-		
-	}
+	float posTurretX = getPosX();
+	float posTurretY = getPosY();
 
+	distX = posTurretX - posPlayerX;
 	
+	distY = posTurretY - posPlayerY;
+	
+	double alpha = atan2(distY, distX) - 0.2;
+	cout << alpha << endl;
+	if (alpha < 0.0f)
+		alpha += 2 * PI;
+	int valor = int(((6 * alpha) - (PI / 4)) / PI);
+
+	if (valor == 0) sprite->changeAnimation(POINT_10);
+	else if ( valor == 1 )sprite->changeAnimation(POINT_11);
+	else if (valor == 2)sprite->changeAnimation(POINT_12);
+	else if (valor == 3)sprite->changeAnimation(POINT_1);
+	else if (valor == 4)sprite->changeAnimation(POINT_2);
+	else if (valor == 5)sprite->changeAnimation(POINT_3);
+	else if (valor == 6)sprite->changeAnimation(POINT_4);
+	else if (valor == 7)sprite->changeAnimation(POINT_5);
+	else if (valor == 8)sprite->changeAnimation(POINT_6);
+	else if (valor == 9)sprite->changeAnimation(POINT_7);
+	else if (valor == 10)sprite->changeAnimation(POINT_8);
+	else if ( valor == 11 )sprite->changeAnimation(POINT_9);
+	/*if (distX >= 0) { 
+		if (distY >= 0) { //adalt esquerra
+			if (distY < 80 && distX > 0) sprite->changeAnimation(POINT_9);
+			else if(distY < 80 && distX < 80 && distX > 60 || distX > 115 && distY > 115) sprite->changeAnimation(POINT_10);
+			else if (distY > 80 && distX < 115 && distX > 79 || distY < 80 && distX < 59 && distY > 50 || distX > 50 ) sprite->changeAnimation(POINT_11);
+			else sprite->changeAnimation(POINT_12);
+		}
+		else {
+			if (distY < -20 && distX > 79) sprite->changeAnimation(POINT_9);
+			else if (distY < -50 && distX < 80 && distX > 60 || distX > 115 && distY > -115) sprite->changeAnimation(POINT_8);
+			else if (distY > -80 && distX < 115 && distX > 79 || distY < -80 && distX < 59 && distY > -50 || distX > 50) sprite->changeAnimation(POINT_7);
+			else sprite->changeAnimation(POINT_6);
+		}
+	}
+	else {
+
+	}*/
 }
 
 void Turret::render()

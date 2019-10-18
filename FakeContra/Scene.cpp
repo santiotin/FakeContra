@@ -9,28 +9,9 @@
 #define SCREEN_X 0
 #define SCREEN_Y 0
 
-#define INIT_PLAYER_X_TILES 10
+#define INIT_PLAYER_X_TILES 100
 #define INIT_PLAYER_Y_TILES 3
 
-#define INIT_TURRET1_X_TILES 102
-#define INIT_TURRET1_Y_TILES 8.4
-#define INIT_TURRET2_X_TILES 114
-#define INIT_TURRET2_Y_TILES 8.4
-#define INIT_TURRET3_X_TILES 78
-#define INIT_TURRET3_Y_TILES 10.4
-#define INIT_TURRET4_X_TILES 186
-#define INIT_TURRET4_Y_TILES 12.4
-#define INIT_TURRET5_X_TILES 194
-#define INIT_TURRET5_Y_TILES 12.4
-#define INIT_TURRET6_X_TILES 214
-#define INIT_TURRET6_Y_TILES 12.4
-
-#define INIT_TORRAFAGA1_X_TILES 136
-#define INIT_TORRAFAGA1_Y_TILES 4.4
-#define INIT_TORRAFAGA2_X_TILES 174
-#define INIT_TORRAFAGA2_Y_TILES 8.4
-#define INIT_TORRAFAGA3_X_TILES 128
-#define INIT_TORRAFAGA3_Y_TILES 10.4
 
 
 Scene::Scene()
@@ -51,25 +32,6 @@ Scene::~Scene()
 	if(player != NULL)
 		delete player;
 
-	if (turret1 != NULL)
-		delete turret1;
-	if (turret2 != NULL)
-		delete turret1;
-	if (turret3 != NULL)
-		delete turret1;
-	if (turret4 != NULL)
-		delete turret1;
-	if (turret5 != NULL)
-		delete turret1;
-	if (turret6 != NULL)
-		delete turret1;
-
-	if (torrafaga1 != NULL)
-		delete torrafaga1;
-	if (torrafaga2 != NULL)
-		delete torrafaga1;
-	if (torrafaga3 != NULL)
-		delete torrafaga1;
 }
 
 
@@ -89,43 +51,8 @@ void Scene::init()
 	player->setPosition(glm::vec2((INIT_PLAYER_X_TILES *map->getTileSize()) - 208, INIT_PLAYER_Y_TILES *map->getTileSize()));
 	player->setTileMap(map);
 
-	turret1 = new Turret();
-	turret1->init(glm::ivec2(SCREEN_X, SCREEN_Y), texProgram);
-	turret1->setPosition(glm::vec2((INIT_TURRET1_X_TILES * map->getTileSize()), INIT_TURRET1_Y_TILES * map->getTileSize()));
-	turret1->setTileMap(map);
-	turret2 = new Turret();
-	turret2->init(glm::ivec2(SCREEN_X, SCREEN_Y), texProgram);
-	turret2->setPosition(glm::vec2((INIT_TURRET2_X_TILES * map->getTileSize()), INIT_TURRET2_Y_TILES * map->getTileSize()));
-	turret2->setTileMap(map);
-	turret3 = new Turret();
-	turret3->init(glm::ivec2(SCREEN_X, SCREEN_Y), texProgram);
-	turret3->setPosition(glm::vec2((INIT_TURRET3_X_TILES * map->getTileSize()), INIT_TURRET3_Y_TILES * map->getTileSize()));
-	turret3->setTileMap(map);
-	turret4 = new Turret();
-	turret4->init(glm::ivec2(SCREEN_X, SCREEN_Y), texProgram);
-	turret4->setPosition(glm::vec2((INIT_TURRET4_X_TILES * map->getTileSize()), INIT_TURRET4_Y_TILES * map->getTileSize()));
-	turret4->setTileMap(map);
-	turret5 = new Turret();
-	turret5->init(glm::ivec2(SCREEN_X, SCREEN_Y), texProgram);
-	turret5->setPosition(glm::vec2((INIT_TURRET5_X_TILES * map->getTileSize()), INIT_TURRET5_Y_TILES * map->getTileSize()));
-	turret5->setTileMap(map);
-	turret6 = new Turret();
-	turret6->init(glm::ivec2(SCREEN_X, SCREEN_Y), texProgram);
-	turret6->setPosition(glm::vec2((INIT_TURRET6_X_TILES * map->getTileSize()), INIT_TURRET6_Y_TILES * map->getTileSize()));
-	turret6->setTileMap(map);
-
-	torrafaga1 = new TorRafaga();
-	torrafaga1->init(glm::ivec2(SCREEN_X, SCREEN_Y), texProgram);
-	torrafaga1->setPosition(glm::vec2((INIT_TORRAFAGA1_X_TILES * map->getTileSize()), INIT_TORRAFAGA1_Y_TILES * map->getTileSize()));
-	torrafaga1->setTileMap(map);
-	torrafaga2 = new TorRafaga();
-	torrafaga2->init(glm::ivec2(SCREEN_X, SCREEN_Y), texProgram);
-	torrafaga2->setPosition(glm::vec2((INIT_TORRAFAGA2_X_TILES * map->getTileSize()), INIT_TORRAFAGA2_Y_TILES * map->getTileSize()));
-	torrafaga2->setTileMap(map);
-	torrafaga3 = new TorRafaga();
-	torrafaga3->init(glm::ivec2(SCREEN_X, SCREEN_Y), texProgram);
-	torrafaga3->setPosition(glm::vec2((INIT_TORRAFAGA3_X_TILES * map->getTileSize()), INIT_TORRAFAGA3_Y_TILES * map->getTileSize()));
-	torrafaga3->setTileMap(map);
+	enemyManager = new EnemyManager();
+	enemyManager->init(map, texProgram);
 
 	menu = new Menu();
 	menu->init(glm::ivec2(SCREEN_X-640, SCREEN_Y), texProgram);
@@ -137,22 +64,12 @@ void Scene::init()
 void Scene::update(int deltaTime)
 {
 	currentTime += deltaTime;
-	bManager->update(deltaTime, player->getPosX());
+
 	player->update(deltaTime);
+	enemyManager->update(deltaTime, player->getPosX(), player->getPosY());
 
-	turret1->update(deltaTime,player->getPosX());
-	turret2->update(deltaTime,player->getPosX());
-	turret3->update(deltaTime, player->getPosX());
-	turret4->update(deltaTime, player->getPosX());
-	turret5->update(deltaTime, player->getPosX());
-	turret6->update(deltaTime, player->getPosX());
-
-	torrafaga1->update(deltaTime, player->getPosX());
-	torrafaga2->update(deltaTime, player->getPosX());
-	torrafaga3->update(deltaTime, player->getPosX());
-
+	bManager->update(deltaTime, player->getPosX());
 	menu->update(deltaTime);
-	
 	updateCamera();
 }
 
@@ -167,21 +84,13 @@ void Scene::render()
 	texProgram.setUniform2f("texCoordDispl", 0.f, 0.f);
 
 	map->render();
-	bManager->render();
+
 	player->render();
-
-	turret1->render();
-	turret2->render();
-	turret3->render();
-	turret4->render();
-	turret5->render();
-	turret6->render();
-
-	torrafaga1->render();
-	torrafaga2->render();
-	torrafaga3->render();
+	enemyManager->render();
+	bManager->render();
 
 	menu->render();
+
 }
 
 void Scene::initShaders()
