@@ -22,7 +22,7 @@ public:
 	void setTileMap(TileMap* tileMap);
 
 	void createBullet(glm::vec2 posBullet, glm::vec2 dirBullet, float speed);
-	bool isBulletInside(float boxBottomLeftX, float boxBottomRightX, float boxBottomLeftY, float boxTopRightY);
+	bool isBulletInside(glm::vec2 pos, glm::vec2 box);
 
 private:
 

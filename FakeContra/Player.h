@@ -23,14 +23,17 @@ public:
 	
 	void setTileMap(TileMap *tileMap);
 	void setPosition(const glm::vec2 &pos);
+	void setBox(glm::vec2 box);
 
 	float getPosX();
 	float getPosY();
+	glm::vec2 getPosition();
+	glm::vec2 getBox();
 	void doShoot(float posX, float posY, float dirX, float dirY, float speed);
 	
 private:
 	bool bJumping, bDir, bSwim;
-	glm::ivec2 tileMapDispl, posPlayer;
+	glm::ivec2 tileMapDispl, posPlayer, boxPlayer;
 	int jumpAngle, startY;
 	long long lastShoot;
 	Texture spritesheet;

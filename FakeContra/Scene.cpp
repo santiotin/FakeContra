@@ -9,7 +9,7 @@
 #define SCREEN_X 0
 #define SCREEN_Y 0
 
-#define INIT_PLAYER_X_TILES 100
+#define INIT_PLAYER_X_TILES 10
 #define INIT_PLAYER_Y_TILES 3
 
 
@@ -64,6 +64,7 @@ void Scene::update(int deltaTime)
 	currentTime += deltaTime;
 
 	player->update(deltaTime);
+	if (bManager->isBulletInside(player->getPosition(), player->getBox())) init();
 	enemyManager->update(deltaTime, player->getPosX(), player->getPosY());
 
 	bManager->update(deltaTime, player->getPosX());

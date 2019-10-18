@@ -4,14 +4,18 @@
 #include <vector> 
 #include <glm/gtc/matrix_transform.hpp>
 #include "Game.h"
-//#include <windows.h>
-//comentario para la nueva rama
+#include <windows.h>
 
 
 
 void BulletManager::init(const glm::ivec2& tileMapPos, ShaderProgram& shaderProgram){
 	sh = shaderProgram;
 	tileMapDispl = tileMapPos;
+
+	//prueba de collision
+	glm::vec2 fakePos = glm::vec2(400.0, 150.0);
+	glm::vec2 fakeDir = glm::vec2(-1.0, 0);
+	createBullet(fakePos, fakeDir, 2.0);
 
 }
 
@@ -54,17 +58,17 @@ void BulletManager::createBullet(glm::vec2 posBullet, glm::vec2 dirBullet, float
 
 }
 
-bool BulletManager::isBulletInside(float bottomLeftX, float bottomRightX, float bottomLeftY, float topRightY) {
+bool BulletManager::isBulletInside(glm::vec2 pos, glm::vec2 box) {
 	for (Bullet* bullet : bullets) {
 		if (bullet != NULL) {
-			if (bullet->getPosition().x > bottomLeftX&& bullet->getPosition().x < bottomRightX) {
-				if (bullet->getPosition().x > bottomLeftY&& bullet->getPosition().y < topRightY) {
+			if (bullet->getPosition().x > pos.x && bullet->getPosition().x < (pos.x + box.x)) {
+				if (bullet->getPosition().y < pos.y && bullet->getPosition().y > (pos.y - box.y)) {
+					OutputDebugStringA("DEADDEADDEADDEAD/n");
 					return true;
 				}
 			}
 		}
 		
 	}
-
 	return false;
 }
