@@ -25,6 +25,7 @@ public:
 	void setPosition(const glm::vec2 &pos);
 
 	float getPosX();
+	float getPosY();
 	void doShoot(float posX, float posY, float dirX, float dirY, float speed);
 	
 private:
