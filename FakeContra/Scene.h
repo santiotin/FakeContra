@@ -6,9 +6,11 @@
 #include "ShaderProgram.h"
 #include "TileMap.h"
 #include "Player.h"
+#include "BulletManager.h"
 #include "Turret1.h"
 #include "TorRafaga1.h"
 #include "EnemyManager.h"
+#include "Menu.h"
 
 
 // Scene contains all the entities of our game.
@@ -25,6 +27,7 @@ public:
 	void init();
 	void update(int deltaTime);
 	void render();
+	void updateCamera();
 
 private:
 	void initShaders();
@@ -36,9 +39,16 @@ private:
 	
 	EnemyManager *enemyManager;
 
+	Menu *menu;
+
+	BulletManager *bManager;
+
 	ShaderProgram texProgram;
 	float currentTime;
 	glm::mat4 projection;
+
+	bool inMenu;
+
 
 };
 

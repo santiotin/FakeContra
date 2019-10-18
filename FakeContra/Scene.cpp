@@ -17,7 +17,11 @@
 Scene::Scene()
 {
 	map = NULL;
+	bManager = NULL;
 	player = NULL;
+	turret1 = NULL;
+	torrafaga1 = NULL;
+	menu = NULL;
 }
 
 Scene::~Scene()
@@ -35,12 +39,24 @@ void Scene::init()
 {
 	initShaders();
 	map = TileMap::createTileMap("levels/fakelevel01.txt", glm::vec2(SCREEN_X, SCREEN_Y), texProgram);
+
+	inMenu = false;
+	
+	bManager = new BulletManager();
+	bManager->init(glm::ivec2(SCREEN_X, SCREEN_Y), texProgram);
+	bManager->setTileMap(map);
+	
 	player = new Player();
-	player->init(glm::ivec2(SCREEN_X, SCREEN_Y), texProgram);
+	player->init(glm::ivec2(SCREEN_X, SCREEN_Y), texProgram, bManager);
 	player->setPosition(glm::vec2((INIT_PLAYER_X_TILES *map->getTileSize()) - 208, INIT_PLAYER_Y_TILES *map->getTileSize()));
 	player->setTileMap(map);
+
 	enemyManager = new EnemyManager();
 	enemyManager->init(map, texProgram);
+
+	menu = new Menu();
+	menu->init(glm::ivec2(SCREEN_X-640, SCREEN_Y), texProgram);
+
 	projection = glm::ortho(0.f, float(SCREEN_WIDTH - 1) , float(SCREEN_HEIGHT - 1), 0.f);
 	currentTime = 0.0f;
 }
@@ -48,10 +64,13 @@ void Scene::init()
 void Scene::update(int deltaTime)
 {
 	currentTime += deltaTime;
+
 	player->update(deltaTime);
 	enemyManager->update(deltaTime, player->getPosX(), player->getPosY());
-	
-	projection = glm::ortho(player->getPosX() - ((SCREEN_WIDTH - 1) / 2), player->getPosX() + ((SCREEN_WIDTH-1)/2), float(SCREEN_HEIGHT - 1), 0.f);
+
+	bManager->update(deltaTime, player->getPosX());
+	menu->update(deltaTime);
+	updateCamera();
 }
 
 void Scene::render()
@@ -65,8 +84,13 @@ void Scene::render()
 	texProgram.setUniform2f("texCoordDispl", 0.f, 0.f);
 
 	map->render();
+
 	player->render();
 	enemyManager->render();
+	bManager->render();
+
+	menu->render();
+
 }
 
 void Scene::initShaders()
@@ -97,6 +121,22 @@ void Scene::initShaders()
 	texProgram.bindFragmentOutput("outColor");
 	vShader.free();
 	fShader.free();
+}
+
+void Scene::updateCamera() {
+	if (inMenu) {
+		projection = glm::ortho(float(-SCREEN_WIDTH + 1), 0.f, float(SCREEN_HEIGHT - 1), 0.f);
+	}
+	else {
+		if (player->getPosX() < ((SCREEN_WIDTH - 1) / 2)) {
+			projection = glm::ortho(0.f, float(SCREEN_WIDTH - 1), float(SCREEN_HEIGHT - 1), 0.f);
+		}
+		else {
+			projection = glm::ortho(player->getPosX() - ((SCREEN_WIDTH - 1) / 2), player->getPosX() + ((SCREEN_WIDTH - 1) / 2), float(SCREEN_HEIGHT - 1), 0.f);
+
+		}
+	}
+	
 }
 
 
