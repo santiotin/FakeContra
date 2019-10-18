@@ -8,6 +8,7 @@
 #include "Player.h"
 #include "Turret1.h"
 #include "TorRafaga1.h"
+#include "EnemyManager.h"
 
 
 // Scene contains all the entities of our game.
@@ -32,17 +33,8 @@ private:
 	TileMap *map;
 
 	Player *player;
-
-	Turret *turret1;
-	Turret* turret2;
-	Turret* turret3;
-	Turret* turret4;
-	Turret* turret5;
-	Turret* turret6;
-
-	TorRafaga *torrafaga1;
-	TorRafaga* torrafaga2;
-	TorRafaga* torrafaga3;
+	
+	EnemyManager *enemyManager;
 
 	ShaderProgram texProgram;
 	float currentTime;

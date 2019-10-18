@@ -22,6 +22,7 @@ public:
 	void setPosition(const glm::vec2 &pos);
 
 	float getPosX();
+	float getPosY();
 	
 private:
 	bool bJumping, bDir, bSwim;

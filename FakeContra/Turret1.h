@@ -13,7 +13,7 @@ class Turret
 
 public:
 	void init(const glm::ivec2& tileMapPos, ShaderProgram& shaderProgram);
-	void update(int deltaTime, int posPlayerX);
+	void update(int deltaTime, float posPlayerX, float posPlayerY);
 	void render();
 
 	void setTileMap(TileMap* tileMap);
@@ -24,6 +24,7 @@ public:
 private:
 	glm::ivec2 tileMapDispl, posTurret;
 	int startY;
+	float distX, distY;
 	Texture spritesheet;
 	Sprite* sprite;
 	TileMap* map;

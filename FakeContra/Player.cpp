@@ -398,6 +398,11 @@ float Player::getPosX()
 	return float(posPlayer.x);
 }
 
+float Player::getPosY()
+{
+	return float(posPlayer.y);
+}
+
 
 
 

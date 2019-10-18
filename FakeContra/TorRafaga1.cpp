@@ -28,10 +28,10 @@ void TorRafaga::init(const glm::ivec2& tileMapPos, ShaderProgram& shaderProgram)
 	sprite->addKeyframe(POINT_9, glm::vec2(0.00f, 0.00f));
 
 	sprite->setAnimationSpeed(POINT_10, 8);
-	sprite->addKeyframe(POINT_10, glm::vec2(0.00f, 0.33f));
+	sprite->addKeyframe(POINT_10, glm::vec2(0.33f, 0.00f));
 
 	sprite->setAnimationSpeed(POINT_11, 8);
-	sprite->addKeyframe(POINT_11, glm::vec2(0.00f, 0.66f));
+	sprite->addKeyframe(POINT_11, glm::vec2(0.66f, 0.00f));
 
 
 
@@ -41,7 +41,7 @@ void TorRafaga::init(const glm::ivec2& tileMapPos, ShaderProgram& shaderProgram)
 
 }
 
-void TorRafaga::update(int deltaTime, int posPlayerX)
+void TorRafaga::update(int deltaTime, float posPlayerX, float posPlayerY)
 {
 	sprite->update(deltaTime);
 	/*if (player->getPosX())
