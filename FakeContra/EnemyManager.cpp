@@ -22,6 +22,15 @@
 #define INIT_TORRAFAGA3_X_TILES 128
 #define INIT_TORRAFAGA3_Y_TILES 10.4
 
+#define INIT_RUNNER1_X_TILES 15
+#define INIT_RUNNER1_Y_TILES 2
+
+#define INIT_SOLDIER1_X_TILES 18
+#define INIT_SOLDIER1_Y_TILES 2
+
+#define INIT_SNIPER1_X_TILES 21
+#define INIT_SNIPER1_Y_TILES 2
+
 void EnemyManager::init(TileMap *tileMap, ShaderProgram& shaderProgram)//pasa tmb lvl
 {
 	Turret *turret1 = new Turret();
@@ -75,16 +84,40 @@ void EnemyManager::init(TileMap *tileMap, ShaderProgram& shaderProgram)//pasa tm
 	torrafaga3->setPosition(glm::vec2((INIT_TORRAFAGA3_X_TILES * tileMap->getTileSize()), INIT_TORRAFAGA3_Y_TILES * tileMap->getTileSize()));
 	torrafaga3->setTileMap(tileMap);
 	vecTorRafaga.push_back(torrafaga3);
+
+	Runner* runner1 = new Runner();
+	runner1->init(glm::ivec2(SCREEN_X, SCREEN_Y), shaderProgram);
+	runner1->setPosition(glm::vec2((INIT_RUNNER1_X_TILES * tileMap->getTileSize()), INIT_RUNNER1_Y_TILES * tileMap->getTileSize()));
+	runner1->setTileMap(tileMap);
+	vecRunner.push_back(runner1);
+
+	Soldier* soldier1 = new Soldier();
+	soldier1->init(glm::ivec2(SCREEN_X, SCREEN_Y), shaderProgram);
+	soldier1->setPosition(glm::vec2((INIT_RUNNER1_X_TILES * tileMap->getTileSize()), INIT_RUNNER1_Y_TILES * tileMap->getTileSize()));
+	soldier1->setTileMap(tileMap);
+	vecSoldier.push_back(soldier1);
+
+	Sniper* sniper1 = new Sniper();
+	sniper1->init(glm::ivec2(SCREEN_X, SCREEN_Y), shaderProgram);
+	sniper1->setPosition(glm::vec2((INIT_RUNNER1_X_TILES * tileMap->getTileSize()), INIT_RUNNER1_Y_TILES * tileMap->getTileSize()));
+	sniper1->setTileMap(tileMap);
+	vecSniper.push_back(sniper1);
 }
 
 void EnemyManager::update(int deltaTime, float posPlayerX, float posPlayerY)
 {
 	for (Turret* t : vecTurret) t->update(deltaTime, posPlayerX, posPlayerY);
 	for (TorRafaga* tr : vecTorRafaga) tr->update(deltaTime, posPlayerX, posPlayerY);
+	for (Runner* r : vecRunner) r->update(deltaTime, posPlayerX, posPlayerY);
+	for (Soldier* so : vecSoldier) so->update(deltaTime, posPlayerX, posPlayerY);
+	for (Sniper* sn : vecSniper) sn->update(deltaTime, posPlayerX, posPlayerY);
 }
 
 void EnemyManager::render()
 {
 	for (Turret* t : vecTurret) t->render();
 	for (TorRafaga* tr : vecTorRafaga) tr->render();
+	for (Runner* r : vecRunner) r->render();
+	for (Soldier* so : vecSoldier) so->render();
+	for (Sniper* sn : vecSniper) sn->render();
 }
