@@ -6,10 +6,12 @@
 #include "ShaderProgram.h"
 #include "TileMap.h"
 #include "Player.h"
+#include "PlayerLevel2.h"
 #include "BulletManager.h"
 #include "Turret1.h"
 #include "TorRafaga1.h"
 #include "EnemyManager.h"
+#include "BulletManager.h"
 #include "Menu.h"
 
 
@@ -28,6 +30,11 @@ public:
 	void update(int deltaTime);
 	void render();
 	void updateCamera();
+	int getMode();
+	void setMode(int m);
+	int getEnum(int s);
+
+	
 
 private:
 	void initShaders();
@@ -36,19 +43,16 @@ private:
 	TileMap *map;
 
 	Player *player;
+	PlayerLevel2* playerLevel2;
 	
 	EnemyManager *enemyManager;
 
 	Menu *menu;
 
-	BulletManager *bManager;
-
 	ShaderProgram texProgram;
 	float currentTime;
 	glm::mat4 projection;
-
-	bool inMenu;
-
+	int mode;
 
 };
 
