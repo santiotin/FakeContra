@@ -11,8 +11,8 @@
 #define FALL_STEP 4
 #define WALK_STEP 2
 
-#define STANDBOX glm::vec2(40.f, 67.f)
-#define BENDBOX glm::vec2(40.f, 57.f)
+#define STANDBOX glm::vec2(40.f, 80.f)
+#define BENDBOX glm::vec2(40.f, 60.f)
 #define JUMPBOX glm::vec2(35.f, 35.f)
 
 
@@ -105,7 +105,7 @@ void PlayerLevel2::update(int deltaTime)
 				if (sprite->animation() != MOVE_LEFT) sprite->changeAnimation(MOVE_LEFT);
 				setBox(STANDBOX);
 				if (Game::instance().getKey(int('x'))) {
-					doShoot(15.0, -80.0, 0.0, -1.0);
+					doShoot(15.0, -90.0, 0.0, -1.0);
 				}
 			}
 
@@ -123,7 +123,7 @@ void PlayerLevel2::update(int deltaTime)
 				if (sprite->animation() != MOVE_RIGHT) sprite->changeAnimation(MOVE_RIGHT);
 				setBox(STANDBOX);
 				if (Game::instance().getKey(int('x'))) {
-					doShoot(17.5, -80.0, 0.0, -1.0);
+					doShoot(17.5, -90.0, 0.0, -1.0);
 				}
 				
 			}
@@ -141,7 +141,7 @@ void PlayerLevel2::update(int deltaTime)
 				setBox(BENDBOX);
 				if (Game::instance().getKey(int('x'))) {
 					sprite->changeAnimation(BEND_SH);
-					doShoot(20.0, -60.0, 0.0, -1.0);
+					doShoot(20.0, -70.0, 0.0, -1.0);
 				}
 				else sprite->changeAnimation(BEND_NS);
 			}
@@ -154,7 +154,7 @@ void PlayerLevel2::update(int deltaTime)
 				setBox(STANDBOX);
 				if (Game::instance().getKey(int('x'))) {
 					sprite->changeAnimation(STAND_SH);
-					doShoot(17.5, -80.0, 0.0, -1.0);
+					doShoot(17.5, -90.0, 0.0, -1.0);
 				}
 				else sprite->changeAnimation(STAND_NS);
 			}
@@ -166,7 +166,7 @@ void PlayerLevel2::update(int deltaTime)
 			else if (!bDir && sprite->animation() != JUMP_LEFT) sprite->changeAnimation(JUMP_LEFT);
 
 			if (Game::instance().getKey(int('x'))) {
-				doShoot(15.0, -30.0, 0.0, -1.0);
+				doShoot(15.0, -50.0, 0.0, -1.0);
 			}
 			
 
@@ -185,17 +185,15 @@ void PlayerLevel2::update(int deltaTime)
 			}
 		}
 		else{
-			posPlayer.y += FALL_STEP;
-			if (map->collisionMoveDown(posPlayer, glm::ivec2(32, 32), &posPlayer.y))
+			
+			//if(Game::instance().getSpecialKey(GLUT_KEY_UP))
+			if (Game::instance().getKey(int('z')))
 			{
-				//if(Game::instance().getSpecialKey(GLUT_KEY_UP))
-				if (Game::instance().getKey(int('z')))
-				{
-					bJumping = true;
-					jumpAngle = 0;
-					startY = posPlayer.y;
-				}
+				bJumping = true;
+				jumpAngle = 0;
+				startY = posPlayer.y;
 			}
+			
 		}
 	}
 	else {
@@ -257,14 +255,14 @@ void PlayerLevel2::doShoot(float desplX, float desplY, float dirX, float dirY) {
 	if (lastShoot == 0) {
 		glm::vec2 pos = glm::vec2(posPlayer.x + desplX, posPlayer.y + desplY);
 		glm::vec2 dir = glm::vec2(dirX, dirY);
-		BulletManager::instance().createBullet(pos, dir, 4, 1);
+		BulletManager::instance().createBullet(pos, dir, 6, 1);
 		lastShoot = Time::instance().getMili();
 	}
 	else {
 		if (Time::instance().isAbleToShoot(lastShoot)) {
 			glm::vec2 pos = glm::vec2(posPlayer.x + desplX, posPlayer.y + desplY);
 			glm::vec2 dir = glm::vec2(dirX, dirY);
-			BulletManager::instance().createBullet(pos, dir, 4, 1);
+			BulletManager::instance().createBullet(pos, dir, 6, 1);
 			lastShoot = Time::instance().getMili();
 		}
 	}

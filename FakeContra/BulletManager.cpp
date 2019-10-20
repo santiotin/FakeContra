@@ -14,7 +14,7 @@ void BulletManager::init(const glm::ivec2& tileMapPos, ShaderProgram& shaderProg
 	if (!bullets.empty())  bullets.clear();
 
 	//prueba de collision
-	glm::vec2 fakePos = glm::vec2(400.0, 150.0);
+	glm::vec2 fakePos = glm::vec2(400.0, 140.0);
 	glm::vec2 fakeDir = glm::vec2(-1.0, 0);
 	createBullet(fakePos, fakeDir, 2.0, 0);
 

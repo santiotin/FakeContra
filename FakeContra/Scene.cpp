@@ -74,7 +74,7 @@ void Scene::init()
 
 		playerLevel2 = new PlayerLevel2();
 		playerLevel2->init(glm::ivec2(SCREEN_X, SCREEN_Y), texProgram);
-		playerLevel2->setPosition(glm::vec2((INIT_PLAYER_X_TILES * map->getTileSize()) - 208, INIT_PLAYER_Y_TILES * map->getTileSize()));
+		playerLevel2->setPosition(glm::vec2((INIT_PLAYER_X_TILES * map->getTileSize()) - 208, (INIT_PLAYER_Y_TILES + 3) * map->getTileSize()));
 		playerLevel2->setTileMap(map);
 
 	}
