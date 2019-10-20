@@ -7,8 +7,8 @@
 #include "Game.h"
 
 
-#define PI 3.141592654
-
+#define WALK_STEP 1.5;
+#define FALL_STEP 4
 
 enum RunnerAnims
 {
@@ -19,7 +19,7 @@ enum RunnerAnims
 void Runner::init(const glm::ivec2& tileMapPos, ShaderProgram& shaderProgram)
 {
 	spritesheet.loadFromFile("images/Runner.png", TEXTURE_PIXEL_FORMAT_RGBA);
-	sprite = Sprite::createSprite(glm::ivec2(96, 96), glm::vec2(0.25, 0.5), &spritesheet, &shaderProgram);
+	sprite = Sprite::createSprite(glm::ivec2(32, 64), glm::vec2(0.25, 0.5), &spritesheet, &shaderProgram);
 	sprite->setNumberAnimations(1);
 	
 	sprite->setAnimationSpeed(MOVE_LEFT_NS, 8);
@@ -46,11 +46,10 @@ void Runner::update(int deltaTime, float posPlayerX, float posPlayerY)
 	distX = posRunnerX - posPlayerX;
 
 	distY = posRunnerY - posPlayerY;
-
-	if (distX < 50) sprite->changeAnimation(MOVE_LEFT_NS);
-	
-
-
+	if (posRunnerY <= 7) sprite->changeAnimation(MOVE_LEFT_NS);
+	posRunner.x -= WALK_STEP;
+	if (posRunner.x < 25)posRunner.y += FALL_STEP;
+	sprite->setPosition(glm::vec2(float(tileMapDispl.x + posRunner.x), float(tileMapDispl.y + posRunner.y)));
 }
 
 void Runner::render()

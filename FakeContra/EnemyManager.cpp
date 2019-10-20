@@ -23,13 +23,29 @@
 #define INIT_TORRAFAGA3_Y_TILES 10.4
 
 #define INIT_RUNNER1_X_TILES 15
-#define INIT_RUNNER1_Y_TILES 2
+#define INIT_RUNNER1_Y_TILES 6.8
+#define INIT_RUNNER2_X_TILES 17
+#define INIT_RUNNER2_Y_TILES 6.8
+#define INIT_RUNNER3_X_TILES 20
+#define INIT_RUNNER3_Y_TILES 6.8
 
-#define INIT_SOLDIER1_X_TILES 18
-#define INIT_SOLDIER1_Y_TILES 2
+#define INIT_SOLDIER1_X_TILES 18.8
+#define INIT_SOLDIER1_Y_TILES 11.8
+#define INIT_SOLDIER2_X_TILES 38.8
+#define INIT_SOLDIER2_Y_TILES 11.8
+#define INIT_SOLDIER3_X_TILES 80
+#define INIT_SOLDIER3_Y_TILES 5.8
+#define INIT_SOLDIER4_X_TILES 147
+#define INIT_SOLDIER4_Y_TILES 7.8
+#define INIT_SOLDIER5_X_TILES 225
+#define INIT_SOLDIER5_Y_TILES 11.8
+#define INIT_SOLDIER6_X_TILES 230
+#define INIT_SOLDIER6_Y_TILES 11.8
 
-#define INIT_SNIPER1_X_TILES 21
-#define INIT_SNIPER1_Y_TILES 2
+#define INIT_SNIPER1_X_TILES 83
+#define INIT_SNIPER1_Y_TILES 7
+#define INIT_SNIPER2_X_TILES 98
+#define INIT_SNIPER2_Y_TILES 5
 
 void EnemyManager::init(TileMap *tileMap, ShaderProgram& shaderProgram)//pasa tmb lvl
 {
@@ -90,18 +106,58 @@ void EnemyManager::init(TileMap *tileMap, ShaderProgram& shaderProgram)//pasa tm
 	runner1->setPosition(glm::vec2((INIT_RUNNER1_X_TILES * tileMap->getTileSize()), INIT_RUNNER1_Y_TILES * tileMap->getTileSize()));
 	runner1->setTileMap(tileMap);
 	vecRunner.push_back(runner1);
+	Runner* runner2 = new Runner();
+	runner2->init(glm::ivec2(SCREEN_X, SCREEN_Y), shaderProgram);
+	runner2->setPosition(glm::vec2((INIT_RUNNER2_X_TILES * tileMap->getTileSize()), INIT_RUNNER2_Y_TILES * tileMap->getTileSize()));
+	runner2->setTileMap(tileMap);
+	vecRunner.push_back(runner2);
+	Runner* runner3 = new Runner();
+	runner3->init(glm::ivec2(SCREEN_X, SCREEN_Y), shaderProgram);
+	runner3->setPosition(glm::vec2((INIT_RUNNER3_X_TILES * tileMap->getTileSize()), INIT_RUNNER3_Y_TILES * tileMap->getTileSize()));
+	runner3->setTileMap(tileMap);
+	vecRunner.push_back(runner3);
 
 	Soldier* soldier1 = new Soldier();
 	soldier1->init(glm::ivec2(SCREEN_X, SCREEN_Y), shaderProgram);
-	soldier1->setPosition(glm::vec2((INIT_RUNNER1_X_TILES * tileMap->getTileSize()), INIT_RUNNER1_Y_TILES * tileMap->getTileSize()));
+	soldier1->setPosition(glm::vec2((INIT_SOLDIER1_X_TILES * tileMap->getTileSize()), INIT_SOLDIER1_Y_TILES * tileMap->getTileSize()));
 	soldier1->setTileMap(tileMap);
 	vecSoldier.push_back(soldier1);
+	Soldier* soldier2 = new Soldier();
+	soldier2->init(glm::ivec2(SCREEN_X, SCREEN_Y), shaderProgram);
+	soldier2->setPosition(glm::vec2((INIT_SOLDIER2_X_TILES * tileMap->getTileSize()), INIT_SOLDIER2_Y_TILES * tileMap->getTileSize()));
+	soldier2->setTileMap(tileMap);
+	vecSoldier.push_back(soldier2);
+	Soldier* soldier3 = new Soldier();
+	soldier3->init(glm::ivec2(SCREEN_X, SCREEN_Y), shaderProgram);
+	soldier3->setPosition(glm::vec2((INIT_SOLDIER3_X_TILES * tileMap->getTileSize()), INIT_SOLDIER3_Y_TILES * tileMap->getTileSize()));
+	soldier3->setTileMap(tileMap);
+	vecSoldier.push_back(soldier3);
+	Soldier* soldier4 = new Soldier();
+	soldier4->init(glm::ivec2(SCREEN_X, SCREEN_Y), shaderProgram);
+	soldier4->setPosition(glm::vec2((INIT_SOLDIER4_X_TILES * tileMap->getTileSize()), INIT_SOLDIER4_Y_TILES * tileMap->getTileSize()));
+	soldier4->setTileMap(tileMap);
+	vecSoldier.push_back(soldier4);
+	Soldier* soldier5 = new Soldier();
+	soldier5->init(glm::ivec2(SCREEN_X, SCREEN_Y), shaderProgram);
+	soldier5->setPosition(glm::vec2((INIT_SOLDIER5_X_TILES * tileMap->getTileSize()), INIT_SOLDIER5_Y_TILES * tileMap->getTileSize()));
+	soldier5->setTileMap(tileMap);
+	vecSoldier.push_back(soldier5);
+	Soldier* soldier6 = new Soldier();
+	soldier6->init(glm::ivec2(SCREEN_X, SCREEN_Y), shaderProgram);
+	soldier6->setPosition(glm::vec2((INIT_SOLDIER6_X_TILES * tileMap->getTileSize()), INIT_SOLDIER6_Y_TILES * tileMap->getTileSize()));
+	soldier6->setTileMap(tileMap);
+	vecSoldier.push_back(soldier6);
 
 	Sniper* sniper1 = new Sniper();
 	sniper1->init(glm::ivec2(SCREEN_X, SCREEN_Y), shaderProgram);
-	sniper1->setPosition(glm::vec2((INIT_RUNNER1_X_TILES * tileMap->getTileSize()), INIT_RUNNER1_Y_TILES * tileMap->getTileSize()));
+	sniper1->setPosition(glm::vec2((INIT_SNIPER1_X_TILES * tileMap->getTileSize()), INIT_SNIPER1_Y_TILES * tileMap->getTileSize()));
 	sniper1->setTileMap(tileMap);
 	vecSniper.push_back(sniper1);
+	Sniper* sniper2 = new Sniper();
+	sniper2->init(glm::ivec2(SCREEN_X, SCREEN_Y), shaderProgram);
+	sniper2->setPosition(glm::vec2((INIT_SNIPER2_X_TILES * tileMap->getTileSize()), INIT_SNIPER2_Y_TILES * tileMap->getTileSize()));
+	sniper2->setTileMap(tileMap);
+	vecSniper.push_back(sniper2);
 }
 
 void EnemyManager::update(int deltaTime, float posPlayerX, float posPlayerY)

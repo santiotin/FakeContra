@@ -19,7 +19,7 @@ enum SoldierAnims
 void Soldier::init(const glm::ivec2& tileMapPos, ShaderProgram& shaderProgram)
 {
 	spritesheet.loadFromFile("images/Soldier.png", TEXTURE_PIXEL_FORMAT_RGBA);
-	sprite = Sprite::createSprite(glm::ivec2(64, 64), glm::vec2(0.33, 0.5), &spritesheet, &shaderProgram);
+	sprite = Sprite::createSprite(glm::ivec2(64, 96), glm::vec2(0.33, 0.5), &spritesheet, &shaderProgram);
 	sprite->setNumberAnimations(6);
 
 
@@ -58,13 +58,24 @@ void Soldier::update(int deltaTime, float posPlayerX, float posPlayerY)
 
 	distY = posSoldierY - posPlayerY;
 
-	double alpha = atan2(distY, distX) - 0.25;
+	double alpha = atan2(distY, distX) - 0;
 	cout << alpha << endl;
 	if (alpha < 0.0f)
 		alpha += 2 * PI;
 	int valor = int(((6 * alpha) - (PI / 4)) / PI);
 
-	if (distX < 20) sprite->changeAnimation(POINT_9L);
+	if (valor == 0) sprite->changeAnimation(POINT_9L);
+	else if (valor == 1)sprite->changeAnimation(POINT_105L);
+	else if (valor == 2)sprite->changeAnimation(POINT_105L);
+	else if (valor == 3)sprite->changeAnimation(POINT_105R);
+	else if (valor == 4)sprite->changeAnimation(POINT_105R);
+	else if (valor == 5)sprite->changeAnimation(POINT_9R);
+	else if (valor == 6)sprite->changeAnimation(POINT_9R);
+	else if (valor == 7)sprite->changeAnimation(POINT_75R);
+	else if (valor == 8)sprite->changeAnimation(POINT_75R);
+	else if (valor == 9)sprite->changeAnimation(POINT_75L);
+	else if (valor == 10)sprite->changeAnimation(POINT_75L);
+	else if (valor == 11)sprite->changeAnimation(POINT_9L);
 
 
 }
