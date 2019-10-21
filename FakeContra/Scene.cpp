@@ -11,7 +11,7 @@
 #define SCREEN_X 0
 #define SCREEN_Y 0
 
-#define INIT_PLAYER_X_TILES 10
+#define INIT_PLAYER_X_TILES 8
 #define INIT_PLAYER_Y_TILES 3
 
 
@@ -61,7 +61,7 @@ void Scene::init()
 
 		player = new Player();
 		player->init(glm::ivec2(SCREEN_X, SCREEN_Y), texProgram);
-		player->setPosition(glm::vec2((INIT_PLAYER_X_TILES * map->getTileSize()) - 208, INIT_PLAYER_Y_TILES * map->getTileSize()));
+		player->setPosition(glm::vec2((INIT_PLAYER_X_TILES * map->getTileSize()), INIT_PLAYER_Y_TILES * map->getTileSize()));
 		player->setTileMap(map);
 
 	}

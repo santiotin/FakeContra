@@ -5,6 +5,9 @@
 #include "Runner.h"
 #include "Soldier.h"
 #include "Sniper.h"
+#include "GreenSoldier.h"
+#include "TorS2.h"
+#include "BolS2.h"
 #include <glm/gtc/matrix_transform.hpp>
 class EnemyManager
 {
@@ -19,5 +22,8 @@ private:
 	vector<Runner *> vecRunner;
 	vector<Soldier *> vecSoldier;
 	vector<Sniper *> vecSniper;
+	vector<GreenSoldier *> vecGS;
+	vector<TorS2 *> vecTS;
+	vector<BolS2 *> vecBS;
 };
 

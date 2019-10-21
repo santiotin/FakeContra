@@ -47,6 +47,15 @@
 #define INIT_SNIPER2_X_TILES 98
 #define INIT_SNIPER2_Y_TILES 5
 
+#define INIT_GREENSOLDIER1_X_TILES 20
+#define INIT_GREENSOLDIER1_Y_TILES 2
+
+#define INIT_TORS2_X_TILES 18
+#define INIT_TORS2_Y_TILES 2
+
+#define INIT_BOLS2_X_TILES 16
+#define INIT_BOLS2_Y_TILES 2
+
 void EnemyManager::init(TileMap *tileMap, ShaderProgram& shaderProgram)//pasa tmb lvl
 {
 	Turret *turret1 = new Turret();
@@ -158,6 +167,24 @@ void EnemyManager::init(TileMap *tileMap, ShaderProgram& shaderProgram)//pasa tm
 	sniper2->setPosition(glm::vec2((INIT_SNIPER2_X_TILES * tileMap->getTileSize()), INIT_SNIPER2_Y_TILES * tileMap->getTileSize()));
 	sniper2->setTileMap(tileMap);
 	vecSniper.push_back(sniper2);
+
+	GreenSoldier* greensoldier1 = new GreenSoldier();
+	greensoldier1->init(glm::ivec2(SCREEN_X, SCREEN_Y), shaderProgram);
+	greensoldier1->setPosition(glm::vec2((INIT_GREENSOLDIER1_X_TILES* tileMap->getTileSize()), INIT_GREENSOLDIER1_Y_TILES* tileMap->getTileSize()));
+	greensoldier1->setTileMap(tileMap);
+	vecGS.push_back(greensoldier1);
+
+	TorS2* tors21 = new TorS2();
+	tors21->init(glm::ivec2(SCREEN_X, SCREEN_Y), shaderProgram);
+	tors21->setPosition(glm::vec2((INIT_TORS2_X_TILES* tileMap->getTileSize()), INIT_TORS2_Y_TILES* tileMap->getTileSize()));
+	tors21->setTileMap(tileMap);
+	vecTS.push_back(tors21);
+
+	BolS2* bol21 = new BolS2();
+	bol21->init(glm::ivec2(SCREEN_X, SCREEN_Y), shaderProgram);
+	bol21->setPosition(glm::vec2((INIT_BOLS2_X_TILES* tileMap->getTileSize()), INIT_BOLS2_Y_TILES* tileMap->getTileSize()));
+	bol21->setTileMap(tileMap);
+	vecBS.push_back(bol21);
 }
 
 void EnemyManager::update(int deltaTime, float posPlayerX, float posPlayerY)
@@ -167,6 +194,9 @@ void EnemyManager::update(int deltaTime, float posPlayerX, float posPlayerY)
 	for (Runner* r : vecRunner) r->update(deltaTime, posPlayerX, posPlayerY);
 	for (Soldier* so : vecSoldier) so->update(deltaTime, posPlayerX, posPlayerY);
 	for (Sniper* sn : vecSniper) sn->update(deltaTime, posPlayerX, posPlayerY);
+	for (GreenSoldier* gs : vecGS) gs->update(deltaTime, posPlayerX, posPlayerY);
+	for (TorS2* ts : vecTS) ts->update(deltaTime, posPlayerX, posPlayerY);
+	for (BolS2* bs : vecBS) bs->update(deltaTime, posPlayerX, posPlayerY);
 }
 
 void EnemyManager::render()
@@ -176,4 +206,7 @@ void EnemyManager::render()
 	for (Runner* r : vecRunner) r->render();
 	for (Soldier* so : vecSoldier) so->render();
 	for (Sniper* sn : vecSniper) sn->render();
+	for (GreenSoldier* gs : vecGS) gs->render();
+	for (TorS2* ts : vecTS) ts->render();
+	for (BolS2* bs : vecBS) bs->render();
 }
