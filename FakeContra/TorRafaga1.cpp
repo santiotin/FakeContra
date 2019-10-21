@@ -7,7 +7,7 @@
 #include "Game.h"
 
 
-//holi
+#define PI 3.141592654
 
 
 enum TorRafagaAnims
@@ -44,10 +44,22 @@ void TorRafaga::init(const glm::ivec2& tileMapPos, ShaderProgram& shaderProgram)
 void TorRafaga::update(int deltaTime, float posPlayerX, float posPlayerY)
 {
 	sprite->update(deltaTime);
-	/*if (player->getPosX())
-	{
-		sprite->changeAnimation(POINT_10);
-	}*/
+	float posTorRafX = getPosX();
+	float posTorRafY = getPosY();
+
+	distX = posTorRafX - posPlayerX;
+
+	distY = posTorRafY - posPlayerY;
+
+	double alpha = atan2(distY, distX) - 0.25;
+	cout << alpha << endl;
+	if (alpha < 0.0f)
+		alpha += 2 * PI;
+	int valor = int(((6 * alpha) - (PI / 4)) / PI);
+
+	if (valor == 11) sprite->changeAnimation(POINT_9);
+	else if (valor == 0)sprite->changeAnimation(POINT_10);
+	else if (valor == 1)sprite->changeAnimation(POINT_11);
 
 
 }

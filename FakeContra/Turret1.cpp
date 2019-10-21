@@ -76,7 +76,7 @@ void Turret::update(int deltaTime, float posPlayerX, float posPlayerY)
 	
 	distY = posTurretY - posPlayerY;
 	
-	double alpha = atan2(distY, distX) - 0.2;
+	double alpha = atan2(distY, distX) - 0.15;
 	cout << alpha << endl;
 	if (alpha < 0.0f)
 		alpha += 2 * PI;
@@ -94,23 +94,6 @@ void Turret::update(int deltaTime, float posPlayerX, float posPlayerY)
 	else if (valor == 9)sprite->changeAnimation(POINT_7);
 	else if (valor == 10)sprite->changeAnimation(POINT_8);
 	else if ( valor == 11 )sprite->changeAnimation(POINT_9);
-	/*if (distX >= 0) { 
-		if (distY >= 0) { //adalt esquerra
-			if (distY < 80 && distX > 0) sprite->changeAnimation(POINT_9);
-			else if(distY < 80 && distX < 80 && distX > 60 || distX > 115 && distY > 115) sprite->changeAnimation(POINT_10);
-			else if (distY > 80 && distX < 115 && distX > 79 || distY < 80 && distX < 59 && distY > 50 || distX > 50 ) sprite->changeAnimation(POINT_11);
-			else sprite->changeAnimation(POINT_12);
-		}
-		else {
-			if (distY < -20 && distX > 79) sprite->changeAnimation(POINT_9);
-			else if (distY < -50 && distX < 80 && distX > 60 || distX > 115 && distY > -115) sprite->changeAnimation(POINT_8);
-			else if (distY > -80 && distX < 115 && distX > 79 || distY < -80 && distX < 59 && distY > -50 || distX > 50) sprite->changeAnimation(POINT_7);
-			else sprite->changeAnimation(POINT_6);
-		}
-	}
-	else {
-
-	}*/
 }
 
 void Turret::render()

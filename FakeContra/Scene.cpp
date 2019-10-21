@@ -14,6 +14,7 @@
 #define INIT_PLAYER_X_TILES 10
 #define INIT_PLAYER_Y_TILES 3
 
+
 enum SceneModes
 {
 	MENU, LEVEL_1, LEVEL_2, LEVEL_3
@@ -78,6 +79,7 @@ void Scene::init()
 		playerLevel2->setTileMap(map);
 
 	}
+
 
 	projection = glm::ortho(0.f, float(SCREEN_WIDTH - 1) , float(SCREEN_HEIGHT - 1), 0.f);
 	currentTime = 0.0f;
