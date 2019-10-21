@@ -16,13 +16,23 @@ class BulletManager
 
 public:
 
+	BulletManager() {}
+
+	// singleton
+	static BulletManager& instance()
+	{
+		static BulletManager BM;
+
+		return BM;
+	}
+
 	void init(const glm::ivec2& tileMapPos, ShaderProgram& shaderProgram);
 	void update(int deltaTime, float posPlayerX);
 	void render();
 	void setTileMap(TileMap* tileMap);
 
-	void createBullet(glm::vec2 posBullet, glm::vec2 dirBullet, float speed);
-	bool isBulletInside(float boxBottomLeftX, float boxBottomRightX, float boxBottomLeftY, float boxTopRightY);
+	void createBullet(glm::vec2 posBullet, glm::vec2 dirBullet, float speed, int type);
+	bool isBulletInside(glm::vec2 pos, glm::vec2 box);
 
 private:
 

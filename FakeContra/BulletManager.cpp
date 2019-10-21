@@ -4,13 +4,19 @@
 #include <vector> 
 #include <glm/gtc/matrix_transform.hpp>
 #include "Game.h"
-//#include <windows.h>
+#include <windows.h>
 
 
 
 void BulletManager::init(const glm::ivec2& tileMapPos, ShaderProgram& shaderProgram){
 	sh = shaderProgram;
 	tileMapDispl = tileMapPos;
+	if (!bullets.empty())  bullets.clear();
+
+	//prueba de collision
+	glm::vec2 fakePos = glm::vec2(400.0, 140.0);
+	glm::vec2 fakeDir = glm::vec2(-1.0, 0);
+	createBullet(fakePos, fakeDir, 2.0, 0);
 
 }
 
@@ -45,25 +51,28 @@ void BulletManager::setTileMap(TileMap* tileMap)
 	map = tileMap;
 }
 
-void BulletManager::createBullet(glm::vec2 posBullet, glm::vec2 dirBullet, float speed) {
+void BulletManager::createBullet(glm::vec2 posBullet, glm::vec2 dirBullet, float speed, int type) {
 	Bullet *bullet;
 	bullet = new Bullet();
-	bullet->init(tileMapDispl, sh, posBullet, dirBullet, speed);
+	bullet->init(tileMapDispl, sh, posBullet, dirBullet, speed, type);
 	bullets.push_back(bullet);
 
 }
 
-bool BulletManager::isBulletInside(float bottomLeftX, float bottomRightX, float bottomLeftY, float topRightY) {
-	for (Bullet* bullet : bullets) {
+bool BulletManager::isBulletInside(glm::vec2 pos, glm::vec2 box) {
+
+	for (int i = 0; i < bullets.size(); i++) {
+		Bullet* bullet = bullets[i];
 		if (bullet != NULL) {
-			if (bullet->getPosition().x > bottomLeftX&& bullet->getPosition().x < bottomRightX) {
-				if (bullet->getPosition().x > bottomLeftY&& bullet->getPosition().y < topRightY) {
+			if (bullet->getPosition().x > pos.x&& bullet->getPosition().x < (pos.x + box.x)) {
+				if (bullet->getPosition().y < pos.y && bullet->getPosition().y >(pos.y - box.y)) {
+					OutputDebugStringA("DEAD/n");
+					bullets[i] = NULL;
 					return true;
 				}
 			}
 		}
-		
-	}
 
+	}
 	return false;
 }
