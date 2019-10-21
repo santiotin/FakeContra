@@ -90,6 +90,18 @@ float Sniper::getPosY()
 	return float(posSniper.y);
 }
 
+glm::vec2 Sniper::getPosition() {
+
+	return glm::vec2(posSniper.x, posSniper.y);
+
+}
+
+glm::vec2 Sniper::getBoxCollider() {
+
+	return glm::vec2(40.0, 40.0);
+
+}
+
 
 
 

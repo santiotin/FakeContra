@@ -90,6 +90,18 @@ float TorRafaga::getPosY()
 	return float(posTorRafaga.y);
 }
 
+glm::vec2 TorRafaga::getPosition() {
+
+	return glm::vec2(posTorRafaga.x, posTorRafaga.y);
+
+}
+
+glm::vec2 TorRafaga::getBoxCollider() {
+
+	return glm::vec2(40.0, 40.0);
+
+}
+
 
 
 

@@ -18,17 +18,16 @@
     <ClCompile Include="TorRafaga1.cpp" />
     <ClCompile Include="Turret1.cpp" />
     <ClCompile Include="PlayerLevel2.cpp" />
+    <ClCompile Include="Runner.cpp" />
+    <ClCompile Include="Sniper.cpp" />
+    <ClCompile Include="Soldier.cpp" />
+    <ClCompile Include="Enemy.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Runner.h">
-      <Filter>Archivos de encabezado</Filter>
-    </ClInclude>
-    <ClInclude Include="Soldier.h">
-      <Filter>Archivos de encabezado</Filter>
-    </ClInclude>
-    <ClInclude Include="Sniper.h">
-      <Filter>Archivos de encabezado</Filter>
-    </ClInclude>
+    <ClInclude Include="Runner.h" />
+    <ClInclude Include="Sniper.h" />
+    <ClInclude Include="Soldier.h" />
+    <ClInclude Include="Enemy.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Game.cpp">
@@ -67,16 +66,6 @@
     <ClCompile Include="EnemyManager.cpp">
       <Filter>Archivos de código fuente</Filter>
     </ClCompile>
-    <ClCompile Include="Runner.cpp">
-      <Filter>Archivos de código fuente</Filter>
-    </ClCompile>
-    <ClCompile Include="Soldier.cpp">
-      <Filter>Archivos de código fuente</Filter>
-    </ClCompile>
-    <ClCompile Include="Sniper.cpp">
-      <Filter>Archivos de código fuente</Filter>
-    </ClCompile>
-
     <ClInclude Include="AnimKeyframes.h" />
     <ClInclude Include="EnemyManager.h" />
     <ClInclude Include="Bullet.h" />
@@ -94,6 +83,5 @@
     <ClInclude Include="TorRafaga1.h" />
     <ClInclude Include="Turret1.h" />
     <ClInclude Include="PlayerLevel2.h" />
-
   </ItemGroup>
 </Project>

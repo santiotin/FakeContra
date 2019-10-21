@@ -106,6 +106,18 @@ float Soldier::getPosY()
 	return float(posSoldier.y);
 }
 
+glm::vec2 Soldier::getPosition() {
+
+	return glm::vec2(posSoldier.x, posSoldier.y);
+
+}
+
+glm::vec2 Soldier::getBoxCollider() {
+
+	return glm::vec2(40.0, 40.0);
+
+}
+
 
 
 

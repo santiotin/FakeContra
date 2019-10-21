@@ -122,6 +122,18 @@ float Turret::getPosY()
 	return float(posTurret.y);
 }
 
+glm::vec2 Turret::getPosition() {
+
+	return glm::vec2(posTurret.x, posTurret.y);
+
+}
+
+glm::vec2 Turret::getBoxCollider() {
+
+	return glm::vec2(40.0, 40.0);
+
+}
+
 
 
 

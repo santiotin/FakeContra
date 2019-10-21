@@ -55,9 +55,7 @@ void Scene::init()
 		map = TileMap::createTileMap("levels/fakelevel01.txt", glm::vec2(SCREEN_X, SCREEN_Y), texProgram);
 
 		BulletManager::instance().init(glm::ivec2(SCREEN_X, SCREEN_Y), texProgram);
-
-		enemyManager = new EnemyManager();
-		enemyManager->init(map, texProgram);
+		EnemyManager::instance().init(map, texProgram, 1);
 
 		player = new Player();
 		player->init(glm::ivec2(SCREEN_X, SCREEN_Y), texProgram);
@@ -69,9 +67,7 @@ void Scene::init()
 		map = TileMap::createTileMap("levels/fakelevel01.txt", glm::vec2(SCREEN_X, SCREEN_Y), texProgram);
 
 		BulletManager::instance().init(glm::ivec2(SCREEN_X, SCREEN_Y), texProgram);
-
-		//enemyManager = new EnemyManager();
-		//enemyManager->init(map, texProgram);
+		EnemyManager::instance().init(map, texProgram, 2);
 
 		playerLevel2 = new PlayerLevel2();
 		playerLevel2->init(glm::ivec2(SCREEN_X, SCREEN_Y), texProgram);
@@ -105,8 +101,7 @@ void Scene::update(int deltaTime)
 		if (BulletManager::instance().isBulletInside(player->getPosition(), player->getBox())) {
 			player->setDeadState(true);
 		}
-		enemyManager->update(deltaTime, player->getPosX(), player->getPosY());
-
+		EnemyManager::instance().update(deltaTime, player->getPosX(), player->getPosY());
 		BulletManager::instance().update(deltaTime, player->getPosX());
 	}
 
@@ -116,8 +111,8 @@ void Scene::update(int deltaTime)
 		if (BulletManager::instance().isBulletInside(playerLevel2->getPosition(), playerLevel2->getBox())) {
 			playerLevel2->setDeadState(true);
 		}
-		//enemyManager->update(deltaTime, player->getPosX(), player->getPosY());
 
+		EnemyManager::instance().update(deltaTime, playerLevel2->getPosX(), playerLevel2->getPosY());
 		BulletManager::instance().update(deltaTime, playerLevel2->getPosX());
 	}
 
@@ -155,12 +150,12 @@ void Scene::render()
 	}
 	else if (getMode() == LEVEL_1) {
 		player->render();
-		enemyManager->render();
+		EnemyManager::instance().render();
 		BulletManager::instance().render();
 	}
 	else if (getMode() == LEVEL_2) {
 		playerLevel2->render();
-		//enemyManager->render();
+		EnemyManager::instance().render();
 		BulletManager::instance().render();
 	}
 

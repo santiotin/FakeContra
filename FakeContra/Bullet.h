@@ -17,6 +17,10 @@ public:
 	void update(int deltaTime);
 	void render();
 
+	bool isDead();
+	void setDead();
+	
+
 	//void setPosition(glm::vec2 posBullet);
 	//void setDirection(glm::vec2 dirBullet);
 

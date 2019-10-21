@@ -7,7 +7,7 @@
 
 enum BulletAnims
 {
-	BULLET_LIVE,
+	BULLET_LIVE, BULLET_DEAD
 };
 
 
@@ -21,12 +21,16 @@ void Bullet::init(const glm::ivec2& tileMapPos, ShaderProgram& shaderProgram, gl
 
 	spritesheet.loadFromFile("images/personaje.png", TEXTURE_PIXEL_FORMAT_RGBA);
 	sprite = Sprite::createSprite(glm::ivec2(96, 96), glm::vec2(0.05, 0.05), &spritesheet, &shaderProgram);
-	sprite->setNumberAnimations(1);
+	sprite->setNumberAnimations(2);
 
 	
 	if (type == 0) {
 		sprite->setAnimationSpeed(BULLET_LIVE, 8);
 		sprite->addKeyframe(BULLET_LIVE, glm::vec2(0.60f, 0.00f));
+
+		sprite->setAnimationSpeed(BULLET_DEAD, 8);
+		sprite->addKeyframe(BULLET_DEAD, glm::vec2(0.65f, 0.10f));
+		sprite->addKeyframe(BULLET_DEAD, glm::vec2(0.70f, 0.10f));
 	}
 	else { 
 		sprite->setAnimationSpeed(BULLET_LIVE, 8);
@@ -63,3 +67,13 @@ glm::vec2 Bullet::getDirection() {
 glm::vec2 Bullet::getPosition() {
 	return pos;
 }
+
+bool Bullet::isDead() {
+	if (sprite->animation() == BULLET_DEAD) return true;
+	else return false;
+}
+
+void Bullet::setDead() {
+	if(sprite->animation() != BULLET_DEAD) sprite->changeAnimation(BULLET_DEAD);
+}
+

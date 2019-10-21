@@ -31,6 +31,8 @@ void BulletManager::update(int deltaTime, float posPlayerX) {
 				bullets[i] = NULL;
 				//OutputDebugStringA("Dead");
 			}
+			else if(bullet->isDead()) bullets[i] = NULL;
+
 			else bullet->update(deltaTime);
 		}
 		
@@ -67,7 +69,7 @@ bool BulletManager::isBulletInside(glm::vec2 pos, glm::vec2 box) {
 			if (bullet->getPosition().x > pos.x&& bullet->getPosition().x < (pos.x + box.x)) {
 				if (bullet->getPosition().y < pos.y && bullet->getPosition().y >(pos.y - box.y)) {
 					OutputDebugStringA("DEAD/n");
-					bullets[i] = NULL;
+					bullet->setDead();
 					return true;
 				}
 			}

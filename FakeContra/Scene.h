@@ -44,8 +44,6 @@ private:
 
 	Player *player;
 	PlayerLevel2* playerLevel2;
-	
-	EnemyManager *enemyManager;
 
 	Menu *menu;
 
