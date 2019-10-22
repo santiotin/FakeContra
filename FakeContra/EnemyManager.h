@@ -29,13 +29,9 @@ public:
 	void update(int deltaTime, float posPlayerX, float posPlayerY);
 	void render();
 
-private:
+	bool isEnemyInside(glm::vec2 pos, glm::vec2 box);
 
-	vector<Turret *> vecTurret;
-	vector<TorRafaga *> vecTorRafaga;
-	vector<Runner *> vecRunner;
-	vector<Soldier *> vecSoldier;
-	vector<Sniper *> vecSniper;
+private:
 
 	vector<Enemy *> enemies;
 

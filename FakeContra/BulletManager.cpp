@@ -21,8 +21,8 @@ void BulletManager::init(const glm::ivec2& tileMapPos, ShaderProgram& shaderProg
 }
 
 void BulletManager::update(int deltaTime, float posPlayerX) {
-	float minWidth = posPlayerX - (SCREEN_WIDTH - 1);
-	float maxWidth = posPlayerX + (SCREEN_WIDTH - 1);
+	float minWidth = posPlayerX - (SCREEN_WIDTH - 1)/1.1;
+	float maxWidth = posPlayerX + (SCREEN_WIDTH - 1)/1.1;
 
 	for (int i = 0; i < bullets.size(); i++) {
 		Bullet* bullet = bullets[i];

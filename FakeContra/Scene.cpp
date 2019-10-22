@@ -98,7 +98,8 @@ void Scene::update(int deltaTime)
 	else if(getMode() == LEVEL_1){
 		player->update(deltaTime);
 
-		if (BulletManager::instance().isBulletInside(player->getPosition(), player->getBox())) {
+		if (BulletManager::instance().isBulletInside(player->getPosition(), player->getBox()) || 
+			EnemyManager::instance().isEnemyInside(player->getPosition(), player->getBox())) {
 			player->setDeadState(true);
 		}
 		EnemyManager::instance().update(deltaTime, player->getPosX(), player->getPosY());
@@ -149,14 +150,14 @@ void Scene::render()
 		menu->render();
 	}
 	else if (getMode() == LEVEL_1) {
-		player->render();
 		EnemyManager::instance().render();
 		BulletManager::instance().render();
+		player->render();
 	}
 	else if (getMode() == LEVEL_2) {
-		playerLevel2->render();
 		EnemyManager::instance().render();
 		BulletManager::instance().render();
+		playerLevel2->render();
 	}
 
 }

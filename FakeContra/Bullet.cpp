@@ -18,6 +18,7 @@ void Bullet::init(const glm::ivec2& tileMapPos, ShaderProgram& shaderProgram, gl
 	die = false;
 	speed = s;
 	tileMapDispl = tileMapPos;
+	deadTime = 0.0;
 
 	spritesheet.loadFromFile("images/personaje.png", TEXTURE_PIXEL_FORMAT_RGBA);
 	sprite = Sprite::createSprite(glm::ivec2(96, 96), glm::vec2(0.05, 0.05), &spritesheet, &shaderProgram);
@@ -29,8 +30,8 @@ void Bullet::init(const glm::ivec2& tileMapPos, ShaderProgram& shaderProgram, gl
 		sprite->addKeyframe(BULLET_LIVE, glm::vec2(0.60f, 0.00f));
 
 		sprite->setAnimationSpeed(BULLET_DEAD, 8);
-		sprite->addKeyframe(BULLET_DEAD, glm::vec2(0.65f, 0.10f));
-		sprite->addKeyframe(BULLET_DEAD, glm::vec2(0.70f, 0.10f));
+		sprite->addKeyframe(BULLET_DEAD, glm::vec2(0.60f, 0.15f));
+		sprite->addKeyframe(BULLET_DEAD, glm::vec2(0.65f, 0.15f));
 	}
 	else { 
 		sprite->setAnimationSpeed(BULLET_LIVE, 8);
@@ -48,9 +49,10 @@ void Bullet::init(const glm::ivec2& tileMapPos, ShaderProgram& shaderProgram, gl
 void Bullet::update(int deltaTime)
 {
 	sprite->update(deltaTime);
-
 	pos.x += dir.x * speed;
 	pos.y += dir.y * speed;
+
+	deadTime = deadTime + 0.1;
 
 	sprite->setPosition(glm::vec2(float(tileMapDispl.x + pos.x), float(tileMapDispl.y + pos.y)));
 }
@@ -69,11 +71,17 @@ glm::vec2 Bullet::getPosition() {
 }
 
 bool Bullet::isDead() {
-	if (sprite->animation() == BULLET_DEAD) return true;
+	if (sprite->animation() == BULLET_DEAD && deadTime > 0.4) return true;
 	else return false;
 }
 
 void Bullet::setDead() {
-	if(sprite->animation() != BULLET_DEAD) sprite->changeAnimation(BULLET_DEAD);
+	if (sprite->animation() != BULLET_DEAD) {
+		sprite->changeAnimation(BULLET_DEAD);
+		deadTime = 0.0;
+	}
+	
+	
 }
+
 

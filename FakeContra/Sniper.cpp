@@ -98,7 +98,7 @@ glm::vec2 Sniper::getPosition() {
 
 glm::vec2 Sniper::getBoxCollider() {
 
-	return glm::vec2(40.0, 40.0);
+	return glm::vec2(40.0, 90.0);
 
 }
 

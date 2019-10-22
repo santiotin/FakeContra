@@ -98,7 +98,7 @@ glm::vec2 TorRafaga::getPosition() {
 
 glm::vec2 TorRafaga::getBoxCollider() {
 
-	return glm::vec2(40.0, 40.0);
+	return glm::vec2(60.0, 80.0);
 
 }
 

@@ -86,7 +86,7 @@ glm::vec2 Runner::getPosition() {
 
 glm::vec2 Runner::getBoxCollider() {
 
-	return glm::vec2(40.0, 40.0);
+	return glm::vec2(40.0, 80.0);
 
 }
 

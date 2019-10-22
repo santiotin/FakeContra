@@ -1,4 +1,5 @@
 #include "EnemyManager.h"
+#include "BulletManager.h"
 #define SCREEN_X 0
 #define SCREEN_Y 0
 
@@ -58,17 +59,41 @@ void EnemyManager::init(TileMap *tileMap, ShaderProgram& shaderProgram, int leve
 
 void EnemyManager::update(int deltaTime, float posPlayerX, float posPlayerY)
 {
-	for (Enemy* e : enemies) {
-		e->update(deltaTime, posPlayerX, posPlayerY);
+	for (int i = 0; i < enemies.size(); i++) {
+		Enemy* enemy = enemies[i];
+		if (enemy != NULL) {
+			if (BulletManager::instance().isBulletInside(enemy->getPosition(), enemy->getBoxCollider())) enemies[i] = NULL;
+			else enemy->update(deltaTime, posPlayerX, posPlayerY);
+		}
+
 	}
 	
 }
 
 void EnemyManager::render()
 {
-	for (Enemy* e : enemies) {
-		e->render();
+	for (Enemy* enemy : enemies) {
+		if(enemy != NULL) enemy->render();
 	}
+}
+
+bool EnemyManager::isEnemyInside(glm::vec2 pos, glm::vec2 box) {
+
+	for (Enemy* enemy : enemies) {
+		if (enemy != NULL) {
+			if ((enemy->getPosition().x >= pos.x && enemy->getPosition().x <= (pos.x + box.x)) || 
+				((enemy->getPosition().x + enemy->getBoxCollider().x) >= pos.x && (enemy->getPosition().x + enemy->getBoxCollider().x) <= (pos.x + box.x))) {
+
+				if ((enemy->getPosition().y <= pos.y && enemy->getPosition().y >= (pos.y - box.y)) ||
+					((enemy->getPosition().y - enemy->getBoxCollider().y) <= pos.y && (enemy->getPosition().y - enemy->getBoxCollider().y) >= (pos.y - box.y)) ||
+					(enemy->getPosition().y >= pos.y && (enemy->getPosition().y - enemy->getBoxCollider().y) <= (pos.y - box.y))) {
+					return true;
+				}
+			}
+		}
+
+	}
+	return false;
 }
 
 void EnemyManager::initLevel1(TileMap* tileMap, ShaderProgram& shaderProgram) {

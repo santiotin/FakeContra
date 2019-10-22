@@ -38,6 +38,8 @@ private:
 	Sprite* sprite;
 	TileMap* map;
 
+	float deadTime;
+
 };
 
 #endif // _BULLET_INCLUDE
