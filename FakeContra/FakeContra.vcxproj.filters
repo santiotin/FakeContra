@@ -24,6 +24,7 @@
     <ClCompile Include="GreenSoldier.cpp" />
     <ClCompile Include="TorS2.cpp" />
     <ClCompile Include="BolS2.cpp" />
+    <ClCompile Include="MapLevel2.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Runner.h" />
@@ -32,6 +33,7 @@
     <ClInclude Include="GreenSoldier.h" />
     <ClInclude Include="TorS2.h" />
     <ClInclude Include="BolS2.h" />
+    <ClInclude Include="MapLevel2.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Game.cpp">

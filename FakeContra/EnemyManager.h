@@ -12,7 +12,8 @@
 class EnemyManager
 {
 public:
-	void init(TileMap *tileMap, ShaderProgram& shaderProgram);
+	void init1(TileMap *tileMap, ShaderProgram& shaderProgram);
+	void init2(TileMap* tileMap, ShaderProgram& shaderProgram);
 	void update(int deltaTime, float posPlayerX, float posPlayerY);
 	void render();
 private:

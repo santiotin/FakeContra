@@ -1,7 +1,7 @@
 #include "EnemyManager.h"
 #define SCREEN_X 0
 #define SCREEN_Y 0
-//holi
+
 #define INIT_TURRET1_X_TILES 102
 #define INIT_TURRET1_Y_TILES 8.4
 #define INIT_TURRET2_X_TILES 114
@@ -56,7 +56,7 @@
 #define INIT_BOLS2_X_TILES 16
 #define INIT_BOLS2_Y_TILES 2
 
-void EnemyManager::init(TileMap *tileMap, ShaderProgram& shaderProgram)//pasa tmb lvl
+void EnemyManager::init1(TileMap *tileMap, ShaderProgram& shaderProgram)
 {
 	Turret *turret1 = new Turret();
 	turret1->init(glm::ivec2(SCREEN_X, SCREEN_Y), shaderProgram);
@@ -183,6 +183,26 @@ void EnemyManager::init(TileMap *tileMap, ShaderProgram& shaderProgram)//pasa tm
 	BolS2* bol21 = new BolS2();
 	bol21->init(glm::ivec2(SCREEN_X, SCREEN_Y), shaderProgram);
 	bol21->setPosition(glm::vec2((INIT_BOLS2_X_TILES* tileMap->getTileSize()), INIT_BOLS2_Y_TILES* tileMap->getTileSize()));
+	bol21->setTileMap(tileMap);
+	vecBS.push_back(bol21);
+}
+void EnemyManager::init2(TileMap* tileMap, ShaderProgram& shaderProgram)
+{
+	GreenSoldier* greensoldier1 = new GreenSoldier();
+	greensoldier1->init(glm::ivec2(SCREEN_X, SCREEN_Y), shaderProgram);
+	greensoldier1->setPosition(glm::vec2((INIT_GREENSOLDIER1_X_TILES * tileMap->getTileSize()), INIT_GREENSOLDIER1_Y_TILES * tileMap->getTileSize()));
+	greensoldier1->setTileMap(tileMap);
+	vecGS.push_back(greensoldier1);
+
+	TorS2* tors21 = new TorS2();
+	tors21->init(glm::ivec2(SCREEN_X, SCREEN_Y), shaderProgram);
+	tors21->setPosition(glm::vec2((INIT_TORS2_X_TILES * tileMap->getTileSize()), INIT_TORS2_Y_TILES * tileMap->getTileSize()));
+	tors21->setTileMap(tileMap);
+	vecTS.push_back(tors21);
+
+	BolS2* bol21 = new BolS2();
+	bol21->init(glm::ivec2(SCREEN_X, SCREEN_Y), shaderProgram);
+	bol21->setPosition(glm::vec2((INIT_BOLS2_X_TILES * tileMap->getTileSize()), INIT_BOLS2_Y_TILES * tileMap->getTileSize()));
 	bol21->setTileMap(tileMap);
 	vecBS.push_back(bol21);
 }
