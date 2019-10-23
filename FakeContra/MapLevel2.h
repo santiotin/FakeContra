@@ -18,7 +18,7 @@ public:
 
 	void setPosition(const glm::vec2& pos);
 
-	float getPosX(), getPosY();
+	int count;
 
 private:
 	glm::ivec2 tileMapDispl, posMapLevel2;

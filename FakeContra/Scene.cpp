@@ -77,13 +77,12 @@ void Scene::init()
 		BulletManager::instance().init(glm::ivec2(SCREEN_X, SCREEN_Y), texProgram);
 
 		enemyManager = new EnemyManager();
-		enemyManager->init2(map, texProgram);
+		enemyManager->init2_1(map, texProgram);
 
 		playerLevel2 = new PlayerLevel2();
 		playerLevel2->init(glm::ivec2(SCREEN_X, SCREEN_Y), texProgram);
-		playerLevel2->setPosition(glm::vec2((INIT_PLAYER_X_TILES * map->getTileSize()) - 208, (4.5+INIT_PLAYER_Y_TILES + 3) * map->getTileSize()));
+		playerLevel2->setPosition(glm::vec2((5+INIT_PLAYER_X_TILES * map->getTileSize()), (4.5+INIT_PLAYER_Y_TILES + 3) * map->getTileSize()));
 		playerLevel2->setTileMap(map);
-
 	}
 
 
