@@ -19,10 +19,10 @@ public:
 
 		return T;
 	}
-
 	string getMiliString() const;
 	long long getMili() const;
 	bool isAbleToShoot(long long lastShoot);
+	bool isAbleToShootSoldier(long long lastShoot);
 	bool isAbleToShootEnemy(long long lastShoot);
 };
 

@@ -17,10 +17,8 @@ public:
 
 	virtual glm::vec2 getPosition();
 	virtual glm::vec2 getBoxCollider();
-		
 							   
 private:
-	
 	int life;
 };
 

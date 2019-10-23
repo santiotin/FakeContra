@@ -8,11 +8,10 @@
 #include "Player.h"
 #include "PlayerLevel2.h"
 #include "BulletManager.h"
-#include "Turret1.h"
-#include "TorRafaga1.h"
 #include "EnemyManager.h"
 #include "BulletManager.h"
 #include "Menu.h"
+#include "MapLevel2.h"
 
 
 // Scene contains all the entities of our game.
@@ -44,6 +43,8 @@ private:
 
 	Player *player;
 	PlayerLevel2* playerLevel2;
+
+	MapLevel2 *lvl2;
 
 	Menu *menu;
 

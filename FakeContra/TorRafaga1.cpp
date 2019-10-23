@@ -97,9 +97,7 @@ float TorRafaga::getPosY()
 }
 
 glm::vec2 TorRafaga::getPosition() {
-
 	return glm::vec2(posTorRafaga.x, posTorRafaga.y);
-
 }
 
 glm::vec2 TorRafaga::getBoxCollider() {
@@ -125,6 +123,19 @@ void TorRafaga::doShoot(float desplX, float desplY, float dirX, float dirY, floa
 	}
 }
 
-
-
-
+void TorRafaga::doShoot(float desplX, float desplY, float dirX, float dirY, float speed) {
+	if (lastShoot == 0) {
+		glm::vec2 pos = glm::vec2(posTorRafaga.x + desplX, posTorRafaga.y + desplY);
+		glm::vec2 dir = glm::vec2(dirX, dirY);
+		BulletManager::instance().createBullet(pos, dir, speed, 0);
+		lastShoot = Time::instance().getMili();
+	}
+	else {
+		if (Time::instance().isAbleToShootEnemy(lastShoot)) {
+			glm::vec2 pos = glm::vec2(posTorRafaga.x + desplX, posTorRafaga.y + desplY);
+			glm::vec2 dir = glm::vec2(dirX, dirY);
+			BulletManager::instance().createBullet(pos, dir, speed, 0);
+			lastShoot = Time::instance().getMili();
+		}
+	}
+}

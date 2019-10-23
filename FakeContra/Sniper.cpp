@@ -24,7 +24,7 @@ void Sniper::init(const glm::ivec2& tileMapPos, ShaderProgram& shaderProgram)
 
 
 	sprite->setAnimationSpeed(HEAT_L, 8);
-	sprite->addKeyframe(HEAT_L, glm::vec2(0.00f, 0.00f));	
+	sprite->addKeyframe(HEAT_L, glm::vec2(0.00f, 0.00f));
 
 	sprite->setAnimationSpeed(SHOOT_L, 2);
 	sprite->addKeyframe(SHOOT_L, glm::vec2(0.33f, 0.00f));
@@ -92,6 +92,7 @@ float Sniper::getPosY()
 
 glm::vec2 Sniper::getPosition() {
 
+
 	return glm::vec2(posSniper.x, posSniper.y);
 
 }
@@ -101,7 +102,3 @@ glm::vec2 Sniper::getBoxCollider() {
 	return glm::vec2(40.0, 90.0);
 
 }
-
-
-
-

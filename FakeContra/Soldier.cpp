@@ -117,7 +117,3 @@ glm::vec2 Soldier::getBoxCollider() {
 	return glm::vec2(40.0, 40.0);
 
 }
-
-
-
-
