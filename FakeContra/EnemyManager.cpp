@@ -288,9 +288,6 @@ void EnemyManager::update(int deltaTime, float posPlayerX, float posPlayerY)
 		}
 
 	}
-	for (GreenSoldier* gs : vecGS) gs->update(deltaTime, posPlayerX, posPlayerY);
-	for (TorS2* ts : vecTS) ts->update(deltaTime, posPlayerX, posPlayerY);
-	for (BolS2* bs : vecBS) bs->update(deltaTime, posPlayerX, posPlayerY);
 }
 
 void EnemyManager::render()
@@ -298,7 +295,4 @@ void EnemyManager::render()
 	for (Enemy* enemy : enemies) {
 		if (enemy != NULL) enemy->render();
 	}
-	for (GreenSoldier* gs : vecGS) gs->render();
-	for (TorS2* ts : vecTS) ts->render();
-	for (BolS2* bs : vecBS) bs->render();
 }

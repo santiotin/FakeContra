@@ -33,8 +33,5 @@ public:
 
 private:
 	vector<Enemy*> enemies;
-	vector<GreenSoldier *> vecGS;
-	vector<TorS2 *> vecTS;
-	vector<BolS2 *> vecBS;
 };
 
