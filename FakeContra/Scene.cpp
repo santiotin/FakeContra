@@ -11,7 +11,7 @@
 #define SCREEN_X 0
 #define SCREEN_Y 0
 
-#define INIT_PLAYER_X_TILES 8
+#define INIT_PLAYER_X_TILES 120
 #define INIT_PLAYER_Y_TILES 3
 
 #define INIT_LVL2_X_TILES 0.0
@@ -57,9 +57,8 @@ void Scene::init()
 		map = TileMap::createTileMap("levels/fakelevel01.txt", glm::vec2(SCREEN_X, SCREEN_Y), texProgram);
 
 		BulletManager::instance().init(glm::ivec2(SCREEN_X, SCREEN_Y), texProgram);
+		EnemyManager::instance().init(map, texProgram, 1);
 
-		enemyManager = new EnemyManager();
-		enemyManager->initLevel1(map, texProgram);
 
 		player = new Player();
 		player->init(glm::ivec2(SCREEN_X, SCREEN_Y), texProgram);
@@ -75,9 +74,7 @@ void Scene::init()
 		lvl2->setPosition(glm::vec2((INIT_LVL2_X_TILES * map->getTileSize()), INIT_LVL2_Y_TILES * map->getTileSize()));
 
 		BulletManager::instance().init(glm::ivec2(SCREEN_X, SCREEN_Y), texProgram);
-
-		enemyManager = new EnemyManager();
-		enemyManager->init2_1(map, texProgram);
+		EnemyManager::instance().init(map, texProgram, 2);
 
 		playerLevel2 = new PlayerLevel2();
 		playerLevel2->init(glm::ivec2(SCREEN_X, SCREEN_Y), texProgram);
@@ -107,11 +104,11 @@ void Scene::update(int deltaTime)
 	else if(getMode() == LEVEL_1){
 		player->update(deltaTime);
 
-		if (BulletManager::instance().isBulletInside(player->getPosition(), player->getBox())) {
-			player->setDeadState(true);
+		if (BulletManager::instance().isBulletInside(player->getPosition(), player->getBox()) || 
+			EnemyManager::instance().isEnemyInside(player->getPosition(), player->getBox())) {
+			//player->setDeadState(true);
 		}
-		enemyManager->update(deltaTime, player->getPosX(), player->getPosY());
-
+		EnemyManager::instance().update(deltaTime, player->getPosX(), player->getPosY());
 		BulletManager::instance().update(deltaTime, player->getPosX());
 	}
 
@@ -121,8 +118,8 @@ void Scene::update(int deltaTime)
 		if (BulletManager::instance().isBulletInside(playerLevel2->getPosition(), playerLevel2->getBox())) {
 			playerLevel2->setDeadState(true);
 		}
-		enemyManager->update(deltaTime, playerLevel2->getPosX(), playerLevel2->getPosY());
 
+		EnemyManager::instance().update(deltaTime, playerLevel2->getPosX(), playerLevel2->getPosY());
 		BulletManager::instance().update(deltaTime, playerLevel2->getPosX());
 	}
 
@@ -159,17 +156,15 @@ void Scene::render()
 		menu->render();
 	}
 	else if (getMode() == LEVEL_1) {
-		player->render();
-		enemyManager->render();
+		EnemyManager::instance().render();
 		BulletManager::instance().render();
+		player->render();
 	}
 	else if (getMode() == LEVEL_2) {
-		
-		lvl2->render();
-	
-		enemyManager->render();
-		playerLevel2->render();
+
+		EnemyManager::instance().render();
 		BulletManager::instance().render();
+		playerLevel2->render();
 
 	}
 

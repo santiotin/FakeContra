@@ -25,6 +25,7 @@
     <ClCompile Include="TorS2.cpp" />
     <ClCompile Include="BolS2.cpp" />
     <ClCompile Include="MapLevel2.cpp" />
+
     <ClCompile Include="Enemy.cpp" />
   </ItemGroup>
   <ItemGroup>

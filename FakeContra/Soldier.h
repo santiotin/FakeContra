@@ -13,7 +13,8 @@ class Soldier : public Enemy
 {
 
 public:
-	void init(const glm::ivec2& tileMapPos, ShaderProgram& shaderProgram) override;
+
+	void init(const glm::ivec2& tileMapPos, ShaderProgram& shaderProgram) override; 
 	void update(int deltaTime, float posPlayerX, float posPlayerY) override;
 	void render() override;
 

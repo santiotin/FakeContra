@@ -49,6 +49,7 @@
 #define INIT_SNIPER2_X_TILES 98
 #define INIT_SNIPER2_Y_TILES 5
 
+
 #define INIT_GREENSOLDIER1_X_TILES 20
 #define INIT_GREENSOLDIER1_Y_TILES 2
 
@@ -62,12 +63,56 @@
 #define INIT_BOLS22_X_TILES 11.1
 #define INIT_BOLS22_Y_TILES 7.4
 
-void EnemyManager::init(TileMap* tileMap, ShaderProgram& shaderProgram, int level)//pasa tmb lvl
+
+void EnemyManager::init(TileMap *tileMap, ShaderProgram& shaderProgram, int level)//pasa tmb lvl
+
 {
 	if (level == 1)
 	{
 		initLevel1(tileMap, shaderProgram);
 	}
+	
+}
+
+void EnemyManager::update(int deltaTime, float posPlayerX, float posPlayerY)
+{
+	for (int i = 0; i < enemies.size(); i++) {
+		Enemy* enemy = enemies[i];
+		if (enemy != NULL) {
+			glm::vec2 aux = enemy->getPosition();
+			aux.y -= 25;
+			if (BulletManager::instance().isBulletInside(aux, enemy->getBoxCollider())) enemies[i] = NULL;
+			else enemy->update(deltaTime, posPlayerX, posPlayerY);
+		}
+
+	}
+	
+}
+
+void EnemyManager::render()
+{
+	for (Enemy* enemy : enemies) {
+		if(enemy != NULL) enemy->render();
+	}
+}
+
+bool EnemyManager::isEnemyInside(glm::vec2 pos, glm::vec2 box) {
+
+	for (Enemy* enemy : enemies) {
+		if (enemy != NULL) {
+			if ((enemy->getPosition().x >= pos.x && enemy->getPosition().x <= (pos.x + box.x)) || 
+				((enemy->getPosition().x + enemy->getBoxCollider().x) >= pos.x && (enemy->getPosition().x + enemy->getBoxCollider().x) <= (pos.x + box.x))) {
+
+				if ((enemy->getPosition().y <= pos.y && enemy->getPosition().y >= (pos.y - box.y)) ||
+					((enemy->getPosition().y - enemy->getBoxCollider().y) <= pos.y && (enemy->getPosition().y - enemy->getBoxCollider().y) >= (pos.y - box.y)) ||
+					(enemy->getPosition().y >= pos.y && (enemy->getPosition().y - enemy->getBoxCollider().y) <= (pos.y - box.y))) {
+					return true;
+				}
+			}
+		}
+
+	}
+	return false;
 }
 
 void EnemyManager::initLevel1(TileMap* tileMap, ShaderProgram& shaderProgram) {
@@ -190,6 +235,7 @@ void EnemyManager::initLevel1(TileMap* tileMap, ShaderProgram& shaderProgram) {
 	sniper2->setPosition(glm::vec2((INIT_SNIPER2_X_TILES * tileMap->getTileSize()), INIT_SNIPER2_Y_TILES * tileMap->getTileSize()));
 	sniper2->setTileMap(tileMap);
 	enemies.push_back(sniper2);
+
 }
 
 void EnemyManager::init2_1(TileMap* tileMap, ShaderProgram& shaderProgram)
@@ -274,25 +320,4 @@ void EnemyManager::init2_4(TileMap* tileMap, ShaderProgram& shaderProgram)
 	bol22->setPosition(glm::vec2((INIT_BOLS22_X_TILES * tileMap->getTileSize()), INIT_BOLS22_Y_TILES * tileMap->getTileSize()));
 	bol22->setTileMap(tileMap);
 	enemies.push_back(bol22);
-}
-
-void EnemyManager::update(int deltaTime, float posPlayerX, float posPlayerY)
-{
-	for (int i = 0; i < enemies.size(); i++) {
-		Enemy* enemy = enemies[i];
-		if (enemy != NULL) {
-			glm::vec2 aux = enemy->getPosition();
-			aux.y -= 25;
-			if (BulletManager::instance().isBulletInside(aux, enemy->getBoxCollider())) enemies[i] = NULL;
-			else enemy->update(deltaTime, posPlayerX, posPlayerY);
-		}
-
-	}
-}
-
-void EnemyManager::render()
-{
-	for (Enemy* enemy : enemies) {
-		if (enemy != NULL) enemy->render();
-	}
 }

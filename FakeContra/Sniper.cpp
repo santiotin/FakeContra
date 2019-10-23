@@ -92,6 +92,7 @@ float Sniper::getPosY()
 
 glm::vec2 Sniper::getPosition() {
 
+
 	return glm::vec2(posSniper.x, posSniper.y);
 
 }

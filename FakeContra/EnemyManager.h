@@ -5,13 +5,21 @@
 #include "Runner.h"
 #include "Soldier.h"
 #include "Sniper.h"
+
 #include "GreenSoldier.h"
 #include "TorS2.h"
 #include "BolS2.h"
+
+#include "Enemy.h"
+
 #include <glm/gtc/matrix_transform.hpp>
+
+
 class EnemyManager
 {
+
 public:
+
 	EnemyManager() {}
 
 	// singleton
@@ -33,5 +41,11 @@ public:
 
 private:
 	vector<Enemy*> enemies;
+
+
+	bool isEnemyInside(glm::vec2 pos, glm::vec2 box);
+
+
+
 };
 
