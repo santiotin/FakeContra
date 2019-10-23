@@ -22,6 +22,8 @@ void TorRafaga::init(const glm::ivec2& tileMapPos, ShaderProgram& shaderProgram)
 	sprite = Sprite::createSprite(glm::ivec2(64, 64), glm::vec2(0.33, 1.0), &spritesheet, &shaderProgram);
 	sprite->setNumberAnimations(3);
 
+	lastShoot = 0;
+
 
 
 	sprite->setAnimationSpeed(POINT_9, 8);
@@ -61,6 +63,10 @@ void TorRafaga::update(int deltaTime, float posPlayerX, float posPlayerY)
 	else if (valor == 0)sprite->changeAnimation(POINT_10);
 	else if (valor == 1)sprite->changeAnimation(POINT_11);
 
+	if (sprite->animation() == POINT_9) doShoot(0.0, -60.0, -1.0, 0.0, 6);
+	if (sprite->animation() == POINT_10) doShoot(0.0, -75.0, -2.0, -1.0, 4);
+	if (sprite->animation() == POINT_11) doShoot(20.0, -80.0, -1.0, -1.5, 6);
+
 
 }
 
@@ -98,8 +104,25 @@ glm::vec2 TorRafaga::getPosition() {
 
 glm::vec2 TorRafaga::getBoxCollider() {
 
-	return glm::vec2(60.0, 80.0);
+	return glm::vec2(60.0, 60.0);
 
+}
+
+void TorRafaga::doShoot(float desplX, float desplY, float dirX, float dirY, float speed) {
+	if (lastShoot == 0) {
+		glm::vec2 pos = glm::vec2(posTorRafaga.x + desplX, posTorRafaga.y + desplY);
+		glm::vec2 dir = glm::vec2(dirX, dirY);
+		BulletManager::instance().createBullet(pos, dir, speed, 0);
+		lastShoot = Time::instance().getMili();
+	}
+	else {
+		if (Time::instance().isAbleToShootEnemy(lastShoot)) {
+			glm::vec2 pos = glm::vec2(posTorRafaga.x + desplX, posTorRafaga.y + desplY);
+			glm::vec2 dir = glm::vec2(dirX, dirY);
+			BulletManager::instance().createBullet(pos, dir, speed, 0);
+			lastShoot = Time::instance().getMili();
+		}
+	}
 }
 
 

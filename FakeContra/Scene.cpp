@@ -11,7 +11,7 @@
 #define SCREEN_X 0
 #define SCREEN_Y 0
 
-#define INIT_PLAYER_X_TILES 10
+#define INIT_PLAYER_X_TILES 120
 #define INIT_PLAYER_Y_TILES 3
 
 
@@ -100,7 +100,7 @@ void Scene::update(int deltaTime)
 
 		if (BulletManager::instance().isBulletInside(player->getPosition(), player->getBox()) || 
 			EnemyManager::instance().isEnemyInside(player->getPosition(), player->getBox())) {
-			player->setDeadState(true);
+			//player->setDeadState(true);
 		}
 		EnemyManager::instance().update(deltaTime, player->getPosX(), player->getPosY());
 		BulletManager::instance().update(deltaTime, player->getPosX());

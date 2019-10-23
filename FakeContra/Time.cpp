@@ -25,3 +25,9 @@ bool Time::isAbleToShoot(long long lastShoot) {
 	if (getMili() - lastShoot < 250) return false;
 	else return true;
 }
+
+bool Time::isAbleToShootEnemy(long long lastShoot) {
+
+	if (getMili() - lastShoot < 1500) return false;
+	else return true;
+}

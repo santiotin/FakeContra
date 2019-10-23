@@ -14,7 +14,7 @@ void BulletManager::init(const glm::ivec2& tileMapPos, ShaderProgram& shaderProg
 	if (!bullets.empty())  bullets.clear();
 
 	//prueba de collision
-	glm::vec2 fakePos = glm::vec2(400.0, 140.0);
+	glm::vec2 fakePos = glm::vec2(400.0, 80.0);
 	glm::vec2 fakeDir = glm::vec2(-1.0, 0);
 	createBullet(fakePos, fakeDir, 2.0, 0);
 
@@ -67,7 +67,7 @@ bool BulletManager::isBulletInside(glm::vec2 pos, glm::vec2 box) {
 		Bullet* bullet = bullets[i];
 		if (bullet != NULL) {
 			if (bullet->getPosition().x > pos.x&& bullet->getPosition().x < (pos.x + box.x)) {
-				if (bullet->getPosition().y < pos.y && bullet->getPosition().y >(pos.y - box.y)) {
+				if (bullet->getPosition().y < (pos.y ) && bullet->getPosition().y >(pos.y - box.y)) {
 					OutputDebugStringA("DEAD/n");
 					bullet->setDead();
 					return true;
