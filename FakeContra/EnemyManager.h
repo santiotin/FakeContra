@@ -39,13 +39,11 @@ public:
 	void update(int deltaTime, float posPlayerX, float posPlayerY);
 	void render();
 
-private:
-	vector<Enemy*> enemies;
-
-
 	bool isEnemyInside(glm::vec2 pos, glm::vec2 box);
 
+private:
 
+	vector<Enemy*> enemies;
 
 };
 

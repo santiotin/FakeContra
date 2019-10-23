@@ -65,11 +65,16 @@
 
 
 void EnemyManager::init(TileMap *tileMap, ShaderProgram& shaderProgram, int level)//pasa tmb lvl
-
 {
 	if (level == 1)
 	{
+		if (!enemies.empty()) enemies.clear();
 		initLevel1(tileMap, shaderProgram);
+	}
+
+	if (level == 2) {
+		if (!enemies.empty()) enemies.clear();
+		init2_1(tileMap, shaderProgram);
 	}
 	
 }

@@ -157,14 +157,13 @@ void Scene::render()
 	}
 	else if (getMode() == LEVEL_1) {
 		EnemyManager::instance().render();
-		BulletManager::instance().render();
 		player->render();
+		BulletManager::instance().render();
 	}
 	else if (getMode() == LEVEL_2) {
-
 		EnemyManager::instance().render();
-		BulletManager::instance().render();
 		playerLevel2->render();
+		BulletManager::instance().render();
 
 	}
 
