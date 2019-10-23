@@ -16,7 +16,6 @@ public:
 	void update(int deltaTime, float posPlayerX, float posPlayerY);
 	void render();
 
-	void setTileMap(TileMap* tileMap);
 	void setPosition(const glm::vec2& pos);
 
 	float getPosX(), getPosY();

@@ -54,10 +54,7 @@ void MapLevel2::render()
 	sprite->render();
 }
 
-void MapLevel2::setTileMap(TileMap* tileMap)
-{
-	map = tileMap;
-}
+
 
 void MapLevel2::setPosition(const glm::vec2& pos)
 {

@@ -50,11 +50,15 @@
 #define INIT_GREENSOLDIER1_X_TILES 20
 #define INIT_GREENSOLDIER1_Y_TILES 2
 
-#define INIT_TORS2_X_TILES 18
-#define INIT_TORS2_Y_TILES 2
+#define INIT_TORS21_X_TILES 7.45
+#define INIT_TORS21_Y_TILES 6
+#define INIT_TORS22_X_TILES 11.1
+#define INIT_TORS22_Y_TILES 6
 
-#define INIT_BOLS2_X_TILES 16
-#define INIT_BOLS2_Y_TILES 2
+#define INIT_BOLS21_X_TILES 7.45
+#define INIT_BOLS21_Y_TILES 7.4
+#define INIT_BOLS22_X_TILES 11.1
+#define INIT_BOLS22_Y_TILES 7.4
 
 void EnemyManager::init1(TileMap *tileMap, ShaderProgram& shaderProgram)
 {
@@ -167,24 +171,6 @@ void EnemyManager::init1(TileMap *tileMap, ShaderProgram& shaderProgram)
 	sniper2->setPosition(glm::vec2((INIT_SNIPER2_X_TILES * tileMap->getTileSize()), INIT_SNIPER2_Y_TILES * tileMap->getTileSize()));
 	sniper2->setTileMap(tileMap);
 	vecSniper.push_back(sniper2);
-
-	GreenSoldier* greensoldier1 = new GreenSoldier();
-	greensoldier1->init(glm::ivec2(SCREEN_X, SCREEN_Y), shaderProgram);
-	greensoldier1->setPosition(glm::vec2((INIT_GREENSOLDIER1_X_TILES* tileMap->getTileSize()), INIT_GREENSOLDIER1_Y_TILES* tileMap->getTileSize()));
-	greensoldier1->setTileMap(tileMap);
-	vecGS.push_back(greensoldier1);
-
-	TorS2* tors21 = new TorS2();
-	tors21->init(glm::ivec2(SCREEN_X, SCREEN_Y), shaderProgram);
-	tors21->setPosition(glm::vec2((INIT_TORS2_X_TILES* tileMap->getTileSize()), INIT_TORS2_Y_TILES* tileMap->getTileSize()));
-	tors21->setTileMap(tileMap);
-	vecTS.push_back(tors21);
-
-	BolS2* bol21 = new BolS2();
-	bol21->init(glm::ivec2(SCREEN_X, SCREEN_Y), shaderProgram);
-	bol21->setPosition(glm::vec2((INIT_BOLS2_X_TILES* tileMap->getTileSize()), INIT_BOLS2_Y_TILES* tileMap->getTileSize()));
-	bol21->setTileMap(tileMap);
-	vecBS.push_back(bol21);
 }
 void EnemyManager::init2(TileMap* tileMap, ShaderProgram& shaderProgram)
 {
@@ -196,15 +182,25 @@ void EnemyManager::init2(TileMap* tileMap, ShaderProgram& shaderProgram)
 
 	TorS2* tors21 = new TorS2();
 	tors21->init(glm::ivec2(SCREEN_X, SCREEN_Y), shaderProgram);
-	tors21->setPosition(glm::vec2((INIT_TORS2_X_TILES * tileMap->getTileSize()), INIT_TORS2_Y_TILES * tileMap->getTileSize()));
+	tors21->setPosition(glm::vec2((INIT_TORS21_X_TILES * tileMap->getTileSize()), INIT_TORS21_Y_TILES * tileMap->getTileSize()));
 	tors21->setTileMap(tileMap);
 	vecTS.push_back(tors21);
+	TorS2* tors22 = new TorS2();
+	tors22->init(glm::ivec2(SCREEN_X, SCREEN_Y), shaderProgram);
+	tors22->setPosition(glm::vec2((INIT_TORS22_X_TILES * tileMap->getTileSize()), INIT_TORS22_Y_TILES * tileMap->getTileSize()));
+	tors22->setTileMap(tileMap);
+	vecTS.push_back(tors22);
 
 	BolS2* bol21 = new BolS2();
 	bol21->init(glm::ivec2(SCREEN_X, SCREEN_Y), shaderProgram);
-	bol21->setPosition(glm::vec2((INIT_BOLS2_X_TILES * tileMap->getTileSize()), INIT_BOLS2_Y_TILES * tileMap->getTileSize()));
+	bol21->setPosition(glm::vec2((INIT_BOLS21_X_TILES * tileMap->getTileSize()), INIT_BOLS21_Y_TILES * tileMap->getTileSize()));
 	bol21->setTileMap(tileMap);
 	vecBS.push_back(bol21);
+	BolS2* bol22 = new BolS2();
+	bol22->init(glm::ivec2(SCREEN_X, SCREEN_Y), shaderProgram);
+	bol22->setPosition(glm::vec2((INIT_BOLS22_X_TILES * tileMap->getTileSize()), INIT_BOLS22_Y_TILES * tileMap->getTileSize()));
+	bol22->setTileMap(tileMap);
+	vecBS.push_back(bol22);
 }
 
 void EnemyManager::update(int deltaTime, float posPlayerX, float posPlayerY)
