@@ -4,11 +4,12 @@
 
 #include "Sprite.h"
 #include "TileMap.h"
+#include "Enemy.h"
 
 
 
 
-class BolS2
+class BolS2 : public Enemy
 {
 
 public:

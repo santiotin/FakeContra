@@ -4,11 +4,12 @@
 
 #include "Sprite.h"
 #include "TileMap.h"
+#include "TorS2.h"
+#include "Enemy.h"
 
 
 
-
-class TorS2
+class TorS2 : public Enemy
 {
 
 public:

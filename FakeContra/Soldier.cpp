@@ -5,11 +5,10 @@
 #include "Soldier.h"
 #include "Scene.h"
 #include "Game.h"
-#include "BulletManager.h"
 
 
 #define PI 3.141592654
-#define SPEED 6
+
 
 enum SoldierAnims
 {
@@ -65,12 +64,18 @@ void Soldier::update(int deltaTime, float posPlayerX, float posPlayerY)
 		alpha += 2 * PI;
 	int valor = int(((6 * alpha) - (PI / 4)) / PI);
 
-	if (valor == 0 || valor == 11) sprite->changeAnimation(POINT_9L);
-	else if (valor == 1 || valor == 2)sprite->changeAnimation(POINT_105L);
-	else if (valor == 3 || valor == 4)sprite->changeAnimation(POINT_105R);
-	else if (valor == 5 || valor == 6)sprite->changeAnimation(POINT_9R);
-	else if (valor == 7 || valor == 8)sprite->changeAnimation(POINT_75R);
-	else if (valor == 9 || valor == 10)sprite->changeAnimation(POINT_75L);
+	if (valor == 0) sprite->changeAnimation(POINT_9L);
+	else if (valor == 1)sprite->changeAnimation(POINT_105L);
+	else if (valor == 2)sprite->changeAnimation(POINT_105L);
+	else if (valor == 3)sprite->changeAnimation(POINT_105R);
+	else if (valor == 4)sprite->changeAnimation(POINT_105R);
+	else if (valor == 5)sprite->changeAnimation(POINT_9R);
+	else if (valor == 6)sprite->changeAnimation(POINT_9R);
+	else if (valor == 7)sprite->changeAnimation(POINT_75R);
+	else if (valor == 8)sprite->changeAnimation(POINT_75R);
+	else if (valor == 9)sprite->changeAnimation(POINT_75L);
+	else if (valor == 10)sprite->changeAnimation(POINT_75L);
+	else if (valor == 11)sprite->changeAnimation(POINT_9L);
 
 
 }
@@ -101,6 +106,14 @@ float Soldier::getPosY()
 	return float(posSoldier.y);
 }
 
+glm::vec2 Soldier::getPosition() {
 
+	return glm::vec2(posSoldier.x, posSoldier.y);
 
+}
 
+glm::vec2 Soldier::getBoxCollider() {
+
+	return glm::vec2(40.0, 40.0);
+
+}

@@ -4,22 +4,28 @@
 
 #include "Sprite.h"
 #include "TileMap.h"
+#include "Enemy.h"
 
 
 
 
-class TorRafaga
+class TorRafaga : public Enemy
 {
 
 public:
-	void init(const glm::ivec2& tileMapPos, ShaderProgram& shaderProgram);
-	void update(int deltaTime, float posPlayerX, float posPlayerY);
-	void render();
+	void init(const glm::ivec2& tileMapPos, ShaderProgram& shaderProgram) override;
+	void update(int deltaTime, float posPlayerX, float posPlayerY) override;
+	void render() override;
 
-	void setTileMap(TileMap* tileMap);
-	void setPosition(const glm::vec2& pos);
+	void setTileMap(TileMap* tileMap) override;
+	void setPosition(const glm::vec2& pos) override;
 
 	float getPosX(), getPosY();
+
+	glm::vec2 getPosition() override;
+	glm::vec2 getBoxCollider() override;
+
+	void doShoot(float posX, float posY, float dirX, float dirY, float speed);
 
 private:
 	glm::ivec2 tileMapDispl, posTorRafaga;
@@ -29,9 +35,9 @@ private:
 	Sprite* sprite;
 	TileMap* map;
 
+	long long lastShoot;
+
 };
 
 
-#endif 
-
-
+#endif

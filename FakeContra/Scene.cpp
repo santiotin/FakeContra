@@ -59,7 +59,7 @@ void Scene::init()
 		BulletManager::instance().init(glm::ivec2(SCREEN_X, SCREEN_Y), texProgram);
 
 		enemyManager = new EnemyManager();
-		enemyManager->init1(map, texProgram);
+		enemyManager->initLevel1(map, texProgram);
 
 		player = new Player();
 		player->init(glm::ivec2(SCREEN_X, SCREEN_Y), texProgram);
