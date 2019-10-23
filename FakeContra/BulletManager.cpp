@@ -14,15 +14,15 @@ void BulletManager::init(const glm::ivec2& tileMapPos, ShaderProgram& shaderProg
 	if (!bullets.empty())  bullets.clear();
 
 	//prueba de collision
-	glm::vec2 fakePos = glm::vec2(400.0, 140.0);
+	glm::vec2 fakePos = glm::vec2(400.0, 80.0);
 	glm::vec2 fakeDir = glm::vec2(-1.0, 0);
 	createBullet(fakePos, fakeDir, 2.0, 0);
 
 }
 
 void BulletManager::update(int deltaTime, float posPlayerX) {
-	float minWidth = posPlayerX - (SCREEN_WIDTH - 1);
-	float maxWidth = posPlayerX + (SCREEN_WIDTH - 1);
+	float minWidth = posPlayerX - (SCREEN_WIDTH - 1)/1.1;
+	float maxWidth = posPlayerX + (SCREEN_WIDTH - 1)/1.1;
 
 	for (int i = 0; i < bullets.size(); i++) {
 		Bullet* bullet = bullets[i];
@@ -31,6 +31,8 @@ void BulletManager::update(int deltaTime, float posPlayerX) {
 				bullets[i] = NULL;
 				//OutputDebugStringA("Dead");
 			}
+			else if(bullet->isDead()) bullets[i] = NULL;
+
 			else bullet->update(deltaTime);
 		}
 		
@@ -65,9 +67,9 @@ bool BulletManager::isBulletInside(glm::vec2 pos, glm::vec2 box) {
 		Bullet* bullet = bullets[i];
 		if (bullet != NULL) {
 			if (bullet->getPosition().x > pos.x&& bullet->getPosition().x < (pos.x + box.x)) {
-				if (bullet->getPosition().y < pos.y && bullet->getPosition().y >(pos.y - box.y)) {
+				if (bullet->getPosition().y < (pos.y ) && bullet->getPosition().y >(pos.y - box.y)) {
 					OutputDebugStringA("DEAD/n");
-					bullets[i] = NULL;
+					bullet->setDead();
 					return true;
 				}
 			}

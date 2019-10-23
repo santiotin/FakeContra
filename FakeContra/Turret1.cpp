@@ -19,7 +19,7 @@ enum Turret1Anims
 void Turret::init(const glm::ivec2& tileMapPos, ShaderProgram& shaderProgram)
 {
 	spritesheet.loadFromFile("images/Torreta.png", TEXTURE_PIXEL_FORMAT_RGBA);
-	sprite = Sprite::createSprite(glm::ivec2(64, 64), glm::vec2(0.25, 0.33), &spritesheet, &shaderProgram); 
+	sprite = Sprite::createSprite(glm::ivec2(64, 64), glm::vec2(0.25, 0.33), &spritesheet, &shaderProgram);
 	sprite->setNumberAnimations(12);
 
 
@@ -62,7 +62,7 @@ void Turret::init(const glm::ivec2& tileMapPos, ShaderProgram& shaderProgram)
 
 	sprite->changeAnimation(0);
 	tileMapDispl = tileMapPos;
-	
+
 
 }
 
@@ -73,9 +73,9 @@ void Turret::update(int deltaTime, float posPlayerX, float posPlayerY)
 	float posTurretY = getPosY();
 
 	distX = posTurretX - posPlayerX;
-	
+
 	distY = posTurretY - posPlayerY;
-	
+
 	double alpha = atan2(distY, distX) - 0.15;
 	cout << alpha << endl;
 	if (alpha < 0.0f)
@@ -83,7 +83,7 @@ void Turret::update(int deltaTime, float posPlayerX, float posPlayerY)
 	int valor = int(((6 * alpha) - (PI / 4)) / PI);
 
 	if (valor == 0) sprite->changeAnimation(POINT_10);
-	else if ( valor == 1 )sprite->changeAnimation(POINT_11);
+	else if (valor == 1)sprite->changeAnimation(POINT_11);
 	else if (valor == 2)sprite->changeAnimation(POINT_12);
 	else if (valor == 3)sprite->changeAnimation(POINT_1);
 	else if (valor == 4)sprite->changeAnimation(POINT_2);
@@ -93,7 +93,7 @@ void Turret::update(int deltaTime, float posPlayerX, float posPlayerY)
 	else if (valor == 8)sprite->changeAnimation(POINT_6);
 	else if (valor == 9)sprite->changeAnimation(POINT_7);
 	else if (valor == 10)sprite->changeAnimation(POINT_8);
-	else if ( valor == 11 )sprite->changeAnimation(POINT_9);
+	else if (valor == 11)sprite->changeAnimation(POINT_9);
 }
 
 void Turret::render()
@@ -108,7 +108,7 @@ void Turret::setTileMap(TileMap* tileMap)
 
 void Turret::setPosition(const glm::vec2& pos)
 {
-	posTurret= pos;
+	posTurret = pos;
 	sprite->setPosition(glm::vec2(float(tileMapDispl.x + posTurret.x), float(tileMapDispl.y + posTurret.y)));
 }
 
@@ -122,6 +122,14 @@ float Turret::getPosY()
 	return float(posTurret.y);
 }
 
+glm::vec2 Turret::getPosition() {
 
+	return glm::vec2(posTurret.x, posTurret.y);
 
+}
 
+glm::vec2 Turret::getBoxCollider() {
+
+	return glm::vec2(60.0, 70.0);
+
+}

@@ -21,7 +21,7 @@ void Runner::init(const glm::ivec2& tileMapPos, ShaderProgram& shaderProgram)
 	spritesheet.loadFromFile("images/Runner.png", TEXTURE_PIXEL_FORMAT_RGBA);
 	sprite = Sprite::createSprite(glm::ivec2(32, 64), glm::vec2(0.25, 0.5), &spritesheet, &shaderProgram);
 	sprite->setNumberAnimations(1);
-	
+
 	sprite->setAnimationSpeed(MOVE_LEFT_NS, 8);
 	sprite->addKeyframe(MOVE_LEFT_NS, glm::vec2(0.00f, 0.00f));
 	sprite->addKeyframe(MOVE_LEFT_NS, glm::vec2(0.25f, 0.00f));
@@ -78,6 +78,14 @@ float Runner::getPosY()
 	return float(posRunner.y);
 }
 
+glm::vec2 Runner::getPosition() {
 
+	return glm::vec2(posRunner.x, posRunner.y);
 
+}
 
+glm::vec2 Runner::getBoxCollider() {
+
+	return glm::vec2(40.0, 80.0);
+
+}

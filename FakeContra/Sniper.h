@@ -4,22 +4,26 @@
 
 #include "Sprite.h"
 #include "TileMap.h"
+#include "Enemy.h"
 
 
 
 
-class Sniper
+class Sniper : public Enemy
 {
 
 public:
-	void init(const glm::ivec2& tileMapPos, ShaderProgram& shaderProgram);
-	void update(int deltaTime, float posPlayerX, float posPlayerY);
-	void render();
+	void init(const glm::ivec2& tileMapPos, ShaderProgram& shaderProgram) override;
+	void update(int deltaTime, float posPlayerX, float posPlayerY) override;
+	void render() override;
 
-	void setTileMap(TileMap* tileMap);
-	void setPosition(const glm::vec2& pos);
+	void setTileMap(TileMap* tileMap) override;
+	void setPosition(const glm::vec2& pos) override;
 
 	float getPosX(), getPosY();
+
+	glm::vec2 getPosition() override;
+	glm::vec2 getBoxCollider() override;
 
 private:
 	glm::ivec2 tileMapDispl, posSniper;
@@ -32,6 +36,4 @@ private:
 };
 
 
-#endif 
-
-
+#endif
