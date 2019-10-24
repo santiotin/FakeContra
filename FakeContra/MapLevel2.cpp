@@ -17,6 +17,8 @@ enum MapLevel2Anims
 void MapLevel2::init(const glm::ivec2& tileMapPos, ShaderProgram& shaderProgram)
 {
 	count = 0;
+	fase1 = true;
+	fase2 = fase3 = fase4 = false;
 	spritesheet.loadFromFile("images/lvl2.png", TEXTURE_PIXEL_FORMAT_RGBA);
 	sprite = Sprite::createSprite(glm::ivec2(640, 480), glm::vec2(0.25, 1.00), &spritesheet, &shaderProgram);
 	sprite->setNumberAnimations(4);
@@ -34,23 +36,44 @@ void MapLevel2::init(const glm::ivec2& tileMapPos, ShaderProgram& shaderProgram)
 	tileMapDispl = tileMapPos;
 }
 
-void MapLevel2::update(int deltaTime, float posPlayerX, float posPlayerY)
+/*void MapLevel2::update(int deltaTime, ShaderProgram& shaderProgram)
 {
 	sprite->update(deltaTime);
-	
-	if (count < 7 || count > 90) {
+	if (count < 7 && fase1) {
 		sprite->changeAnimation(FASE_1);
 		if (BulletManager::instance().isBulletInside(glm::vec2(225,160), glm::vec2(167,160))) {
 			++count;
 		}
 	}
-	else {
+	else if (count > 150){
 		if (sprite->animation() != FASE_2)sprite->changeAnimation(FASE_2);
-		count++;
+		fase1 = false;
+		fase2 = true;
+	}
+	else if (fase2) {
+		if (sprite->animation() != FASE_1)sprite->changeAnimation(FASE_1);
+		BulletManager::instance().init(glm::ivec2(0, 0), shaderProgram);
+		EnemyManager::instance().init(map, shaderProgram, 2);
+		fase2 = false;
+	}*/
+	
+	void MapLevel2::update(int deltaTime, float posPlayerX, float posPlayerY)
+	{
+		sprite->update(deltaTime);
+
+		if (count < 7 || count > 90) {
+				sprite->changeAnimation(FASE_1);
+				if (BulletManager::instance().isBulletInside(glm::vec2(225, 160), glm::vec2(167, 160))) {
+					++count;
+				}
+		}
+		else {
+			if (sprite->animation() != FASE_2)sprite->changeAnimation(FASE_2);
+			count++;
+		}
 	}
 
 
-}
 
 void MapLevel2::render()
 {

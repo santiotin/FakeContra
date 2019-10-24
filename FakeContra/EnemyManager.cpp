@@ -50,13 +50,13 @@
 #define INIT_SNIPER2_Y_TILES 5
 
 
-#define INIT_GREENSOLDIER1_X_TILES 20
-#define INIT_GREENSOLDIER1_Y_TILES 2
+#define INIT_GREENSOLDIER1_X_TILES 24
+#define INIT_GREENSOLDIER1_Y_TILES 8
 
-#define INIT_TORS21_X_TILES 7.45
-#define INIT_TORS21_Y_TILES 6
-#define INIT_TORS22_X_TILES 11.1
-#define INIT_TORS22_Y_TILES 6
+#define INIT_TORS21_X_TILES 23.45
+#define INIT_TORS21_Y_TILES 1
+#define INIT_TORS22_X_TILES 37.1
+#define INIT_TORS22_Y_TILES 1
 
 #define INIT_BOLS21_X_TILES 7.45
 #define INIT_BOLS21_Y_TILES 7.4
@@ -74,7 +74,8 @@ void EnemyManager::init(TileMap *tileMap, ShaderProgram& shaderProgram, int leve
 
 	if (level == 2) {
 		if (!enemies.empty()) enemies.clear();
-		init2_1(tileMap, shaderProgram);
+		//initLevel2_1(shaderProgram);
+		initLevel2_1(tileMap, shaderProgram);
 	}
 	
 }
@@ -243,7 +244,7 @@ void EnemyManager::initLevel1(TileMap* tileMap, ShaderProgram& shaderProgram) {
 
 }
 
-void EnemyManager::init2_1(TileMap* tileMap, ShaderProgram& shaderProgram)
+void EnemyManager::initLevel2_1(TileMap* tileMap, ShaderProgram& shaderProgram)
 {
 	Enemy* greensoldier1 = new GreenSoldier();
 	greensoldier1->init(glm::ivec2(SCREEN_X, SCREEN_Y), shaderProgram);
@@ -251,27 +252,24 @@ void EnemyManager::init2_1(TileMap* tileMap, ShaderProgram& shaderProgram)
 	greensoldier1->setTileMap(tileMap);
 	enemies.push_back(greensoldier1);
 }
-void EnemyManager::init2_2(TileMap* tileMap, ShaderProgram& shaderProgram)
+void EnemyManager::initLevel2_2(ShaderProgram& shaderProgram)
 {
 	Enemy* greensoldier1 = new GreenSoldier();
 	greensoldier1->init(glm::ivec2(SCREEN_X, SCREEN_Y), shaderProgram);
-	greensoldier1->setPosition(glm::vec2((INIT_GREENSOLDIER1_X_TILES * tileMap->getTileSize()), INIT_GREENSOLDIER1_Y_TILES * tileMap->getTileSize()));
-	greensoldier1->setTileMap(tileMap);
+	greensoldier1->setPosition(glm::vec2(INIT_GREENSOLDIER1_X_TILES , INIT_GREENSOLDIER1_Y_TILES ));
 	enemies.push_back(greensoldier1);
 
 	Enemy* tors21 = new TorS2();
 	tors21->init(glm::ivec2(SCREEN_X, SCREEN_Y), shaderProgram);
-	tors21->setPosition(glm::vec2((INIT_TORS21_X_TILES * tileMap->getTileSize()), INIT_TORS21_Y_TILES * tileMap->getTileSize()));
-	tors21->setTileMap(tileMap);
+	tors21->setPosition(glm::vec2(INIT_TORS21_X_TILES , INIT_TORS21_Y_TILES ));
 	enemies.push_back(tors21);
 	Enemy* tors22 = new TorS2();
 	tors22->init(glm::ivec2(SCREEN_X, SCREEN_Y), shaderProgram);
-	tors22->setPosition(glm::vec2((INIT_TORS22_X_TILES * tileMap->getTileSize()), INIT_TORS22_Y_TILES * tileMap->getTileSize()));
-	tors22->setTileMap(tileMap);
+	tors22->setPosition(glm::vec2(INIT_TORS22_X_TILES , INIT_TORS22_Y_TILES ));
 	enemies.push_back(tors22);
 
 }
-void EnemyManager::init2_3(TileMap* tileMap, ShaderProgram& shaderProgram)
+void EnemyManager::initLevel2_3(TileMap* tileMap, ShaderProgram& shaderProgram)
 {
 	Enemy* greensoldier1 = new GreenSoldier();
 	greensoldier1->init(glm::ivec2(SCREEN_X, SCREEN_Y), shaderProgram);
@@ -296,7 +294,7 @@ void EnemyManager::init2_3(TileMap* tileMap, ShaderProgram& shaderProgram)
 	bol22->setTileMap(tileMap);
 	enemies.push_back(bol22);
 }
-void EnemyManager::init2_4(TileMap* tileMap, ShaderProgram& shaderProgram)
+void EnemyManager::initLevel2_4(TileMap* tileMap, ShaderProgram& shaderProgram)
 {
 	Enemy* greensoldier1 = new GreenSoldier();
 	greensoldier1->init(glm::ivec2(SCREEN_X, SCREEN_Y), shaderProgram);
