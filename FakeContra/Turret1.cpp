@@ -22,6 +22,8 @@ void Turret::init(const glm::ivec2& tileMapPos, ShaderProgram& shaderProgram)
 	sprite = Sprite::createSprite(glm::ivec2(64, 64), glm::vec2(0.25, 0.33), &spritesheet, &shaderProgram);
 	sprite->setNumberAnimations(12);
 
+	lastShoot = 0;
+
 
 	sprite->setAnimationSpeed(POINT_9, 8);
 	sprite->addKeyframe(POINT_9, glm::vec2(0.00f, 0.00f));
@@ -94,6 +96,10 @@ void Turret::update(int deltaTime, float posPlayerX, float posPlayerY)
 	else if (valor == 9)sprite->changeAnimation(POINT_7);
 	else if (valor == 10)sprite->changeAnimation(POINT_8);
 	else if (valor == 11)sprite->changeAnimation(POINT_9);
+
+	if (abs(distX) <= 320) {
+		shootFromAnimation();
+	}
 }
 
 void Turret::render()
@@ -132,4 +138,39 @@ glm::vec2 Turret::getBoxCollider() {
 
 	return glm::vec2(60.0, 70.0);
 
+}
+
+void Turret::shootFromAnimation() {
+	if (sprite->animation() == POINT_1) doShoot(45.0, -90.0, 1.0, -1.5, 6);
+	if (sprite->animation() == POINT_2) doShoot(60.0, -73.0, 2.0, -1.0, 4);
+	if (sprite->animation() == POINT_3) doShoot(65.0, -60.0, 1.0, 0.0, 6);
+
+	if (sprite->animation() == POINT_4) doShoot(55.0, -45.0, 2.0, 1.0, 4);
+	if (sprite->animation() == POINT_5) doShoot(40.0, -33.0, 1.0, 1.5, 6);
+	if (sprite->animation() == POINT_6) doShoot(27.0, -30.0, 0.0, 1.0, 6);
+
+	if (sprite->animation() == POINT_7) doShoot(10.0, -33.0, -1.0, 1.5, 6);
+	if (sprite->animation() == POINT_8) doShoot(0.0, -45.0, -2.0, 1.0, 4);
+	if (sprite->animation() == POINT_9) doShoot(0.0, -60.0, -1.0, 0.0, 6);
+
+	if (sprite->animation() == POINT_10) doShoot(0.0, -75.0, -2.0, -1.0, 4);
+	if (sprite->animation() == POINT_11) doShoot(10.0, -90.0, -1.0, -1.5, 6);
+	if (sprite->animation() == POINT_12) doShoot(27.0, -90.0, 0.0, -1.0, 6);
+}
+
+void Turret::doShoot(float desplX, float desplY, float dirX, float dirY, float speed) {
+	if (lastShoot == 0) {
+		glm::vec2 pos = glm::vec2(posTurret.x + desplX, posTurret.y + desplY);
+		glm::vec2 dir = glm::vec2(dirX, dirY);
+		BulletManager::instance().createEnemyBullet(pos, dir, speed, 0);
+		lastShoot = Time::instance().getMili();
+	}
+	else {
+		if (Time::instance().isAbleToShootEnemy(lastShoot)) {
+			glm::vec2 pos = glm::vec2(posTurret.x + desplX, posTurret.y + desplY);
+			glm::vec2 dir = glm::vec2(dirX, dirY);
+			BulletManager::instance().createEnemyBullet(pos, dir, speed, 0);
+			lastShoot = Time::instance().getMili();
+		}
+	}
 }

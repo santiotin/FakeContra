@@ -13,7 +13,7 @@
 #define SCREEN_X 0
 #define SCREEN_Y 0
 
-#define INIT_PLAYER_X_TILES 120
+#define INIT_PLAYER_X_TILES 70
 #define INIT_PLAYER_Y_TILES 3
 
 #define INIT_LVL2_X_TILES 0.0
@@ -106,7 +106,7 @@ void Scene::update(int deltaTime)
 	else if(getMode() == LEVEL_1){
 		player->update(deltaTime);
 
-		if (BulletManager::instance().isBulletInside(player->getPosition(), player->getBox()) || 
+		if (BulletManager::instance().isEnemyBulletInside(player->getPosition(), player->getBox()) || 
 			EnemyManager::instance().isEnemyInside(player->getPosition(), player->getBox())) {
 			//player->setDeadState(true);
 		}
@@ -117,7 +117,7 @@ void Scene::update(int deltaTime)
 	else if (getMode() == LEVEL_2) {
 		playerLevel2->update(deltaTime);
 		lvl2->update(deltaTime, playerLevel2->getPosX(), playerLevel2->getPosY());
-		if (BulletManager::instance().isBulletInside(playerLevel2->getPosition(), playerLevel2->getBox())) {
+		if (BulletManager::instance().isPlayerBulletInside(playerLevel2->getPosition(), playerLevel2->getBox())) {
 			playerLevel2->setDeadState(true);
 		}
 

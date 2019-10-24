@@ -31,8 +31,10 @@ public:
 	void render();
 	void setTileMap(TileMap* tileMap);
 
-	void createBullet(glm::vec2 posBullet, glm::vec2 dirBullet, float speed, int type);
-	bool isBulletInside(glm::vec2 pos, glm::vec2 box);
+	void createEnemyBullet(glm::vec2 posBullet, glm::vec2 dirBullet, float speed, int type);
+	void createPlayerBullet(glm::vec2 posBullet, glm::vec2 dirBullet, float speed, int type);
+	bool isPlayerBulletInside(glm::vec2 pos, glm::vec2 box);
+	bool isEnemyBulletInside(glm::vec2 pos, glm::vec2 box);
 
 private:
 
@@ -41,7 +43,9 @@ private:
 	TileMap* map;
 	glm::ivec2 tileMapDispl;
 	ShaderProgram sh;
-	vector<Bullet*> bullets;
+
+	vector<Bullet*> playerBullets;
+	vector<Bullet*> enemyBullets;
 
 };
 

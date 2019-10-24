@@ -40,7 +40,7 @@ void MapLevel2::update(int deltaTime, float posPlayerX, float posPlayerY)
 	
 	if (count < 7 || count > 90) {
 		sprite->changeAnimation(FASE_1);
-		if (BulletManager::instance().isBulletInside(glm::vec2(225,160), glm::vec2(167,160))) {
+		if (BulletManager::instance().isPlayerBulletInside(glm::vec2(225,160), glm::vec2(167,160))) {
 			++count;
 		}
 	}

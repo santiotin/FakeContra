@@ -1,5 +1,6 @@
 #include <cmath>
 #include <iostream>
+#include <stdlib.h>
 #include <GL/glew.h>
 #include <GL/glut.h>
 #include "TorRafaga1.h"
@@ -63,11 +64,10 @@ void TorRafaga::update(int deltaTime, float posPlayerX, float posPlayerY)
 	else if (valor == 0)sprite->changeAnimation(POINT_10);
 	else if (valor == 1)sprite->changeAnimation(POINT_11);
 
-	if (sprite->animation() == POINT_9) doShoot(0.0, -60.0, -1.0, 0.0, 6);
-	if (sprite->animation() == POINT_10) doShoot(0.0, -75.0, -2.0, -1.0, 4);
-	if (sprite->animation() == POINT_11) doShoot(20.0, -80.0, -1.0, -1.5, 6);
-
-
+	if (abs(distX) <= 320) {
+		shootFromAnimation();
+	}
+	
 }
 
 void TorRafaga::render()
@@ -106,18 +106,24 @@ glm::vec2 TorRafaga::getBoxCollider() {
 
 }
 
+void TorRafaga::shootFromAnimation() {
+	if (sprite->animation() == POINT_9) doShoot(0.0, -60.0, -1.0, 0.0, 6);
+	if (sprite->animation() == POINT_10) doShoot(0.0, -75.0, -2.0, -1.0, 4);
+	if (sprite->animation() == POINT_11) doShoot(20.0, -80.0, -1.0, -1.5, 6);
+}
+
 void TorRafaga::doShoot(float desplX, float desplY, float dirX, float dirY, float speed) {
 	if (lastShoot == 0) {
 		glm::vec2 pos = glm::vec2(posTorRafaga.x + desplX, posTorRafaga.y + desplY);
 		glm::vec2 dir = glm::vec2(dirX, dirY);
-		BulletManager::instance().createBullet(pos, dir, speed, 0);
+		BulletManager::instance().createEnemyBullet(pos, dir, speed, 0);
 		lastShoot = Time::instance().getMili();
 	}
 	else {
 		if (Time::instance().isAbleToShootEnemy(lastShoot)) {
 			glm::vec2 pos = glm::vec2(posTorRafaga.x + desplX, posTorRafaga.y + desplY);
 			glm::vec2 dir = glm::vec2(dirX, dirY);
-			BulletManager::instance().createBullet(pos, dir, speed, 0);
+			BulletManager::instance().createEnemyBullet(pos, dir, speed, 0);
 			lastShoot = Time::instance().getMili();
 		}
 	}
