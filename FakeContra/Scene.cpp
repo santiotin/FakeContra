@@ -13,12 +13,13 @@
 #define SCREEN_X 0
 #define SCREEN_Y 0
 
-#define INIT_PLAYER_X_TILES 70
+#define INIT_PLAYER_X_TILES 5
 #define INIT_PLAYER_Y_TILES 3
 
 #define INIT_LVL2_X_TILES 0.0
 #define INIT_LVL2_Y_TILES 1.4
 
+#define DEAD_TIME 110
 
 enum SceneModes
 {
@@ -33,6 +34,7 @@ Scene::Scene()
 	playerLevel2 = NULL;
 	menu = NULL;
 	mode = MENU;
+
 }
 
 Scene::~Scene()
@@ -104,12 +106,30 @@ void Scene::update(int deltaTime)
 	}
 
 	else if(getMode() == LEVEL_1){
+
+		if (player->getDeadState() && player->getLifes() > 0 && player->getDeadTime() > DEAD_TIME) {
+			glm::vec2 aux = player->getPosition();
+			aux.y = 80.0;
+			player->setDeadState(false);
+			
+			player->setPosition(aux);
+		}
+		else if (player->getDeadState() && player->getLifes() > 0 && player->getDeadTime() < DEAD_TIME) {
+			//do nothing
+		}
+		else if (player->getDeadState() && player->getLifes() == 0) {
+			setMode(MENU);
+			init();
+		}
+		else {
+			if (BulletManager::instance().isEnemyBulletInside(player->getPosition(), player->getBox()) ||
+				EnemyManager::instance().isEnemyInside(player->getPosition(), player->getBox())) {
+				player->setDeadState(true);
+			}
+		}
+
 		player->update(deltaTime);
 
-		if (BulletManager::instance().isEnemyBulletInside(player->getPosition(), player->getBox()) || 
-			EnemyManager::instance().isEnemyInside(player->getPosition(), player->getBox())) {
-			//player->setDeadState(true);
-		}
 		EnemyManager::instance().update(deltaTime, player->getPosX(), player->getPosY());
 		BulletManager::instance().update(deltaTime, player->getPosX());
 	}

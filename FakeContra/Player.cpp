@@ -4,6 +4,8 @@
 #include <GL/glut.h>
 #include "Player.h"
 #include "Game.h"
+#include <string>
+#include <windows.h>
 
 
 #define JUMP_ANGLE_STEP 4
@@ -50,6 +52,8 @@ void Player::init(const glm::ivec2& tileMapPos, ShaderProgram& shaderProgram)
 	bSwim = false;
 	lastShoot = 0;
 	isDead = false;
+	lifes = 3;
+	deadTime = 0;
 
 	boxPlayer = glm::vec2(30.0f, 30.0);
 
@@ -213,6 +217,12 @@ void Player::init(const glm::ivec2& tileMapPos, ShaderProgram& shaderProgram)
 
 void Player::update(int deltaTime)
 {
+	if (lifes == 0) OutputDebugStringA("0");
+	if(lifes == 1) OutputDebugStringA("1");
+	if (lifes == 2) OutputDebugStringA("2");
+	if (lifes == 3) OutputDebugStringA("3");
+
+
 	sprite->update(deltaTime);
 
 	bSwim = map->inWaterToSwim(posPlayer, glm::ivec2(32, 32));
@@ -447,7 +457,7 @@ void Player::update(int deltaTime)
 		}
 	}
 	else {
-
+		deadTime++;
 		if (!bSwim) {
 			if (bDir && sprite->animation() != DIE_RIGHT) sprite->changeAnimation(DIE_RIGHT);
 			else if (!bDir && sprite->animation() != DIE_LEFT) sprite->changeAnimation(DIE_LEFT);
@@ -526,6 +536,23 @@ void Player::doShoot(float desplX, float desplY, float dirX, float dirY, float s
 
 void Player::setDeadState(bool dead) {
 	isDead = dead;
+	if (isDead) --lifes;
+	else {
+		sprite->changeAnimation(STAND_FORW_RIGHT_NS);
+		deadTime = 0;
+	}
+}
+
+bool Player::getDeadState() {
+	return isDead;
+}
+
+int Player::getDeadTime() {
+	return deadTime;
+}
+
+int Player::getLifes() {
+	return lifes;
 }
 
 

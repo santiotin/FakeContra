@@ -187,11 +187,6 @@ void EnemyManager::initLevel1(TileMap* tileMap, ShaderProgram& shaderProgram) {
 	runner2->setTileMap(tileMap);
 	enemies.push_back(runner2);
 
-	Enemy* runner3 = new Runner();
-	runner3->init(glm::ivec2(SCREEN_X, SCREEN_Y), shaderProgram);
-	runner3->setPosition(glm::vec2((INIT_RUNNER3_X_TILES * tileMap->getTileSize()), INIT_RUNNER3_Y_TILES * tileMap->getTileSize()));
-	runner3->setTileMap(tileMap);
-	enemies.push_back(runner3);
 
 	Enemy* soldier1 = new Soldier();
 	soldier1->init(glm::ivec2(SCREEN_X, SCREEN_Y), shaderProgram);
