@@ -14,11 +14,6 @@ void BulletManager::init(const glm::ivec2& tileMapPos, ShaderProgram& shaderProg
 	if (!playerBullets.empty())  playerBullets.clear();
 	if (!enemyBullets.empty()) enemyBullets.clear();
 
-	//prueba de collision
-	glm::vec2 fakePos = glm::vec2(400.0, 80.0);
-	glm::vec2 fakeDir = glm::vec2(-1.0, 0);
-	createEnemyBullet(fakePos, fakeDir, 2.0, 0);
-
 }
 
 void BulletManager::update(int deltaTime, float posPlayerX) {

@@ -12,6 +12,7 @@
 #include "BulletManager.h"
 #include "Menu.h"
 #include "MapLevel2.h"
+#include "LifeIcon.h"
 
 
 // Scene contains all the entities of our game.
@@ -43,6 +44,7 @@ private:
 
 	Player *player;
 	PlayerLevel2* playerLevel2;
+	LifeIcon* icon;
 
 	MapLevel2 *lvl2;
 

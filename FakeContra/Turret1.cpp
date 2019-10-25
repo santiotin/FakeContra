@@ -136,7 +136,7 @@ glm::vec2 Turret::getPosition() {
 
 glm::vec2 Turret::getBoxCollider() {
 
-	return glm::vec2(60.0, 70.0);
+	return glm::vec2(60.0, 90.0);
 
 }
 

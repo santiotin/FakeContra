@@ -45,7 +45,6 @@ void Bullet::init(const glm::ivec2& tileMapPos, ShaderProgram& shaderProgram, gl
 
 }
 
-
 void Bullet::update(int deltaTime)
 {
 	sprite->update(deltaTime);
