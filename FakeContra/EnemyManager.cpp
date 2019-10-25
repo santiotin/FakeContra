@@ -119,11 +119,10 @@ void EnemyManager::update(int deltaTime, float posPlayerX, float posPlayerY)
 		Enemy* enemy = enemies[i];
 		if (enemy != NULL) {
 			glm::vec2 aux = enemy->getPosition();
-			if (BulletManager::instance().isBulletInside(aux, enemy->getBoxCollider())) {
+			if (BulletManager::instance().isPlayerBulletInside(aux, enemy->getBoxCollider())) {
 				enemies[i] = NULL;
 				kills++;
 			}
-			aux.y -= 0;
 			else enemy->update(deltaTime, posPlayerX, posPlayerY);
 		}
 

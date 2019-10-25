@@ -43,7 +43,7 @@ void MapLevel2::update(int deltaTime, ShaderProgram& shaderProgram)
 	if (count1 < 10 && fase1) {
 		EnemyManager::instance().transition(false);
 		sprite->changeAnimation(FASE_1);
-		if (BulletManager::instance().isBulletInside(glm::vec2(225, 160), glm::vec2(167, 160)))	count1++; //count suma de 5 en 5 porque si
+		if (BulletManager::instance().isPlayerBulletInside(glm::vec2(225, 160), glm::vec2(167, 160)))	count1++; //count suma de 5 en 5 porque si
 	}
 	
 	else if (count1 > 6 || EnemyManager::instance().getKills() >= EnemyManager::instance().getSize()) {

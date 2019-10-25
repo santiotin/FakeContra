@@ -31,19 +31,18 @@ public:
 	}
 
 	void init(TileMap* tileMap, ShaderProgram& shaderProgram, int level);
+
 	void initLevel1(TileMap *tileMap, ShaderProgram& shaderProgram);
+
 	void initLevel2_1( ShaderProgram& shaderProgram);
-	//void initLevel2_1(TileMap* tileMap, ShaderProgram& shaderProgram);
 	void initLevel2_2(ShaderProgram& shaderProgram);
 	void initLevel2_3( ShaderProgram& shaderProgram);
 	void initLevel2_4( ShaderProgram& shaderProgram);
+
 	void update(int deltaTime, float posPlayerX, float posPlayerY);
 	void render();
 	void greenSoldier(ShaderProgram& shaderProgram);
-	//void init2_1(TileMap* tileMap, ShaderProgram& shaderProgram);
-   // void init2_2(TileMap* tileMap, ShaderProgram& shaderProgram);
-   // void initLevel2_3(TileMap* tileMap, ShaderProgram& shaderProgram);
-   // void initLevel2_4(TileMap* tileMap, ShaderProgram& shaderProgram);
+	
 	
 	int getKills();
 	int getSize();
