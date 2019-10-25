@@ -68,7 +68,7 @@ void EnemyManager::init(TileMap *tileMap, ShaderProgram& shaderProgram, int leve
 {
 	this->sh = shaderProgram;
 	kills = 0;
-	segs = 0;
+	segs = 0; //boom boom
 	if (level == 1)
 	{
 		if (!enemies.empty()) enemies.clear();
