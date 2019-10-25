@@ -16,7 +16,7 @@ enum MapLevel2Anims
 
 void MapLevel2::init(const glm::ivec2& tileMapPos, ShaderProgram& shaderProgram)
 {
-	count = 0;
+	count1 = count2 = count3 = 0;
 	fase1 = true;
 	fase2 = fase3 = fase4 = false;
 	spritesheet.loadFromFile("images/lvl2.png", TEXTURE_PIXEL_FORMAT_RGBA);
@@ -36,42 +36,74 @@ void MapLevel2::init(const glm::ivec2& tileMapPos, ShaderProgram& shaderProgram)
 	tileMapDispl = tileMapPos;
 }
 
-/*void MapLevel2::update(int deltaTime, ShaderProgram& shaderProgram)
+void MapLevel2::update(int deltaTime, ShaderProgram& shaderProgram)
 {
 	sprite->update(deltaTime);
-	if (count < 7 && fase1) {
+	cout << EnemyManager::instance().getKills() << endl;
+	if (count1 < 10 && fase1) {
+		EnemyManager::instance().transition(false);
 		sprite->changeAnimation(FASE_1);
-		if (BulletManager::instance().isBulletInside(glm::vec2(225,160), glm::vec2(167,160))) {
-			++count;
+		if (BulletManager::instance().isBulletInside(glm::vec2(225, 160), glm::vec2(167, 160)))	count1++; //count suma de 5 en 5 porque si
+	}
+	
+	else if (count1 > 6 || EnemyManager::instance().getKills() >= EnemyManager::instance().getSize()) {
+		EnemyManager::instance().transition(true);
+		EnemyManager::instance().cleanEnemies();
+		if (sprite->animation() != FASE_2) sprite->changeAnimation(FASE_2);
+		fase1 = false;
+		++count1;
+		if (count1 > 120) {
+			count1 = 0;
+			fase2 = true;
+			if (sprite->animation() != FASE_1)sprite->changeAnimation(FASE_1);
+			BulletManager::instance().init(glm::ivec2(0, 0), shaderProgram);
+			EnemyManager::instance().init(map, shaderProgram, 3);
 		}
 	}
-	else if (count > 150){
-		if (sprite->animation() != FASE_2)sprite->changeAnimation(FASE_2);
-		fase1 = false;
-		fase2 = true;
-	}
 	else if (fase2) {
+		EnemyManager::instance().transition(false);
+		cout << EnemyManager::instance().getKills() << endl;
+		if (EnemyManager::instance().getKills() >= EnemyManager::instance().getSize()) {
+			fase2 = false;
+			count2 = 35;
+		}
+	}
+	else if (count2 > 6) {
+		EnemyManager::instance().transition(true);
+		EnemyManager::instance().cleanEnemies();
+		if (sprite->animation() != FASE_2) sprite->changeAnimation(FASE_2);
+		fase2 = false;
+		++count2;
+		if (count2 > 120) {
+			fase3 = true;
+			count2 = 0;
+		}
+	}
+	else if (fase3) {
+		EnemyManager::instance().transition(false);
 		if (sprite->animation() != FASE_1)sprite->changeAnimation(FASE_1);
 		BulletManager::instance().init(glm::ivec2(0, 0), shaderProgram);
-		EnemyManager::instance().init(map, shaderProgram, 2);
-		fase2 = false;
-	}*/
+		EnemyManager::instance().init(map, shaderProgram, 4);
+		if (EnemyManager::instance().isEmpty()) {
+			fase3 = false;
+			count3 = 35;
+		}
+	}
+}
 	
-	void MapLevel2::update(int deltaTime, float posPlayerX, float posPlayerY)
+	/*void MapLevel2::update(int deltaTime, float posPlayerX, float posPlayerY)
 	{
 		sprite->update(deltaTime);
 
-		if (count < 7 || count > 90) {
+		if (count < 7 ) {
 				sprite->changeAnimation(FASE_1);
-				if (BulletManager::instance().isBulletInside(glm::vec2(225, 160), glm::vec2(167, 160))) {
-					++count;
-				}
+				if (BulletManager::instance().isBulletInside(glm::vec2(225, 160), glm::vec2(167, 160))) ++count;
 		}
 		else {
 			if (sprite->animation() != FASE_2)sprite->changeAnimation(FASE_2);
 			count++;
 		}
-	}
+	}*/
 
 
 
