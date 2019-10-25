@@ -116,9 +116,11 @@ glm::vec2 Soldier::getPosition() {
 }
 
 glm::vec2 Soldier::getBoxCollider() {
+	return glm::vec2(64.0, 96.0);
+}
 
-	return glm::vec2(40.0, 40.0);
-
+glm::vec2 Soldier::getStartP() {
+	return glm::vec2(0.0, 32.0);
 }
 
 void Soldier::shootFromAnimation() {

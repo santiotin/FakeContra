@@ -33,8 +33,10 @@ public:
 
 	void createEnemyBullet(glm::vec2 posBullet, glm::vec2 dirBullet, float speed, int type);
 	void createPlayerBullet(glm::vec2 posBullet, glm::vec2 dirBullet, float speed, int type);
-	bool isPlayerBulletInside(glm::vec2 pos, glm::vec2 box);
+	bool isPlayerBulletInside(glm::vec2 pos, glm::vec2 box, glm::vec2 startP);
 	bool isEnemyBulletInside(glm::vec2 pos, glm::vec2 box);
+
+	bool hitBox(glm::vec2 bulletPos, glm::vec2 entityPos, glm::vec2 entityBox, glm::vec2 entityStartP);
 
 private:
 

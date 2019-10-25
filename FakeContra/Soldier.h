@@ -25,6 +25,7 @@ public:
 	glm::vec2 getBoxCollider() override;
 
 	float getPosX(), getPosY();
+	glm::vec2 getStartP() override;
 
 	void doShoot(float posX, float posY, float dirX, float dirY, float speed);
 	void shootFromAnimation();

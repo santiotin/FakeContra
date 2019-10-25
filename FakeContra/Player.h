@@ -31,6 +31,9 @@ public:
 	float getPosY();
 	glm::vec2 getPosition();
 	glm::vec2 getBox();
+	glm::vec2 getStratP();
+	void setStartP(glm::vec2 start);
+
 	void doShoot(float posX, float posY, float dirX, float dirY, float speed);
 
 	
@@ -39,7 +42,7 @@ public:
 	
 private:
 	bool bJumping, bDir, bSwim, isDead;
-	glm::ivec2 tileMapDispl, posPlayer, boxPlayer;
+	glm::ivec2 tileMapDispl, posPlayer, boxPlayer, startP;
 	int jumpAngle, startY;
 	long long lastShoot;
 	Texture spritesheet;

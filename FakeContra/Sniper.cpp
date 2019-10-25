@@ -103,8 +103,12 @@ glm::vec2 Sniper::getPosition() {
 
 glm::vec2 Sniper::getBoxCollider() {
 
-	return glm::vec2(40.0, 90.0);
+	return glm::vec2(64.0, 32.0);
 
+}
+
+glm::vec2 Sniper::getStartP() {
+	return glm::vec2(0.0, 0.0);
 }
 
 void Sniper::shootFromAnimation() {

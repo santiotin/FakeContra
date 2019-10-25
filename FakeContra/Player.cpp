@@ -512,6 +512,14 @@ glm::vec2 Player::getBox()
 	return boxPlayer;
 }
 
+glm::vec2 Player::getStratP() {
+	return startP;
+}
+
+void Player::setStartP(glm::vec2 start) {
+	startP = start;
+}
+
 void Player::setBox(glm::vec2 box)
 {
 	boxPlayer = box;

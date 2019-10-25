@@ -6,7 +6,7 @@
 #include "Game.h"
 #include <windows.h>
 
-
+#define bulletOffset 86
 
 void BulletManager::init(const glm::ivec2& tileMapPos, ShaderProgram& shaderProgram){
 	sh = shaderProgram;
@@ -85,17 +85,15 @@ void BulletManager::createEnemyBullet(glm::vec2 posBullet, glm::vec2 dirBullet, 
 
 }
 
-bool BulletManager::isPlayerBulletInside(glm::vec2 pos, glm::vec2 box) {
+bool BulletManager::isPlayerBulletInside(glm::vec2 pos, glm::vec2 box, glm::vec2 startP) {
 
 	for (int i = 0; i < playerBullets.size(); i++) {
 		Bullet* bullet = playerBullets[i];
 		if (bullet != NULL) {
-			if (bullet->getPosition().x > pos.x&& bullet->getPosition().x < (pos.x + box.x)) {
-				if (bullet->getPosition().y < (pos.y ) && bullet->getPosition().y >(pos.y - box.y)) {
-					OutputDebugStringA("DEAD/n");
-					bullet->setDead();
-					return true;
-				}
+			if (hitBox(bullet->getPosition(), pos, box, startP)) {
+				OutputDebugStringA("DEAD/n");
+				bullet->setDead();
+				return true;
 			}
 		}
 
@@ -107,15 +105,24 @@ bool BulletManager::isEnemyBulletInside(glm::vec2 pos, glm::vec2 box) {
 	for (int i = 0; i < enemyBullets.size(); i++) {
 		Bullet* bullet = enemyBullets[i];
 		if (bullet != NULL) {
-			if (bullet->getPosition().x > pos.x&& bullet->getPosition().x < (pos.x + box.x)) {
-				if (bullet->getPosition().y < (pos.y) && bullet->getPosition().y >(pos.y - box.y)) {
-					OutputDebugStringA("DEAD/n");
-					bullet->setDead();
-					return true;
-				}
+			if (hitBox(bullet->getPosition(), pos, box, glm::vec2 (0.0,0.0))) {
+				OutputDebugStringA("DEAD/n");
+				bullet->setDead();
+				return true;
 			}
 		}
 
 	}
 	return false;
+}
+
+bool BulletManager::hitBox(glm::vec2 bulletPos, glm::vec2 entityPos, glm::vec2 entityBox, glm::vec2 entityStartP) {
+	if (bulletPos.x > entityPos.x && bulletPos.x < (entityPos.x + entityBox.x)) {
+		if ((bulletPos.y + bulletOffset) > entityPos.y+entityStartP.y && (bulletPos.y + bulletOffset) < (entityPos.y + entityBox.y)) {
+			return true;
+		}
+		else return false;
+	}
+	else return false;
+	
 }

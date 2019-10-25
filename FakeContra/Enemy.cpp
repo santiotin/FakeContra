@@ -27,3 +27,7 @@ glm::vec2 Enemy::getPosition() {
 glm::vec2 Enemy::getBoxCollider() {
 	return glm::vec2(-1.0, -1.0);
 }
+
+glm::vec2 Enemy::getStartP() {
+	return glm::vec2(-1.0, -1.0);
+}

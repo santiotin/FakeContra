@@ -4,12 +4,12 @@
 #define SCREEN_X 0
 #define SCREEN_Y 0
 
-#define INIT_TURRET1_X_TILES 102
-#define INIT_TURRET1_Y_TILES 8.4
-#define INIT_TURRET2_X_TILES 114
-#define INIT_TURRET2_Y_TILES 8.4
-#define INIT_TURRET3_X_TILES 78
-#define INIT_TURRET3_Y_TILES 10.4
+#define INIT_TURRET1_X_TILES 30
+#define INIT_TURRET1_Y_TILES 7
+#define INIT_TURRET2_X_TILES 35
+#define INIT_TURRET2_Y_TILES 8
+#define INIT_TURRET3_X_TILES 40
+#define INIT_TURRET3_Y_TILES 9
 #define INIT_TURRET4_X_TILES 186
 #define INIT_TURRET4_Y_TILES 12.4
 #define INIT_TURRET5_X_TILES 194
@@ -119,7 +119,7 @@ void EnemyManager::update(int deltaTime, float posPlayerX, float posPlayerY)
 		Enemy* enemy = enemies[i];
 		if (enemy != NULL) {
 			glm::vec2 aux = enemy->getPosition();
-			if (BulletManager::instance().isPlayerBulletInside(aux, enemy->getBoxCollider())) {
+			if (BulletManager::instance().isPlayerBulletInside(aux, enemy->getBoxCollider(), enemy->getStartP())) {
 				enemies[i] = NULL;
 				kills++;
 			}

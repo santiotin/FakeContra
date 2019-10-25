@@ -102,8 +102,12 @@ glm::vec2 TorRafaga::getPosition() {
 
 glm::vec2 TorRafaga::getBoxCollider() {
 
-	return glm::vec2(60.0, 90.0);
+	return glm::vec2(64.0, 64.0);
 
+}
+
+glm::vec2 TorRafaga::getStartP() {
+	return glm::vec2(0.0, 0.0);
 }
 
 void TorRafaga::shootFromAnimation() {

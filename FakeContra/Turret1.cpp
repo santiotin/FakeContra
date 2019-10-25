@@ -136,8 +136,12 @@ glm::vec2 Turret::getPosition() {
 
 glm::vec2 Turret::getBoxCollider() {
 
-	return glm::vec2(60.0, 90.0);
+	return glm::vec2(64.0, 64.0);
 
+}
+
+glm::vec2 Turret::getStartP() {
+	return glm::vec2(0.0, 0.0);
 }
 
 void Turret::shootFromAnimation() {
