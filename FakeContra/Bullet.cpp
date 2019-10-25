@@ -38,13 +38,15 @@ void Bullet::init(const glm::ivec2& tileMapPos, ShaderProgram& shaderProgram, gl
 		sprite->addKeyframe(BULLET_LIVE, glm::vec2(0.65f, 0.05f)); 
 		//sprite->addKeyframe(BULLET_LIVE, glm::vec2(0.70f, 0.05f));
 		//sprite->addKeyframe(BULLET_LIVE, glm::vec2(0.60f, 0.10f));
+		sprite->setAnimationSpeed(BULLET_DEAD, 8);
+		sprite->addKeyframe(BULLET_DEAD, glm::vec2(0.60f, 0.15f));
+		sprite->addKeyframe(BULLET_DEAD, glm::vec2(0.65f, 0.15f));
 	}
 
 	sprite->changeAnimation(0);
 	sprite->setPosition(glm::vec2(float(tileMapDispl.x + pos.x), float(tileMapDispl.y + pos.y)));
 
 }
-
 
 void Bullet::update(int deltaTime)
 {

@@ -25,12 +25,17 @@ public:
 	void setPosition(const glm::vec2 &pos);
 	void setBox(glm::vec2 box);
 	void setDeadState(bool dead);
+	bool Player::getDeadState();
 
 	float getPosX();
 	float getPosY();
 	glm::vec2 getPosition();
 	glm::vec2 getBox();
 	void doShoot(float posX, float posY, float dirX, float dirY, float speed);
+
+	
+	int Player::getDeadTime();
+	int Player::getLifes();
 	
 private:
 	bool bJumping, bDir, bSwim, isDead;
@@ -40,6 +45,9 @@ private:
 	Texture spritesheet;
 	Sprite *sprite;
 	TileMap *map;
+
+	int lifes;
+	int deadTime;
 
 };
 

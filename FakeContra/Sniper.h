@@ -25,6 +25,9 @@ public:
 	glm::vec2 getPosition() override;
 	glm::vec2 getBoxCollider() override;
 
+	void doShoot(float posX, float posY, float dirX, float dirY, float speed);
+	void shootFromAnimation();
+
 private:
 	glm::ivec2 tileMapDispl, posSniper;
 	int startY;
@@ -32,6 +35,8 @@ private:
 	Texture spritesheet;
 	Sprite* sprite;
 	TileMap* map;
+
+	long long lastShoot;
 
 };
 
