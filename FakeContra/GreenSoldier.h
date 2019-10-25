@@ -21,6 +21,8 @@ public:
 
 	float getPosX(), getPosY();
 
+	glm::vec2 getPosition() override;
+	glm::vec2 getBoxCollider() override;
 private:
 	glm::ivec2 tileMapDispl, posGreenSoldier;
 	int startY;

@@ -16,6 +16,10 @@
 #define INIT_PLAYER_X_TILES 3
 #define INIT_PLAYER_Y_TILES 1
 
+#define INIT_PLAYER2_X_TILES 9
+#define INIT_PLAYER2_X_TILES 10
+#define INIT_PLAYER2_Y_TILES 10.5
+
 #define INIT_LVL2_X_TILES 0.0
 #define INIT_LVL2_Y_TILES 1.4
 
@@ -76,7 +80,6 @@ void Scene::init()
 		map = TileMap::createTileMap("levels/fakelevel01.txt", glm::vec2(SCREEN_X, SCREEN_Y), texProgram);
 		lvl2 = new MapLevel2();
 		lvl2->init(glm::ivec2(SCREEN_X, SCREEN_Y), texProgram);
-
 		lvl2->setPosition(glm::vec2((INIT_LVL2_X_TILES * map->getTileSize()), INIT_LVL2_Y_TILES * map->getTileSize()));
 
 		BulletManager::instance().init(glm::ivec2(SCREEN_X, SCREEN_Y), texProgram);
@@ -84,7 +87,7 @@ void Scene::init()
 
 		playerLevel2 = new PlayerLevel2();
 		playerLevel2->init(glm::ivec2(SCREEN_X, SCREEN_Y), texProgram);
-		playerLevel2->setPosition(glm::vec2((5+INIT_PLAYER_X_TILES * map->getTileSize()), (4.5+INIT_PLAYER_Y_TILES + 3) * map->getTileSize()));
+		playerLevel2->setPosition(glm::vec2((INIT_PLAYER2_X_TILES * map->getTileSize()), INIT_PLAYER2_Y_TILES * map->getTileSize()));
 		playerLevel2->setTileMap(map);
 	}
 
@@ -140,7 +143,9 @@ void Scene::update(int deltaTime)
 
 	else if (getMode() == LEVEL_2) {
 		playerLevel2->update(deltaTime);
-		lvl2->update(deltaTime, playerLevel2->getPosX(), playerLevel2->getPosY());
+
+		//lvl2->update(deltaTime, playerLevel2->getPosX(), playerLevel2->getPosY());
+		lvl2->update(deltaTime, texProgram);
 		if (BulletManager::instance().isPlayerBulletInside(playerLevel2->getPosition(), playerLevel2->getBox())) {
 			playerLevel2->setDeadState(true);
 		}
@@ -188,6 +193,7 @@ void Scene::render()
 		icon->render();
 	}
 	else if (getMode() == LEVEL_2) {
+		lvl2->render();
 		EnemyManager::instance().render();
 		playerLevel2->render();
 		BulletManager::instance().render();

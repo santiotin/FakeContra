@@ -37,3 +37,8 @@ bool Time::isAbleToShootEnemy(long long lastShoot) {
 	if (getMili() - lastShoot < 1500) return false;
 	else return true;
 }
+bool Time::createGS(long long lastCreate) {
+
+	if (getMili() - lastCreate < 2000) return false;
+	else return true;
+}

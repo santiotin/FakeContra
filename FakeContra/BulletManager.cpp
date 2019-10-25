@@ -11,6 +11,7 @@
 void BulletManager::init(const glm::ivec2& tileMapPos, ShaderProgram& shaderProgram){
 	sh = shaderProgram;
 	tileMapDispl = tileMapPos;
+
 	if (!playerBullets.empty())  playerBullets.clear();
 	if (!enemyBullets.empty()) enemyBullets.clear();
 

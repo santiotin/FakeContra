@@ -46,13 +46,17 @@ void GreenSoldier::update(int deltaTime, float posPlayerX, float posPlayerY)
 	float posGreenSoldierX = getPosX();
 	float posGreenSoldierY = getPosY();
 	float distX = posGreenSoldierX - posPlayerX;
-	if (distX < 64 && distX > -64) shooting = true;
+	if (distX < 65 && distX > -65) shooting = true;
 	else if (distX > 64) {
 		if(sprite->animation() != MOVE_LEFT)sprite->changeAnimation(MOVE_LEFT);
+		posGreenSoldierX--;
+		setPosition(glm::vec2(posGreenSoldierX, posGreenSoldierY));
 		shooting = false;
 	}
 	else if (distX < -64) {
 		if (sprite->animation() != MOVE_RIGHT)sprite->changeAnimation(MOVE_RIGHT);
+		posGreenSoldierX++;
+		setPosition(glm::vec2(posGreenSoldierX,posGreenSoldierY));
 		shooting = false;
 	}
 	if (shooting) sprite->changeAnimation(SHOOT);
@@ -84,6 +88,17 @@ float GreenSoldier::getPosY()
 	return float(posGreenSoldier.y);
 }
 
+glm::vec2 GreenSoldier::getPosition() {
+
+	return glm::vec2(posGreenSoldier.x, posGreenSoldier.y);
+
+}
+
+glm::vec2 GreenSoldier::getBoxCollider() {
+
+	return glm::vec2(35.0, 40.0);
+
+}
 
 
 
