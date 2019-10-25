@@ -256,14 +256,14 @@ void PlayerLevel2::doShoot(float desplX, float desplY, float dirX, float dirY) {
 	if (lastShoot == 0) {
 		glm::vec2 pos = glm::vec2(posPlayer.x + desplX, posPlayer.y + desplY);
 		glm::vec2 dir = glm::vec2(dirX, dirY);
-		BulletManager::instance().createBullet(pos, dir, 6, 1);
+		BulletManager::instance().createPlayerBullet(pos, dir, 6, 1);
 		lastShoot = Time::instance().getMili();
 	}
 	else {
 		if (Time::instance().isAbleToShoot(lastShoot)) {
 			glm::vec2 pos = glm::vec2(posPlayer.x + desplX, posPlayer.y + desplY);
 			glm::vec2 dir = glm::vec2(dirX, dirY);
-			BulletManager::instance().createBullet(pos, dir, 6, 1);
+			BulletManager::instance().createPlayerBullet(pos, dir, 6, 1);
 			lastShoot = Time::instance().getMili();
 		}
 	}

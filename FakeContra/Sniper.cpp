@@ -21,6 +21,7 @@ void Sniper::init(const glm::ivec2& tileMapPos, ShaderProgram& shaderProgram)
 	sprite = Sprite::createSprite(glm::ivec2(64, 32), glm::vec2(0.33, 0.5), &spritesheet, &shaderProgram);
 	sprite->setNumberAnimations(4);
 
+	lastShoot = 0;
 
 
 	sprite->setAnimationSpeed(HEAT_L, 8);
@@ -61,6 +62,9 @@ void Sniper::update(int deltaTime, float posPlayerX, float posPlayerY)
 	else if (distX > -300 && distX <= 0) sprite->changeAnimation(SHOOT_R);
 	else if (distX < -300) sprite->changeAnimation(HEAT_R);
 
+	if (abs(distX) <= 320) {
+		shootFromAnimation();
+	}
 
 }
 
@@ -101,4 +105,26 @@ glm::vec2 Sniper::getBoxCollider() {
 
 	return glm::vec2(40.0, 90.0);
 
+}
+
+void Sniper::shootFromAnimation() {
+	if (sprite->animation() == SHOOT_R) doShoot(65.0, -67.5, 1.0, 0.0, 6);
+	if (sprite->animation() == SHOOT_L) doShoot(0.0, -67.5, -1.0, 0.0, 6);
+}
+
+void Sniper::doShoot(float desplX, float desplY, float dirX, float dirY, float speed) {
+	if (lastShoot == 0) {
+		glm::vec2 pos = glm::vec2(posSniper.x + desplX, posSniper.y + desplY);
+		glm::vec2 dir = glm::vec2(dirX, dirY);
+		BulletManager::instance().createEnemyBullet(pos, dir, speed, 0);
+		lastShoot = Time::instance().getMili();
+	}
+	else {
+		if (Time::instance().isAbleToShootEnemy(lastShoot)) {
+			glm::vec2 pos = glm::vec2(posSniper.x + desplX, posSniper.y + desplY);
+			glm::vec2 dir = glm::vec2(dirX, dirY);
+			BulletManager::instance().createEnemyBullet(pos, dir, speed, 0);
+			lastShoot = Time::instance().getMili();
+		}
+	}
 }

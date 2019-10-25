@@ -22,6 +22,7 @@ void Soldier::init(const glm::ivec2& tileMapPos, ShaderProgram& shaderProgram)
 	sprite = Sprite::createSprite(glm::ivec2(64, 96), glm::vec2(0.33, 0.5), &spritesheet, &shaderProgram);
 	sprite->setNumberAnimations(6);
 
+	lastShoot = 0;
 
 	sprite->setAnimationSpeed(POINT_9L, 8);
 	sprite->addKeyframe(POINT_9L, glm::vec2(0.00f, 0.00f));
@@ -77,7 +78,9 @@ void Soldier::update(int deltaTime, float posPlayerX, float posPlayerY)
 	else if (valor == 10)sprite->changeAnimation(POINT_75L);
 	else if (valor == 11)sprite->changeAnimation(POINT_9L);
 
-
+	if (abs(distX) <= 320) {
+		shootFromAnimation();
+	}
 }
 
 void Soldier::render()
@@ -116,4 +119,33 @@ glm::vec2 Soldier::getBoxCollider() {
 
 	return glm::vec2(40.0, 40.0);
 
+}
+
+void Soldier::shootFromAnimation() {
+	if (sprite->animation() == POINT_105R) doShoot(55.0, -73.0, 1.0, -1.0, 4);
+	if (sprite->animation() == POINT_9R) doShoot(65.0, -53.0, 1.0, 0.0, 6);
+
+	if (sprite->animation() == POINT_75R) doShoot(55.0, -30.0, 1.0, 1.0, 4);
+
+	if (sprite->animation() == POINT_75L) doShoot(0.0, -25.0, -1.0, 1.0, 4);
+	if (sprite->animation() == POINT_9L) doShoot(0.0, -53.0, -1.0, 0.0, 6);
+
+	if (sprite->animation() == POINT_105L) doShoot(10.0, -70.0, -1.0, -1.0, 4);
+}
+
+void Soldier::doShoot(float desplX, float desplY, float dirX, float dirY, float speed) {
+	if (lastShoot == 0) {
+		glm::vec2 pos = glm::vec2(posSoldier.x + desplX, posSoldier.y + desplY);
+		glm::vec2 dir = glm::vec2(dirX, dirY);
+		BulletManager::instance().createEnemyBullet(pos, dir, speed, 0);
+		lastShoot = Time::instance().getMili();
+	}
+	else {
+		if (Time::instance().isAbleToShootEnemy(lastShoot)) {
+			glm::vec2 pos = glm::vec2(posSoldier.x + desplX, posSoldier.y + desplY);
+			glm::vec2 dir = glm::vec2(dirX, dirY);
+			BulletManager::instance().createEnemyBullet(pos, dir, speed, 0);
+			lastShoot = Time::instance().getMili();
+		}
+	}
 }
