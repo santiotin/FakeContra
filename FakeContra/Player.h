@@ -37,14 +37,20 @@ public:
 	void doShoot(float posX, float posY, float dirX, float dirY, float speed);
 
 	
-	int Player::getDeadTime();
-	int Player::getLifes();
+	int getDeadTime();
+	int getLifes();
+
+	void changeToSuperMode();
+	void changeToNormalMode();
+	bool getMode();
+	bool getHasPower();
 	
 private:
-	bool bJumping, bDir, bSwim, isDead, superMode;
+	bool bJumping, bDir, bSwim, isDead, superMode, hasPowerUp;
 	glm::ivec2 tileMapDispl, posPlayer, boxPlayer, startP;
 	int jumpAngle, startY;
 	long long lastShoot;
+	long long powerTime;
 	Texture spritesheet;
 	Sprite *sprite;
 	TileMap *map;
@@ -58,6 +64,7 @@ private:
 	float fallStep;
 	float jumpHeight;
 	float jumpAngleStep;
+	float magicNumber;
 	
 };
 

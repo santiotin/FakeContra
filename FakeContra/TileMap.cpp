@@ -184,7 +184,7 @@ bool TileMap::collisionMoveRight(const glm::ivec2 &pos, const glm::ivec2 &size) 
 	return false;
 }
 
-bool TileMap::collisionMoveDown(const glm::ivec2 &pos, const glm::ivec2 &size, int *posY) const
+bool TileMap::collisionMoveDown(const glm::ivec2 &pos, const glm::ivec2 &size, int *posY, int magicNumber) const
 {
 	int x0, x1, y;
 	x0 = pos.x / tileSize;
@@ -198,7 +198,7 @@ bool TileMap::collisionMoveDown(const glm::ivec2 &pos, const glm::ivec2 &size, i
 				map[y * mapSize.x + x] == 36 || map[y * mapSize.x + x] == 37)
 			{
 				//antes el valor era 4, para normal 8, super 16
-				if (*posY - tileSize * y + size.y <= 16)
+				if (*posY - tileSize * y + size.y <= magicNumber)
 				{
 					*posY = tileSize * y - size.y;
 					return true;

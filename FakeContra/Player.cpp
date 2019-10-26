@@ -8,7 +8,7 @@
 #include <windows.h>
 
 
-
+#define SUPERMODETIME 6000
 
 #define STANDBOX glm::vec2(40.f, 70.f)
 #define BENDBOX glm::vec2(60.f, 25.f)
@@ -57,13 +57,16 @@ void Player::init(const glm::ivec2& tileMapPos, ShaderProgram& shaderProgram)
 	lifes = 3;
 	deadTime = 0;
 
+	hasPowerUp = true;
+	powerTime = 0;
 	superMode = false;
-	speedLinearBullet = 10.0f; //6
-	speedDiagBullet = 7.0f; //3.5
-	walkStep = 4; //2
-	fallStep = 8; //4
-	jumpHeight = 192; //96
+	speedLinearBullet = 6.0f; //6
+	speedDiagBullet = 3.5f; //3.5
+	walkStep = 2; //2
+	fallStep = 4; //4
+	jumpHeight = 96; //96
 	jumpAngleStep = 4; //4
+	magicNumber = 8;
 
 	boxPlayer = glm::vec2(30.0f, 30.0);
 
@@ -230,6 +233,9 @@ void Player::update(int deltaTime)
 	sprite->update(deltaTime);
 
 	bSwim = map->inWaterToSwim(posPlayer, glm::ivec2(32, 32));
+
+	changeToNormalMode();
+	if (Game::instance().getKey(32)) changeToSuperMode();
 
 	if (!isDead) {
 		if (Game::instance().getSpecialKey(GLUT_KEY_LEFT)) {
@@ -442,13 +448,13 @@ void Player::update(int deltaTime)
 			{
 				posPlayer.y = int(startY - jumpHeight * sin(3.14159f * jumpAngle / 180.f));
 				if (jumpAngle > 90)
-					bJumping = !map->collisionMoveDown(posPlayer, glm::ivec2(32, 32), &posPlayer.y);
+					bJumping = !map->collisionMoveDown(posPlayer, glm::ivec2(32, 32), &posPlayer.y, magicNumber);
 			}
 		}
 		else if (!bSwim)
 		{
 			posPlayer.y += fallStep;
-			if (map->collisionMoveDown(posPlayer, glm::ivec2(32, 32), &posPlayer.y))
+			if (map->collisionMoveDown(posPlayer, glm::ivec2(32, 32), &posPlayer.y, magicNumber))
 			{
 				//if(Game::instance().getSpecialKey(GLUT_KEY_UP))
 				if (Game::instance().getKey(int('z')))
@@ -467,7 +473,7 @@ void Player::update(int deltaTime)
 			else if (!bDir && sprite->animation() != DIE_LEFT) sprite->changeAnimation(DIE_LEFT);
 
 			posPlayer.y += fallStep;
-			map->collisionMoveDown(posPlayer, glm::ivec2(32, 32), &posPlayer.y);
+			map->collisionMoveDown(posPlayer, glm::ivec2(32, 32), &posPlayer.y, magicNumber);
 		}
 		else {
 			if (sprite->animation() != DIE_SWIM) sprite->changeAnimation(DIE_SWIM);
@@ -552,9 +558,12 @@ void Player::doShoot(float desplX, float desplY, float dirX, float dirY, float s
 }
 
 void Player::setDeadState(bool dead) {
-	isDead = dead;
-	if (isDead) --lifes;
-	else {
+	if (dead && !isDead) {
+		isDead = dead;
+		--lifes;
+	}
+	else if (!dead && isDead) {
+		isDead = dead;
 		sprite->changeAnimation(STAND_FORW_RIGHT_NS);
 		deadTime = 0;
 	}
@@ -570,6 +579,44 @@ int Player::getDeadTime() {
 
 int Player::getLifes() {
 	return lifes;
+}
+
+void Player::changeToSuperMode() {
+	if (hasPowerUp) {
+		powerTime = Time::instance().getMili();
+		hasPowerUp = false;
+
+		superMode = true;
+		speedLinearBullet = 6.0f; //6
+		speedDiagBullet = 7.0f; //3.5
+		walkStep = 4; //2
+		fallStep = 8; //4
+		jumpHeight = 192; //96
+		jumpAngleStep = 4; //4
+		magicNumber = 16;
+	}
+}
+
+void Player::changeToNormalMode() {
+	if (Time::instance().getMili() - powerTime > SUPERMODETIME) {
+		
+		superMode = false;
+		speedLinearBullet = 6.0f; //6
+		speedDiagBullet = 3.5f; //3.5
+		walkStep = 2; //2
+		fallStep = 4; //4
+		jumpHeight = 96; //96
+		jumpAngleStep = 4; //4
+		magicNumber = 8;
+	}
+}
+
+bool Player::getMode() {
+	return superMode;
+}
+
+bool Player::getHasPower() {
+	return hasPowerUp;
 }
 
 
