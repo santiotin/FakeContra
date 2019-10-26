@@ -133,7 +133,7 @@ void Scene::update(int deltaTime)
 		player->update(deltaTime);
 
 		EnemyManager::instance().update(deltaTime, player->getPosX(), player->getPosY());
-		BulletManager::instance().update(deltaTime, player->getPosX());
+		BulletManager::instance().update(deltaTime, player->getPosX(), 1);
 
 		icon->changeLife(player->getLifes());
 		icon->update(deltaTime);
@@ -144,12 +144,12 @@ void Scene::update(int deltaTime)
 
 		//lvl2->update(deltaTime, playerLevel2->getPosX(), playerLevel2->getPosY());
 		lvl2->update(deltaTime, texProgram);
-		if (BulletManager::instance().isEnemyBulletInside(playerLevel2->getPosition(), playerLevel2->getBox(), glm::vec2(0.0,0.0))) {
+		if (BulletManager::instance().isEnemyBulletInside(playerLevel2->getPosition(), playerLevel2->getBox(), playerLevel2->getStartP())) {
 			playerLevel2->setDeadState(true);
 		}
 
 		EnemyManager::instance().update(deltaTime, playerLevel2->getPosX(), playerLevel2->getPosY());
-		BulletManager::instance().update(deltaTime, playerLevel2->getPosX());
+		BulletManager::instance().update(deltaTime, playerLevel2->getPosX(), 2);
 	}
 
 

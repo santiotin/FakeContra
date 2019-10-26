@@ -106,13 +106,10 @@ void MapLevel2::update(int deltaTime, ShaderProgram& shaderProgram)
 	}*/
 
 
-
 void MapLevel2::render()
 {
 	sprite->render();
 }
-
-
 
 void MapLevel2::setPosition(const glm::vec2& pos)
 {

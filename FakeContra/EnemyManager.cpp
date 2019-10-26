@@ -347,6 +347,7 @@ void EnemyManager::initLevel2_4( ShaderProgram& shaderProgram)
 	bol22->setPosition(glm::vec2(INIT_BOLS22_X_TILES , INIT_BOLS22_Y_TILES ));
 	enemies.push_back(bol22);
 }
+
 void EnemyManager::greenSoldier(ShaderProgram& shaderProgram) {
 	//long long segs = Time::instance().getMili();
 	if (segs == 0) {

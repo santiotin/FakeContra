@@ -15,20 +15,21 @@ void BulletManager::init(const glm::ivec2& tileMapPos, ShaderProgram& shaderProg
 	if (!playerBullets.empty())  playerBullets.clear();
 	if (!enemyBullets.empty()) enemyBullets.clear();
 
-	createEnemyBullet(glm::vec2(450, 100), glm::vec2(-1.0, 0.0), 3, 0);
-	createEnemyBullet(glm::vec2(550, 150), glm::vec2(-1.0, 0.0), 3, 0);
-	createEnemyBullet(glm::vec2(650, 190), glm::vec2(-1.0, 0.0), 3, 0);
-
 }
 
-void BulletManager::update(int deltaTime, float posPlayerX) {
-	float minWidth = posPlayerX - (SCREEN_WIDTH - 1)/1.1;
-	float maxWidth = posPlayerX + (SCREEN_WIDTH - 1)/1.1;
+void BulletManager::update(int deltaTime, float posPlayerX, int level) {
 
 	for (int i = 0; i < playerBullets.size(); i++) {
 		Bullet* bullet = playerBullets[i];
+		bool outside;
 		if (bullet != NULL) {
-			if (bullet->getPosition().x > maxWidth || bullet->getPosition().x < minWidth) {
+			if (level == 1) {
+				outside = isLevel1BulletOutside(bullet->getPosition(), posPlayerX);
+			}else {
+				outside = isLevel2BulletOutside(bullet->getPosition(), posPlayerX);
+			}
+
+			if (outside) {
 				playerBullets[i] = NULL;
 				//OutputDebugStringA("Dead");
 			}
@@ -41,8 +42,16 @@ void BulletManager::update(int deltaTime, float posPlayerX) {
 
 	for (int i = 0; i < enemyBullets.size(); i++) {
 		Bullet* bullet = enemyBullets[i];
+		bool outside;
 		if (bullet != NULL) {
-			if (bullet->getPosition().x > maxWidth || bullet->getPosition().x < minWidth) {
+			if (level == 1) {
+				outside = isLevel1BulletOutside(bullet->getPosition(), posPlayerX);
+			}
+			else {
+				outside = isLevel2BulletOutside(bullet->getPosition(), posPlayerX);
+			}
+
+			if (outside) {
 				enemyBullets[i] = NULL;
 				//OutputDebugStringA("Dead");
 			}
@@ -129,4 +138,27 @@ bool BulletManager::hitBox(glm::vec2 bulletPos, glm::vec2 entityPos, glm::vec2 e
 	}
 	else return false;
 	
+}
+
+bool BulletManager::isLevel1BulletOutside(glm::vec2 posBullet, float posPlayerX) {
+	float minWidth = posPlayerX - (SCREEN_WIDTH - 1) / 1.1;
+	float maxWidth = posPlayerX + (SCREEN_WIDTH - 1) / 1.1;
+
+	if (posBullet.x > maxWidth || posBullet.x < minWidth) {
+		return true;
+	}
+	else if (posBullet.y < -10.0 || posBullet.y > SCREEN_HEIGHT + 10.0) {
+		return true;
+	}
+	else return false;
+}
+bool BulletManager::isLevel2BulletOutside(glm::vec2 posBullet, float posPlayerX) {
+	if (posBullet.x > SCREEN_WIDTH + 10.0 || posBullet.x < -10.0) {
+		return true;
+	}
+	else if (posBullet.y < SCREEN_HEIGHT * 0.30 || posBullet.y > SCREEN_HEIGHT) {
+		OutputDebugStringA("Bullet OUTSIDE");
+		return true;
+	}
+	else return false;
 }

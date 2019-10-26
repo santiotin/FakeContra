@@ -222,12 +222,6 @@ void Player::init(const glm::ivec2& tileMapPos, ShaderProgram& shaderProgram)
 
 void Player::update(int deltaTime)
 {
-	if (lifes == 0) OutputDebugStringA("0");
-	if(lifes == 1) OutputDebugStringA("1");
-	if (lifes == 2) OutputDebugStringA("2");
-	if (lifes == 3) OutputDebugStringA("3");
-
-
 	sprite->update(deltaTime);
 
 	bSwim = map->inWaterToSwim(posPlayer, glm::ivec2(32, 32));

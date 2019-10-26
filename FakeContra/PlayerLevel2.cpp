@@ -12,9 +12,13 @@
 #define FALL_STEP 4
 #define WALK_STEP 2
 
-#define STANDBOX glm::vec2(40.f, 80.f)
+#define STANDBOX glm::vec2(40.f, 70.f)
 #define BENDBOX glm::vec2(40.f, 60.f)
 #define JUMPBOX glm::vec2(35.f, 35.f)
+
+#define STANDSTARTP glm::vec2(0.f, 20.f)
+#define BENDSTARTP glm::vec2(0.f, 30.f)
+#define JUMPSTARTP glm::vec2(0.f, 60.f)
 
 
 enum PlayerLevel2Anims
@@ -38,7 +42,7 @@ void PlayerLevel2::init(const glm::ivec2& tileMapPos, ShaderProgram& shaderProgr
 	lastShoot = 0;
 	isDead = false;
 
-	boxPlayer = glm::vec2(30.0f, 30.0);
+	boxPlayer = glm::vec2(35.0f, 35.0);
 
 	spritesheet.loadFromFile("images/personaje.png", TEXTURE_PIXEL_FORMAT_RGBA);
 	sprite = Sprite::createSprite(glm::ivec2(96, 96), glm::vec2(0.05, 0.05), &spritesheet, &shaderProgram);
@@ -181,8 +185,6 @@ void PlayerLevel2::update(int deltaTime)
 			else
 			{
 				posPlayer.y = int(startY - 96 * sin(3.14159f * jumpAngle / 180.f));
-				if (jumpAngle > 90)
-					bJumping = !map->collisionMoveDown(posPlayer, glm::ivec2(32, 32), &posPlayer.y);
 			}
 		}
 		else{
@@ -245,6 +247,19 @@ float PlayerLevel2::getPosY()
 glm::vec2 PlayerLevel2::getBox()
 {
 	return boxPlayer;
+}
+
+
+glm::vec2 PlayerLevel2::getStartP() {
+	if (getBox().x == STANDBOX.x && getBox().y == STANDBOX.y) return STANDSTARTP;
+	else if (getBox().x == BENDBOX.x && getBox().y == BENDBOX.y) return BENDSTARTP;
+	else if (getBox().x == JUMPBOX.x && getBox().y == JUMPBOX.y) return JUMPSTARTP;
+
+	return STANDSTARTP;
+}
+
+void PlayerLevel2::setStartP(glm::vec2 start) {
+	startP = start;
 }
 
 void PlayerLevel2::setBox(glm::vec2 box)

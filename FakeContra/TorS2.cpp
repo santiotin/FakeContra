@@ -81,8 +81,12 @@ glm::vec2 TorS2::getPosition() {
 
 glm::vec2 TorS2::getBoxCollider() {
 
-	return glm::vec2(40.0, 40.0);
+	return glm::vec2(32.0, 32.0);
 
+}
+
+glm::vec2 TorS2::getStartP() {
+	return glm::vec2(0.0, 0.0);
 }
 
 
