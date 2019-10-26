@@ -44,6 +44,8 @@ public:
 	void changeToNormalMode();
 	bool getMode();
 	bool getHasPower();
+
+	void setHasPower();
 	
 private:
 	bool bJumping, bDir, bSwim, isDead, superMode, hasPowerUp;
