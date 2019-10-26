@@ -41,7 +41,7 @@ public:
 	int Player::getLifes();
 	
 private:
-	bool bJumping, bDir, bSwim, isDead;
+	bool bJumping, bDir, bSwim, isDead, superMode;
 	glm::ivec2 tileMapDispl, posPlayer, boxPlayer, startP;
 	int jumpAngle, startY;
 	long long lastShoot;
@@ -52,6 +52,13 @@ private:
 	int lifes;
 	int deadTime;
 
+	float speedLinearBullet;
+	float speedDiagBullet;
+	float walkStep;
+	float fallStep;
+	float jumpHeight;
+	float jumpAngleStep;
+	
 };
 
 
