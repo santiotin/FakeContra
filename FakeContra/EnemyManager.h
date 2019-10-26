@@ -9,6 +9,7 @@
 #include "GreenSoldier.h"
 #include "TorS2.h"
 #include "BolS2.h"
+#include "BigS2.h"
 #include "Time.h"
 #include "Enemy.h"
 

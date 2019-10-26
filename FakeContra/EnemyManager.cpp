@@ -317,10 +317,10 @@ void EnemyManager::initLevel2_3(ShaderProgram& shaderProgram)
 }
 void EnemyManager::initLevel2_4( ShaderProgram& shaderProgram)
 {
-	/*Enemy* bb2 = new BigS2();
+	Enemy* bb2 = new BigS2();
 	bb2->init(glm::ivec2(SCREEN_X, SCREEN_Y), shaderProgram);
 	bb2->setPosition(glm::vec2(INIT_BBS2_X_TILES, INIT_BBS2_Y_TILES - 20));
-	enemies.push_back(bb2);*/
+	enemies.push_back(bb2);
 
 	Enemy* tors21 = new TorS2();
 	tors21->init(glm::ivec2(SCREEN_X, SCREEN_Y), shaderProgram);
@@ -335,6 +335,7 @@ void EnemyManager::initLevel2_4( ShaderProgram& shaderProgram)
 	bol21->init(glm::ivec2(SCREEN_X, SCREEN_Y), shaderProgram);
 	bol21->setPosition(glm::vec2(INIT_BOLS21_X_TILES, INIT_BOLS21_Y_TILES-20 ));
 	enemies.push_back(bol21);
+
 	Enemy* bol22 = new BolS2();
 	bol22->init(glm::ivec2(SCREEN_X, SCREEN_Y), shaderProgram);
 	bol22->setPosition(glm::vec2(INIT_BOLS22_X_TILES , INIT_BOLS22_Y_TILES-20 ));
