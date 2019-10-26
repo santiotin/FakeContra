@@ -24,13 +24,19 @@ public:
 
 	glm::vec2 getPosition() override;
 	glm::vec2 getBoxCollider() override;
+
+	void doShoot(float desplX, float desplY, float dirX, float dirY, float speed);
+
 private:
+
 	glm::ivec2 tileMapDispl, posGreenSoldier;
 	int startY;
 	bool shooting;
 	Texture spritesheet;
 	Sprite* sprite;
 	TileMap* map;
+
+	long long lastShoot;
 
 };
 
