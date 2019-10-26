@@ -38,6 +38,7 @@ public:
 	void initLevel2_2(ShaderProgram& shaderProgram);
 	void initLevel2_3( ShaderProgram& shaderProgram);
 	void initLevel2_4( ShaderProgram& shaderProgram);
+	void initLevel_Boss(ShaderProgram& shaderProgram);
 
 	void update(int deltaTime, float posPlayerX, float posPlayerY);
 	void render();
@@ -52,7 +53,7 @@ public:
 	bool isEnemyInside(glm::vec2 pos, glm::vec2 box);
 
 private:
-	int kills;
+	int kills, lvl;
 	bool changing;
 	long long segs;
 	vector<Enemy*> enemies;

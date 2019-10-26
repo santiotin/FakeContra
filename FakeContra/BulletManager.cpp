@@ -156,7 +156,7 @@ bool BulletManager::isLevel2BulletOutside(glm::vec2 posBullet, float posPlayerX)
 	if (posBullet.x > SCREEN_WIDTH + 10.0 || posBullet.x < -10.0) {
 		return true;
 	}
-	else if (posBullet.y < SCREEN_HEIGHT * 0.30 || posBullet.y > SCREEN_HEIGHT) {
+	else if ((posBullet.y +20) < SCREEN_HEIGHT * 0.30 || posBullet.y > SCREEN_HEIGHT) {
 		//OutputDebugStringA("Bullet OUTSIDE");
 		return true;
 	}

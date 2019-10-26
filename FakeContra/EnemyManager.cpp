@@ -63,12 +63,16 @@
 #define INIT_BOLS22_X_TILES 355
 #define INIT_BOLS22_Y_TILES 215
 
+#define INIT_BBS2_X_TILES 232
+#define INIT_BBS2_Y_TILES 220
+
 
 void EnemyManager::init(TileMap *tileMap, ShaderProgram& shaderProgram, int level)//pasa tmb lvl
 {
 	this->sh = shaderProgram;
 	kills = 0;
-	segs = 0; //boom boom
+	segs = 0; //boom 
+	lvl = level;
 	if (level == 1)
 	{
 		if (!enemies.empty()) enemies.clear();
@@ -77,25 +81,24 @@ void EnemyManager::init(TileMap *tileMap, ShaderProgram& shaderProgram, int leve
 
 	if (level == 2) {
 		if (!enemies.empty()) enemies.clear();
-		//initLevel2_1(shaderProgram);
 		initLevel2_1(shaderProgram);
 	}
 	if (level == 3) {
 		if (!enemies.empty()) enemies.clear();
-		//initLevel2_1(shaderProgram);
 		initLevel2_2(shaderProgram);
 	}
 	if (level == 4) {
 		if (!enemies.empty()) enemies.clear();
-		//initLevel2_1(shaderProgram);
 		initLevel2_3(shaderProgram);
 	}
 	if (level == 5) {
 		if (!enemies.empty()) enemies.clear();
-		//initLevel2_1(shaderProgram);
 		initLevel2_4(shaderProgram);
 	}
-	
+	if (level == 6) {
+		if (!enemies.empty()) enemies.clear();
+		initLevel_Boss(shaderProgram);
+	}
 }
 bool EnemyManager::isEmpty()
 {
@@ -127,7 +130,10 @@ void EnemyManager::update(int deltaTime, float posPlayerX, float posPlayerY)
 		}
 
 	}
-	if (!changing && getSize() < 6)greenSoldier(sh);
+	if (!changing && getSize() < 4 && lvl == 2)greenSoldier(sh);
+	else if (!changing && getSize() < 6 && lvl == 3)greenSoldier(sh);
+	else if (!changing && getSize() < 8 && lvl == 4)greenSoldier(sh);
+	else if (!changing && getSize() < 10 && lvl == 5)greenSoldier(sh);
 	
 }
 void EnemyManager::cleanEnemies()
@@ -280,10 +286,7 @@ void EnemyManager::initLevel1(TileMap* tileMap, ShaderProgram& shaderProgram) {
 
 void EnemyManager::initLevel2_1(ShaderProgram& shaderProgram)
 {
-	/*Enemy* greensoldier1 = new GreenSoldier();
-	greensoldier1->init(glm::ivec2(SCREEN_X, SCREEN_Y), shaderProgram);
-	greensoldier1->setPosition(glm::vec2(INIT_GREENSOLDIER1_X_TILES , INIT_GREENSOLDIER1_Y_TILES ));
-	enemies.push_back(greensoldier1);*/
+	
 }
 void EnemyManager::initLevel2_2(ShaderProgram& shaderProgram)
 {
@@ -295,17 +298,12 @@ void EnemyManager::initLevel2_2(ShaderProgram& shaderProgram)
 	tors22->init(glm::ivec2(SCREEN_X, SCREEN_Y), shaderProgram);
 	tors22->setPosition(glm::vec2(INIT_TORS22_X_TILES , INIT_TORS22_Y_TILES ));
 	enemies.push_back(tors22);
-
-	Enemy* greensoldier1 = new GreenSoldier();
-	greensoldier1->init(glm::ivec2(SCREEN_X, SCREEN_Y), shaderProgram);
-	greensoldier1->setPosition(glm::vec2(INIT_GREENSOLDIER1_X_TILES, INIT_GREENSOLDIER1_Y_TILES));
-	enemies.push_back(greensoldier1);
 }
 void EnemyManager::initLevel2_3(ShaderProgram& shaderProgram)
 {
 	Enemy* tors21 = new TorS2();
 	tors21->init(glm::ivec2(SCREEN_X, SCREEN_Y), shaderProgram);
-	tors21->setPosition(glm::vec2(INIT_TORS21_X_TILES-50 , INIT_TORS21_Y_TILES));
+	tors21->setPosition(glm::vec2(INIT_TORS21_X_TILES+58 , INIT_TORS21_Y_TILES+25));// para centrar torreta pongo estas sumas, evito definir nuevas pos	
 	enemies.push_back(tors21);
 
 	Enemy* bol21 = new BolS2();
@@ -316,38 +314,38 @@ void EnemyManager::initLevel2_3(ShaderProgram& shaderProgram)
 	bol22->init(glm::ivec2(SCREEN_X, SCREEN_Y), shaderProgram);
 	bol22->setPosition(glm::vec2(INIT_BOLS22_X_TILES , INIT_BOLS22_Y_TILES ));
 	enemies.push_back(bol22);
-
-	Enemy* greensoldier1 = new GreenSoldier();
-	greensoldier1->init(glm::ivec2(SCREEN_X, SCREEN_Y), shaderProgram);
-	greensoldier1->setPosition(glm::vec2(INIT_GREENSOLDIER1_X_TILES, INIT_GREENSOLDIER1_Y_TILES));
-	enemies.push_back(greensoldier1);
 }
 void EnemyManager::initLevel2_4( ShaderProgram& shaderProgram)
 {
-	Enemy* greensoldier1 = new GreenSoldier();
-	greensoldier1->init(glm::ivec2(SCREEN_X, SCREEN_Y), shaderProgram);
-	greensoldier1->setPosition(glm::vec2(INIT_GREENSOLDIER1_X_TILES , INIT_GREENSOLDIER1_Y_TILES));
-	enemies.push_back(greensoldier1);
+	/*Enemy* bb2 = new BigS2();
+	bb2->init(glm::ivec2(SCREEN_X, SCREEN_Y), shaderProgram);
+	bb2->setPosition(glm::vec2(INIT_BBS2_X_TILES, INIT_BBS2_Y_TILES - 20));
+	enemies.push_back(bb2);*/
 
 	Enemy* tors21 = new TorS2();
 	tors21->init(glm::ivec2(SCREEN_X, SCREEN_Y), shaderProgram);
-	tors21->setPosition(glm::vec2(INIT_TORS21_X_TILES, INIT_TORS21_Y_TILES));
+	tors21->setPosition(glm::vec2(INIT_TORS21_X_TILES, INIT_TORS21_Y_TILES+20));
 	enemies.push_back(tors21);
 	Enemy* tors22 = new TorS2();
 	tors22->init(glm::ivec2(SCREEN_X, SCREEN_Y), shaderProgram);
-	tors22->setPosition(glm::vec2(INIT_TORS22_X_TILES , INIT_TORS22_Y_TILES));
+	tors22->setPosition(glm::vec2(INIT_TORS22_X_TILES , INIT_TORS22_Y_TILES+20));
 	enemies.push_back(tors22);
 
 	Enemy* bol21 = new BolS2();
 	bol21->init(glm::ivec2(SCREEN_X, SCREEN_Y), shaderProgram);
-	bol21->setPosition(glm::vec2(INIT_BOLS21_X_TILES, INIT_BOLS21_Y_TILES ));
+	bol21->setPosition(glm::vec2(INIT_BOLS21_X_TILES, INIT_BOLS21_Y_TILES-20 ));
 	enemies.push_back(bol21);
 	Enemy* bol22 = new BolS2();
 	bol22->init(glm::ivec2(SCREEN_X, SCREEN_Y), shaderProgram);
-	bol22->setPosition(glm::vec2(INIT_BOLS22_X_TILES , INIT_BOLS22_Y_TILES ));
+	bol22->setPosition(glm::vec2(INIT_BOLS22_X_TILES , INIT_BOLS22_Y_TILES-20 ));
 	enemies.push_back(bol22);
-}
 
+	
+}
+void EnemyManager::initLevel_Boss(ShaderProgram& shaderProgram)
+{
+
+}
 void EnemyManager::greenSoldier(ShaderProgram& shaderProgram) {
 	//long long segs = Time::instance().getMili();
 	if (segs == 0) {
@@ -359,7 +357,7 @@ void EnemyManager::greenSoldier(ShaderProgram& shaderProgram) {
 		segs = Time::instance().getMili();
 	}
 	else {
-		if (Time::instance().getMili() - segs > 3000) {
+		if (Time::instance().getMili() - segs > 2000) {
 			Enemy* greensoldier1 = new GreenSoldier();
 			greensoldier1->init(glm::ivec2(SCREEN_X, SCREEN_Y), shaderProgram);
 			if ((rand() % 100) % 2 == 0) greensoldier1->setPosition(glm::vec2(INIT_GREENSOLDIER1_X_TILES + 134, INIT_GREENSOLDIER1_Y_TILES));

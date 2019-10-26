@@ -27,8 +27,11 @@
     <ClCompile Include="MapLevel2.cpp" />
     <ClCompile Include="Enemy.cpp" />
     <ClCompile Include="LifeIcon.cpp" />
+    <ClCompile Include="BigS2.cpp" />
+    <ClCompile Include="MapLevel3.cpp" />
     <ClCompile Include="PowerUp.cpp" />
     <ClCompile Include="PowerUpIcon.cpp" />
+
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Runner.h" />
@@ -40,6 +43,8 @@
     <ClInclude Include="MapLevel2.h" />
     <ClInclude Include="Enemy.h" />
     <ClInclude Include="LifeIcon.h" />
+    <ClInclude Include="BigS2.h" />
+    <ClInclude Include="MapLevel3.h" />
     <ClInclude Include="PowerUp.h" />
     <ClInclude Include="PowerUpIcon.h" />
   </ItemGroup>

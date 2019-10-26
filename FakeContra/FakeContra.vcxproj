@@ -12,6 +12,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AnimKeyframes.h" />
+    <ClInclude Include="BigS2.h" />
     <ClInclude Include="BolS2.h" />
     <ClInclude Include="Enemy.h" />
     <ClInclude Include="EnemyManager.h" />
@@ -21,6 +22,7 @@
     <ClInclude Include="GreenSoldier.h" />
     <ClInclude Include="LifeIcon.h" />
     <ClInclude Include="MapLevel2.h" />
+    <ClInclude Include="MapLevel3.h" />
     <ClInclude Include="Menu.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="PowerUp.h" />
@@ -41,6 +43,7 @@
     <ClInclude Include="Turret1.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="BigS2.cpp" />
     <ClCompile Include="BolS2.cpp" />
     <ClCompile Include="Enemy.cpp" />
     <ClCompile Include="EnemyManager.cpp" />
@@ -51,6 +54,7 @@
     <ClCompile Include="LifeIcon.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="MapLevel2.cpp" />
+    <ClCompile Include="MapLevel3.cpp" />
     <ClCompile Include="Menu.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="PowerUp.cpp" />
