@@ -15,6 +15,7 @@
 #include "MapLevel3.h"
 #include "LifeIcon.h"
 #include "PowerUpIcon.h"
+#include "PowerUp.h"
 
 
 // Scene contains all the entities of our game.
@@ -48,6 +49,7 @@ private:
 	PlayerLevel2* playerLevel2;
 	LifeIcon* lifeIcon;
 	PowerUpIcon* powerUpIcon;
+	PowerUp* powerUp;
 
 	MapLevel2 *lvl2;
 	MapLevel3* lvl3;

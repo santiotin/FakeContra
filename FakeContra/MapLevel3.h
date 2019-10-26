@@ -19,7 +19,7 @@ public:
 	bool isFaseBoss();
 	void setPosition(const glm::vec2& pos);
 
-	int count1, count2, count3, countBoss;
+	int count1, count2, count3, count4, count5, count6;
 
 private:
 	long long segs;

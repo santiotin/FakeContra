@@ -1,5 +1,7 @@
 #include "Time.h"
 #include <chrono>
+#include <stdlib.h>
+
 
 string Time::getMiliString() const
 {
@@ -42,3 +44,15 @@ bool Time::createGS(long long lastCreate) {
 	if (getMili() - lastCreate < 2000) return false;
 	else return true;
 }
+
+bool Time::isAbleToShootEnemyLevel2(long long lastShoot) {
+	
+	if (getMili() - lastShoot < 3000) return false;
+	else {
+		int num = rand() % 19;
+		if (num == 3) return true;
+		else return false;
+	}
+}
+
+//commit

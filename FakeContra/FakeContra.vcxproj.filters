@@ -31,7 +31,8 @@
     <ClCompile Include="MapLevel3.cpp" />
     <ClCompile Include="PowerUp.cpp" />
     <ClCompile Include="PowerUpIcon.cpp" />
-
+    <ClCompile Include="TorBoss.cpp" />
+    <ClCompile Include="RafBoss.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Runner.h" />
@@ -47,6 +48,8 @@
     <ClInclude Include="MapLevel3.h" />
     <ClInclude Include="PowerUp.h" />
     <ClInclude Include="PowerUpIcon.h" />
+    <ClInclude Include="TorBoss.h" />
+    <ClInclude Include="RafBoss.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Game.cpp">

@@ -57,7 +57,7 @@ void Player::init(const glm::ivec2& tileMapPos, ShaderProgram& shaderProgram)
 	lifes = 3;
 	deadTime = 0;
 
-	hasPowerUp = true;
+	hasPowerUp = false;
 	powerTime = 0;
 	superMode = false;
 	speedLinearBullet = 6.0f; //6
@@ -238,6 +238,7 @@ void Player::update(int deltaTime)
 	if (Game::instance().getKey(32)) changeToSuperMode();
 
 	if (!isDead) {
+
 		if (Game::instance().getSpecialKey(GLUT_KEY_LEFT)) {
 			bDir = false;
 
@@ -617,6 +618,10 @@ bool Player::getMode() {
 
 bool Player::getHasPower() {
 	return hasPowerUp;
+}
+
+void Player::setHasPower() {
+	hasPowerUp = true;
 }
 
 

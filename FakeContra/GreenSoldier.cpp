@@ -34,6 +34,7 @@ void GreenSoldier::init(const glm::ivec2& tileMapPos, ShaderProgram& shaderProgr
 	sprite->addKeyframe(MOVE_RIGHT, glm::vec2(0.00f, 0.50f));
 	sprite->addKeyframe(MOVE_RIGHT, glm::vec2(0.33f, 0.50f));
 
+	lastShoot = 0;
 	shooting = false;
 	sprite->changeAnimation(0);
 	tileMapDispl = tileMapPos;
@@ -59,7 +60,10 @@ void GreenSoldier::update(int deltaTime, float posPlayerX, float posPlayerY)
 		setPosition(glm::vec2(posGreenSoldierX,posGreenSoldierY));
 		shooting = false;
 	}
-	if (shooting) sprite->changeAnimation(SHOOT);
+	if (shooting) {
+		sprite->changeAnimation(SHOOT);
+		doShoot(13.0, -65.0, distX * -0.006, 1.0, 2);
+	}
 }
 
 void GreenSoldier::render()
@@ -102,6 +106,23 @@ glm::vec2 GreenSoldier::getBoxCollider() {
 
 glm::vec2 GreenSoldier::getStartP() {
 	return glm::vec2(0.0, 0.0);
+}
+
+void GreenSoldier::doShoot(float desplX, float desplY, float dirX, float dirY, float speed) {
+	if (lastShoot == 0) {
+		glm::vec2 pos = glm::vec2(posGreenSoldier.x + desplX, posGreenSoldier.y + desplY);
+		glm::vec2 dir = glm::vec2(dirX, dirY);
+		BulletManager::instance().createEnemyBullet(pos, dir, speed, 0);
+		lastShoot = Time::instance().getMili();
+	}
+	else {
+		if (Time::instance().isAbleToShootEnemyLevel2(lastShoot)) {
+			glm::vec2 pos = glm::vec2(posGreenSoldier.x + desplX, posGreenSoldier.y + desplY);
+			glm::vec2 dir = glm::vec2(dirX, dirY);
+			BulletManager::instance().createEnemyBullet(pos, dir, speed, 0);
+			lastShoot = Time::instance().getMili();
+		}
+	}
 }
 
 

@@ -4,6 +4,7 @@
 
 #include "Sprite.h"
 #include "TileMap.h"
+#include "Player.h"
 
 
 #pragma once
@@ -13,12 +14,14 @@ class PowerUp
 public:
 
 
-	void init(const glm::ivec2& tileMapPos, ShaderProgram& shaderProgram, glm::vec2 posBullet);
+	void init(const glm::ivec2& tileMapPos, ShaderProgram& shaderProgram, glm::vec2 posBullet, Player* p);
 	void update(int deltaTime);
 	void render();
 
 	bool isDead();
 	void setDead();
+
+	bool isPlayerInsideHitBox();
 
 
 
@@ -29,6 +32,12 @@ private:
 	Texture spritesheet;
 	Sprite* sprite;
 	TileMap* map;
+
+	int jumpAngle;
+	float jumpHeight;
+	float jumpAngleStep;
+	float startY;
+	Player* player;
 
 };
 

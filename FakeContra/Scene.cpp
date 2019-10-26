@@ -20,7 +20,7 @@
 #define INIT_PLAYER2_Y_TILES 10.5
 
 #define INIT_PLAYER3_X_TILES 10
-#define INIT_PLAYER3_Y_TILES 10.5
+#define INIT_PLAYER3_Y_TILES 12.5
 
 #define INIT_LVL2_X_TILES 0.0
 #define INIT_LVL2_Y_TILES 1.4
@@ -76,11 +76,15 @@ void Scene::init()
 		lifeIcon->init(glm::ivec2(SCREEN_X, SCREEN_Y), texProgram);
 		powerUpIcon = new PowerUpIcon();
 		powerUpIcon->init(glm::ivec2(SCREEN_X, SCREEN_Y), texProgram);
+		
 
 		player = new Player();
 		player->init(glm::ivec2(SCREEN_X, SCREEN_Y), texProgram);
 		player->setPosition(glm::vec2((INIT_PLAYER_X_TILES * map->getTileSize()), INIT_PLAYER_Y_TILES * map->getTileSize()));
 		player->setTileMap(map);
+
+		powerUp = new PowerUp();
+		powerUp->init(glm::ivec2(SCREEN_X, SCREEN_Y), texProgram, glm::ivec2(500, 165), player);
 
 	}
 	else if (getMode() == LEVEL_2) {
@@ -104,7 +108,7 @@ void Scene::init()
 		lvl3->setPosition(glm::vec2((INIT_LVL3_X_TILES * map->getTileSize()), INIT_LVL3_Y_TILES * map->getTileSize()));
 
 		BulletManager::instance().init(glm::ivec2(SCREEN_X, SCREEN_Y), texProgram);
-		EnemyManager::instance().init(map, texProgram, 2);
+		EnemyManager::instance().init(map, texProgram, 6);
 
 		playerLevel2 = new PlayerLevel2();
 		playerLevel2->init(glm::ivec2(SCREEN_X, SCREEN_Y), texProgram);
@@ -161,6 +165,7 @@ void Scene::update(int deltaTime)
 		lifeIcon->update(deltaTime);
 		powerUpIcon->changePower(player->getHasPower());
 		powerUpIcon->update(deltaTime);
+		powerUp->update(deltaTime);
 	}
 
 	else if (getMode() == LEVEL_2) {
@@ -201,6 +206,10 @@ void Scene::update(int deltaTime)
 		setMode(LEVEL_2);
 		init();
 	}
+	else if (Game::instance().getSpecialKey(GLUT_KEY_F3)) {
+		setMode(LEVEL_3);
+		init();
+	}
 
 	updateCamera();
 }
@@ -222,10 +231,12 @@ void Scene::render()
 	}
 	else if (getMode() == LEVEL_1) {
 		EnemyManager::instance().render();
+		powerUp->render();
 		player->render();
 		BulletManager::instance().render();
 		lifeIcon->render();
 		powerUpIcon->render();
+		
 	}
 	else if (getMode() == LEVEL_2) {
 		lvl2->render();
