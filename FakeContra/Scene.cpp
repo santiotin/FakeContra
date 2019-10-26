@@ -20,7 +20,7 @@
 #define INIT_PLAYER2_Y_TILES 10.5
 
 #define INIT_PLAYER3_X_TILES 10
-#define INIT_PLAYER3_Y_TILES 10.5
+#define INIT_PLAYER3_Y_TILES 12.5
 
 #define INIT_LVL2_X_TILES 0.0
 #define INIT_LVL2_Y_TILES 1.4
@@ -104,7 +104,7 @@ void Scene::init()
 		lvl3->setPosition(glm::vec2((INIT_LVL3_X_TILES * map->getTileSize()), INIT_LVL3_Y_TILES * map->getTileSize()));
 
 		BulletManager::instance().init(glm::ivec2(SCREEN_X, SCREEN_Y), texProgram);
-		EnemyManager::instance().init(map, texProgram, 2);
+		EnemyManager::instance().init(map, texProgram, 6);
 
 		playerLevel2 = new PlayerLevel2();
 		playerLevel2->init(glm::ivec2(SCREEN_X, SCREEN_Y), texProgram);
@@ -199,6 +199,10 @@ void Scene::update(int deltaTime)
 	}
 	else if (Game::instance().getSpecialKey(GLUT_KEY_F2)) {
 		setMode(LEVEL_2);
+		init();
+	}
+	else if (Game::instance().getSpecialKey(GLUT_KEY_F3)) {
+		setMode(LEVEL_3);
 		init();
 	}
 

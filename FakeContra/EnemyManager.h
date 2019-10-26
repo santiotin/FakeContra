@@ -11,7 +11,9 @@
 #include "BolS2.h"
 #include "Time.h"
 #include "Enemy.h"
-
+#include "TorBoss.h"
+#include "BigS2.h"
+#include "RafBoss.h"
 #include <glm/gtc/matrix_transform.hpp>
 
 
@@ -48,6 +50,7 @@ public:
 	int getKills();
 	int getSize();
 	bool isEmpty();
+	void isFaseBoss(bool fb);
 	void transition(bool trans);
 	void cleanEnemies();
 	bool isEnemyInside(glm::vec2 pos, glm::vec2 box);
@@ -55,6 +58,7 @@ public:
 private:
 	int kills, lvl;
 	bool changing;
+	bool boss;
 	long long segs;
 	vector<Enemy*> enemies;
 	ShaderProgram sh;

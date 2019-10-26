@@ -70,7 +70,7 @@ void MapLevel2::update(int deltaTime, ShaderProgram& shaderProgram)
 		EnemyManager::instance().transition(false);
 		if (EnemyManager::instance().getKills() >= EnemyManager::instance().getSize()) {
 			fase2 = false;
-			count2 = 40;
+			count2 = 35;
 		}
 	}
 	if (count2 > 6) {
@@ -79,7 +79,7 @@ void MapLevel2::update(int deltaTime, ShaderProgram& shaderProgram)
 		if (sprite->animation() != FASE_2) sprite->changeAnimation(FASE_2);
 		fase2 = false;
 		++count2;
-		if (count2 > 120) {
+		if (count2 > 100) {
 			count2 = 0;
 			fase3 = true;
 			if (sprite->animation() != FASE_1)sprite->changeAnimation(FASE_1);
@@ -129,7 +129,8 @@ void MapLevel2::update(int deltaTime, ShaderProgram& shaderProgram)
 			EnemyManager::instance().init(map, shaderProgram, 6);
 		}
 	}
-	else if (fase4) {
+	else if (faseBoss) {
+		EnemyManager::instance().isFaseBoss(true);
 		EnemyManager::instance().transition(false);
 		if (EnemyManager::instance().getKills() >= EnemyManager::instance().getSize()) {
 			fase4 = false;
