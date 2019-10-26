@@ -195,9 +195,10 @@ bool TileMap::collisionMoveDown(const glm::ivec2 &pos, const glm::ivec2 &size, i
 		//if (!Game::instance().getSpecialKey(GLUT_KEY_DOWN)) {
 		if (!Game::instance().getSpecialKey(GLUT_KEY_DOWN) || !Game::instance().getKey((int('z')))) { 
 			if (map[y * mapSize.x + x] == 1 || map[y * mapSize.x + x] == 2 || 
-				map[y * mapSize.x + x] == 36 || map[y * mapSize.x + x] == 37 || (y == 13))
+				map[y * mapSize.x + x] == 36 || map[y * mapSize.x + x] == 37)
 			{
-				if (*posY - tileSize * y + size.y <= 4)
+				//antes el valor era 4
+				if (*posY - tileSize * y + size.y <= 8)
 				{
 					*posY = tileSize * y - size.y;
 					return true;
@@ -217,10 +218,7 @@ bool TileMap::inWaterToSwim(const glm::ivec2& pos, const glm::ivec2& size) {
 	y = (pos.y + 4 + size.y - 1) / tileSize;
 	for (int x = x0; x <= x1; x++)
 	{
-		if (y < 13 || map[y * mapSize.x + x] == 1 || map[y * mapSize.x + x] == 2)
-		{
-			return false;
-		}
+		if (y < 13 || map[y * mapSize.x + x] == 1 || map[y * mapSize.x + x] == 2) return false;
 		
 	}
 	return true;
