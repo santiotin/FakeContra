@@ -54,3 +54,5 @@ bool Time::isAbleToShootEnemyLevel2(long long lastShoot) {
 		else return false;
 	}
 }
+
+//commit
