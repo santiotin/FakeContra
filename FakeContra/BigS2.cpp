@@ -2,18 +2,18 @@
 #include <iostream>
 #include <GL/glew.h>
 #include <GL/glut.h>
-#include "BolS2.h"
+#include "BigS2.h"
 #include "Game.h"
 
 
 
-enum BolS2Anims
+enum BigS2Anims
 {
 	SHOOT
 };
 
 
-void BolS2::init(const glm::ivec2& tileMapPos, ShaderProgram& shaderProgram)
+void BigS2::init(const glm::ivec2& tileMapPos, ShaderProgram& shaderProgram)
 {
 	spritesheet.loadFromFile("images/BolS2.png", TEXTURE_PIXEL_FORMAT_RGBA);
 	sprite = Sprite::createSprite(glm::ivec2(32, 32), glm::vec2(0.33, 1.00), &spritesheet, &shaderProgram);
@@ -31,7 +31,7 @@ void BolS2::init(const glm::ivec2& tileMapPos, ShaderProgram& shaderProgram)
 
 }
 
-void BolS2::update(int deltaTime, float posPlayerX, float posPlayerY)
+void BigS2::update(int deltaTime, float posPlayerX, float posPlayerY)
 {
 	sprite->update(deltaTime);
 	float posTurretX = getPosX();
@@ -44,45 +44,45 @@ void BolS2::update(int deltaTime, float posPlayerX, float posPlayerY)
 
 }
 
-void BolS2::render()
+void BigS2::render()
 {
 	sprite->render();
 }
 
-void BolS2::setTileMap(TileMap* tileMap)
+void BigS2::setTileMap(TileMap* tileMap)
 {
 	map = tileMap;
 }
 
-void BolS2::setPosition(const glm::vec2& pos)
+void BigS2::setPosition(const glm::vec2& pos)
 {
 	posTurret = pos;
 	sprite->setPosition(glm::vec2(float(tileMapDispl.x + posTurret.x), float(tileMapDispl.y + posTurret.y)));
 }
 
-float BolS2::getPosX()
+float BigS2::getPosX()
 {
 	return float(posTurret.x);
 }
 
-float BolS2::getPosY()
+float BigS2::getPosY()
 {
 	return float(posTurret.y);
 }
 
-glm::vec2 BolS2::getPosition() {
+glm::vec2 BigS2::getPosition() {
 
 	return glm::vec2(posTurret.x, posTurret.y);
 
 }
 
-glm::vec2 BolS2::getBoxCollider() {
+glm::vec2 BigS2::getBoxCollider() {
 
 	return glm::vec2(32.0, 32.0);
 
 }
 
-glm::vec2 BolS2::getStartP() {
+glm::vec2 BigS2::getStartP() {
 	return glm::vec2(0.0, 0.0);
 }
 

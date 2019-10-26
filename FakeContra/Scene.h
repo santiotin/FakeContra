@@ -12,6 +12,7 @@
 #include "BulletManager.h"
 #include "Menu.h"
 #include "MapLevel2.h"
+#include "MapLevel3.h"
 #include "LifeIcon.h"
 
 
@@ -47,6 +48,7 @@ private:
 	LifeIcon* icon;
 
 	MapLevel2 *lvl2;
+	MapLevel3* lvl3;
 
 	Menu *menu;
 

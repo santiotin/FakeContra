@@ -63,6 +63,9 @@
 #define INIT_BOLS22_X_TILES 355
 #define INIT_BOLS22_Y_TILES 215
 
+#define INIT_BBS2_X_TILES 232
+#define INIT_BBS2_Y_TILES 220
+
 
 void EnemyManager::init(TileMap *tileMap, ShaderProgram& shaderProgram, int level)//pasa tmb lvl
 {
@@ -92,7 +95,10 @@ void EnemyManager::init(TileMap *tileMap, ShaderProgram& shaderProgram, int leve
 		if (!enemies.empty()) enemies.clear();
 		initLevel2_4(shaderProgram);
 	}
-	
+	if (level == 6) {
+		if (!enemies.empty()) enemies.clear();
+		initLevel_Boss(shaderProgram);
+	}
 }
 bool EnemyManager::isEmpty()
 {
@@ -124,7 +130,7 @@ void EnemyManager::update(int deltaTime, float posPlayerX, float posPlayerY)
 		}
 
 	}
-	if (!changing && getSize() < 2 && lvl == 2)greenSoldier(sh);
+	if (!changing && getSize() < 4 && lvl == 2)greenSoldier(sh);
 	else if (!changing && getSize() < 6 && lvl == 3)greenSoldier(sh);
 	else if (!changing && getSize() < 8 && lvl == 4)greenSoldier(sh);
 	else if (!changing && getSize() < 10 && lvl == 5)greenSoldier(sh);
@@ -297,7 +303,7 @@ void EnemyManager::initLevel2_3(ShaderProgram& shaderProgram)
 {
 	Enemy* tors21 = new TorS2();
 	tors21->init(glm::ivec2(SCREEN_X, SCREEN_Y), shaderProgram);
-	tors21->setPosition(glm::vec2(INIT_TORS21_X_TILES+58 , INIT_TORS21_Y_TILES-12));// para centrar torreta pongo estas sumas, evito definir nuevas pos	
+	tors21->setPosition(glm::vec2(INIT_TORS21_X_TILES+58 , INIT_TORS21_Y_TILES+25));// para centrar torreta pongo estas sumas, evito definir nuevas pos	
 	enemies.push_back(tors21);
 
 	Enemy* bol21 = new BolS2();
@@ -311,6 +317,11 @@ void EnemyManager::initLevel2_3(ShaderProgram& shaderProgram)
 }
 void EnemyManager::initLevel2_4( ShaderProgram& shaderProgram)
 {
+	/*Enemy* bb2 = new BigS2();
+	bb2->init(glm::ivec2(SCREEN_X, SCREEN_Y), shaderProgram);
+	bb2->setPosition(glm::vec2(INIT_BBS2_X_TILES, INIT_BBS2_Y_TILES - 20));
+	enemies.push_back(bb2);*/
+
 	Enemy* tors21 = new TorS2();
 	tors21->init(glm::ivec2(SCREEN_X, SCREEN_Y), shaderProgram);
 	tors21->setPosition(glm::vec2(INIT_TORS21_X_TILES, INIT_TORS21_Y_TILES+20));
@@ -328,8 +339,13 @@ void EnemyManager::initLevel2_4( ShaderProgram& shaderProgram)
 	bol22->init(glm::ivec2(SCREEN_X, SCREEN_Y), shaderProgram);
 	bol22->setPosition(glm::vec2(INIT_BOLS22_X_TILES , INIT_BOLS22_Y_TILES-20 ));
 	enemies.push_back(bol22);
-}
 
+	
+}
+void EnemyManager::initLevel_Boss(ShaderProgram& shaderProgram)
+{
+
+}
 void EnemyManager::greenSoldier(ShaderProgram& shaderProgram) {
 	//long long segs = Time::instance().getMili();
 	if (segs == 0) {

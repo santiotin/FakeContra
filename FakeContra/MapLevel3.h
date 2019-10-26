@@ -1,5 +1,5 @@
-#ifndef _MAPLEVEL2_INCLUDE
-#define _MAPLEVEL2_INCLUDE
+#ifndef _MAPLEVEL3_INCLUDE
+#define _MAPLEVEL3_INCLUDE
 
 
 #include "Sprite.h"
@@ -8,7 +8,7 @@
 
 
 
-class MapLevel2
+class MapLevel3
 {
 
 public:
