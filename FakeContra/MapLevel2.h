@@ -19,10 +19,11 @@ public:
 
 	void setPosition(const glm::vec2& pos);
 
-	int count1, count2, count3;
+	int count1, count2, count3, countBoss;
 
 private:
-	bool fase1, fase2, fase3, fase4;
+	long long segs;
+	bool fase1, fase2, fase3, fase4, faseBoss;
 	glm::ivec2 tileMapDispl, posMapLevel2;
 	int startY;
 	Texture spritesheet;

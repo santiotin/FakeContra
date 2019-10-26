@@ -73,6 +73,22 @@ float BolS2::getPosY()
 	return float(posTurret.y);
 }
 
+glm::vec2 BolS2::getPosition() {
+
+	return glm::vec2(posTurret.x, posTurret.y);
+
+}
+
+glm::vec2 BolS2::getBoxCollider() {
+
+	return glm::vec2(32.0, 32.0);
+
+}
+
+glm::vec2 BolS2::getStartP() {
+	return glm::vec2(0.0, 0.0);
+}
+
 
 
 

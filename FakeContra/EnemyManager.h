@@ -52,7 +52,7 @@ public:
 	bool isEnemyInside(glm::vec2 pos, glm::vec2 box);
 
 private:
-	int kills;
+	int kills, lvl;
 	bool changing;
 	long long segs;
 	vector<Enemy*> enemies;

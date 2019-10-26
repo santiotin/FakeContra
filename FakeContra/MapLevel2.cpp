@@ -39,14 +39,15 @@ void MapLevel2::init(const glm::ivec2& tileMapPos, ShaderProgram& shaderProgram)
 void MapLevel2::update(int deltaTime, ShaderProgram& shaderProgram)
 {
 	sprite->update(deltaTime);
-	cout << EnemyManager::instance().getKills() << endl;
-	if (count1 < 10 && fase1) {
+	//cout << EnemyManager::instance().getKills() << endl;
+	if (count1 < 35 && fase1) {
+		cout << "ESTOY FASE 1" << endl;
 		EnemyManager::instance().transition(false);
 		sprite->changeAnimation(FASE_1);
-		if (BulletManager::instance().isPlayerBulletInside(glm::vec2(225, 160), glm::vec2(167, 160), glm::vec2(0, 0)))	count1++; //count suma de 5 en 5 porque si
+		if (BulletManager::instance().isPlayerBulletInside(glm::vec2(225, 110), glm::vec2(167, 160), glm::vec2(0, 0)))	count1++; //count suma de 5 en 5 porque si
 	}
 	
-	else if (count1 > 6 || EnemyManager::instance().getKills() >= EnemyManager::instance().getSize()) {
+	else if (count1 > 6 || EnemyManager::instance().getKills() >= EnemyManager::instance().getSize() && fase1) {
 		EnemyManager::instance().transition(true);
 		EnemyManager::instance().cleanEnemies();
 		if (sprite->animation() != FASE_2) sprite->changeAnimation(FASE_2);
@@ -61,32 +62,74 @@ void MapLevel2::update(int deltaTime, ShaderProgram& shaderProgram)
 		}
 	}
 	else if (fase2) {
+		cout << "ESTOY FASE 2 " << endl;
 		EnemyManager::instance().transition(false);
-		cout << EnemyManager::instance().getKills() << endl;
 		if (EnemyManager::instance().getKills() >= EnemyManager::instance().getSize()) {
 			fase2 = false;
 			count2 = 35;
 		}
 	}
-	else if (count2 > 6) {
+	if (count2 > 6) {
 		EnemyManager::instance().transition(true);
 		EnemyManager::instance().cleanEnemies();
 		if (sprite->animation() != FASE_2) sprite->changeAnimation(FASE_2);
 		fase2 = false;
+		cout << "COUNT2 = " << count2 << endl;
 		++count2;
 		if (count2 > 120) {
-			fase3 = true;
 			count2 = 0;
+			fase3 = true;
+			if (sprite->animation() != FASE_1)sprite->changeAnimation(FASE_1);
+			BulletManager::instance().init(glm::ivec2(0, 0), shaderProgram);
+			EnemyManager::instance().init(map, shaderProgram, 4);
 		}
 	}
 	else if (fase3) {
+		cout << "ESTOY FASE 3 " << endl;
 		EnemyManager::instance().transition(false);
-		if (sprite->animation() != FASE_1)sprite->changeAnimation(FASE_1);
-		BulletManager::instance().init(glm::ivec2(0, 0), shaderProgram);
-		EnemyManager::instance().init(map, shaderProgram, 4);
-		if (EnemyManager::instance().isEmpty()) {
+		if (EnemyManager::instance().getKills() >= EnemyManager::instance().getSize()) {
 			fase3 = false;
 			count3 = 35;
+		}
+	}
+	if (count3 > 6) {
+		EnemyManager::instance().transition(true);
+		EnemyManager::instance().cleanEnemies();
+		if (sprite->animation() != FASE_2) sprite->changeAnimation(FASE_2);
+		fase3 = false;
+		//cout << "COUNT3 = " << count3 << endl;
+		++count3;
+		cout << "NUMERO DE ENEMIGOS ANTES FASE FINAL   " << EnemyManager::instance().getSize() << endl;
+		if (count3 > 120) {
+			count3 = 0;
+			fase4 = true;
+			if (sprite->animation() != FASE_1)sprite->changeAnimation(FASE_1);
+			BulletManager::instance().init(glm::ivec2(0, 0), shaderProgram);
+			EnemyManager::instance().init(map, shaderProgram, 5);
+		}
+	}
+	else if (fase4) {
+		cout << "ESTOY FASE 4 " << endl;
+		cout << "NUMERO DE ENEMIGOS   " << EnemyManager::instance().getSize() << endl;
+		EnemyManager::instance().transition(false);
+		if (EnemyManager::instance().getKills() >= EnemyManager::instance().getSize()) {
+			fase4 = false;
+			countBoss = 35;
+		}
+	}
+	if (countBoss > 6) {
+		EnemyManager::instance().transition(true);
+		EnemyManager::instance().cleanEnemies();
+		if (sprite->animation() != FASE_2) sprite->changeAnimation(FASE_2);
+		fase3 = false;
+		cout << "COUNT_BOSS = " << countBoss << endl;
+		++countBoss;
+		if (countBoss > 120) {
+			countBoss = 0;
+			fase4 = true;
+			if (sprite->animation() != FASE_1)sprite->changeAnimation(FASE_1);
+			BulletManager::instance().init(glm::ivec2(0, 0), shaderProgram);
+			EnemyManager::instance().init(map, shaderProgram, 5);
 		}
 	}
 }
