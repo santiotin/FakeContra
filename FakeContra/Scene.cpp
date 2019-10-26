@@ -282,14 +282,14 @@ void Scene::updateCamera() {
 			projection = glm::ortho(0.f, float(SCREEN_WIDTH - 1), float(SCREEN_HEIGHT - 1), 0.f);
 			
 			lifeIcon->setPosition(glm::vec2(30.0, 0.0));
-			powerUpIcon->setPosition(glm::vec2(SCREEN_WIDTH - 100.0, 30.0));
+			powerUpIcon->setPosition(glm::vec2(SCREEN_WIDTH - 50.0, 0.0));
 		}
 		else {
 			projection = glm::ortho(player->getPosX() - ((SCREEN_WIDTH - 1) / 2), player->getPosX() + ((SCREEN_WIDTH - 1) / 2), float(SCREEN_HEIGHT - 1), 0.f);
 			
 			glm::vec2 aux = glm::vec2(player->getPosX() + 30.0 - ((SCREEN_WIDTH - 1) / 2), 0.0f);
 			lifeIcon->setPosition(aux);
-			glm::vec2 aux1 = glm::vec2(player->getPosX() - 100.0 + ((SCREEN_WIDTH - 1) / 2), 30.0f);
+			glm::vec2 aux1 = glm::vec2(player->getPosX() - 50.0 + ((SCREEN_WIDTH - 1) / 2), 0.0f);
 			powerUpIcon->setPosition(aux1);
 		}
 	}
