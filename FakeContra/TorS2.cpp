@@ -5,9 +5,6 @@
 #include "TorS2.h"
 #include "Game.h"
 
-#define PI 3.141592654
-
-
 
 
 enum TorS2Anims

@@ -8,10 +8,7 @@
 #include <windows.h>
 
 
-#define JUMP_ANGLE_STEP 4
-#define JUMP_HEIGHT 96
-#define FALL_STEP 4
-#define WALK_STEP 2
+#define SUPERMODETIME 6000
 
 #define STANDBOX glm::vec2(40.f, 70.f)
 #define BENDBOX glm::vec2(60.f, 25.f)
@@ -59,6 +56,17 @@ void Player::init(const glm::ivec2& tileMapPos, ShaderProgram& shaderProgram)
 	isDead = false;
 	lifes = 3;
 	deadTime = 0;
+
+	hasPowerUp = true;
+	powerTime = 0;
+	superMode = false;
+	speedLinearBullet = 6.0f; //6
+	speedDiagBullet = 3.5f; //3.5
+	walkStep = 2; //2
+	fallStep = 4; //4
+	jumpHeight = 96; //96
+	jumpAngleStep = 4; //4
+	magicNumber = 8;
 
 	boxPlayer = glm::vec2(30.0f, 30.0);
 
@@ -226,6 +234,9 @@ void Player::update(int deltaTime)
 
 	bSwim = map->inWaterToSwim(posPlayer, glm::ivec2(32, 32));
 
+	changeToNormalMode();
+	if (Game::instance().getKey(32)) changeToSuperMode();
+
 	if (!isDead) {
 		if (Game::instance().getSpecialKey(GLUT_KEY_LEFT)) {
 			bDir = false;
@@ -234,15 +245,15 @@ void Player::update(int deltaTime)
 				setBox(STANDBOX);
 				if (Game::instance().getSpecialKey(GLUT_KEY_UP)) {
 					if (sprite->animation() != DIAG_UP_LEFT_NS_SH) sprite->changeAnimation(DIAG_UP_LEFT_NS_SH);
-					else if (Game::instance().getKey('x')) doShoot(-10.f, -65.f, -1.5f, -1.f, 3.5f);
+					else if (Game::instance().getKey('x')) doShoot(-10.f, -65.f, -1.5f, -1.f, speedDiagBullet);
 				}
 				else if (Game::instance().getSpecialKey(GLUT_KEY_DOWN)) {
 					if (sprite->animation() != DIAG_DOWN_LEFT_NS_SH) sprite->changeAnimation(DIAG_DOWN_LEFT_NS_SH);
-					else if (Game::instance().getKey(int('x'))) doShoot(-15.f, -15.f, -1.5f, 1.f, 3.5f);
+					else if (Game::instance().getKey(int('x'))) doShoot(-15.f, -15.f, -1.5f, 1.f, speedDiagBullet);
 				}
 				else {
 					if (Game::instance().getKey(int('x')) && sprite->animation() != MOVE_LEFT_SH) sprite->changeAnimation(MOVE_LEFT_SH);
-					else if (Game::instance().getKey(int('x')) && sprite->animation() == MOVE_LEFT_SH) doShoot(-5.f, -40.f, -1.f, 0.0f, 6.f);
+					else if (Game::instance().getKey(int('x')) && sprite->animation() == MOVE_LEFT_SH) doShoot(-5.f, -40.f, -1.f, 0.0f, speedLinearBullet);
 					else if (!Game::instance().getKey(int('x')) && sprite->animation() != MOVE_LEFT_NS) sprite->changeAnimation(MOVE_LEFT_NS);
 
 				}
@@ -251,22 +262,22 @@ void Player::update(int deltaTime)
 				setBox(SWIMBOX);
 				if (Game::instance().getSpecialKey(GLUT_KEY_UP)) {
 					if (Game::instance().getKey(int('x')) && sprite->animation() != SWIM_DIAG_UP_LEFT_SH) sprite->changeAnimation(SWIM_DIAG_UP_LEFT_SH);
-					else if (Game::instance().getKey(int('x')) && sprite->animation() == SWIM_DIAG_UP_LEFT_SH) doShoot(-10.f, -30.f, -1.5f, -1.f, 3.5f);
+					else if (Game::instance().getKey(int('x')) && sprite->animation() == SWIM_DIAG_UP_LEFT_SH) doShoot(-10.f, -30.f, -1.5f, -1.f, speedDiagBullet);
 					else if (!Game::instance().getKey(int('x')) && sprite->animation() != SWIM_DIAG_UP_LEFT_NS) sprite->changeAnimation(SWIM_DIAG_UP_LEFT_NS);
 
 				}
 				else {
 					if (Game::instance().getKey(int('x')) && sprite->animation() != SWIM_FORW_LEFT_SH) sprite->changeAnimation(SWIM_FORW_LEFT_SH);
-					else if (Game::instance().getKey(int('x')) && sprite->animation() == SWIM_FORW_LEFT_SH) doShoot(-5.f, -8.f, -1.f, 0.0f, 6.f);
+					else if (Game::instance().getKey(int('x')) && sprite->animation() == SWIM_FORW_LEFT_SH) doShoot(-5.f, -8.f, -1.f, 0.0f, speedLinearBullet);
 					else if (!Game::instance().getKey(int('x')) && sprite->animation() != SWIM_FORW_LEFT_NS) sprite->changeAnimation(SWIM_FORW_LEFT_NS);
 
 				}
 			}
 
-			posPlayer.x -= WALK_STEP;
+			posPlayer.x -= walkStep;
 			if (map->collisionMoveLeft(posPlayer, glm::ivec2(32, 32)))
 			{
-				posPlayer.x += WALK_STEP;
+				posPlayer.x += walkStep;
 				if (!bJumping) sprite->changeAnimation(STAND_FORW_LEFT_NS);
 			}
 		}
@@ -277,15 +288,15 @@ void Player::update(int deltaTime)
 				setBox(STANDBOX);
 				if (Game::instance().getSpecialKey(GLUT_KEY_UP)) {
 					if (sprite->animation() != DIAG_UP_RIGHT_NS_SH)sprite->changeAnimation(DIAG_UP_RIGHT_NS_SH);
-					else if (Game::instance().getKey(int('x'))) doShoot(45.f, -70.f, 1.5f, -1.f, 3.5f);
+					else if (Game::instance().getKey(int('x'))) doShoot(45.f, -70.f, 1.5f, -1.f, speedDiagBullet);
 				}
 				else if (Game::instance().getSpecialKey(GLUT_KEY_DOWN)) {
 					if (sprite->animation() != DIAG_DOWN_RIGHT_NS_SH) sprite->changeAnimation(DIAG_DOWN_RIGHT_NS_SH);
-					else if (Game::instance().getKey(int('x'))) doShoot(62.f, -10.f, 1.5f, 1.f, 3.5f);
+					else if (Game::instance().getKey(int('x'))) doShoot(62.f, -10.f, 1.5f, 1.f, speedDiagBullet);
 				}
 				else {
 					if (Game::instance().getKey(int('x')) && sprite->animation() != MOVE_RIGHT_SH) sprite->changeAnimation(MOVE_RIGHT_SH);
-					else if (Game::instance().getKey(int('x')) && sprite->animation() == MOVE_RIGHT_SH) doShoot(45.f, -40.f, 1.f, 0.0f, 6.0f);
+					else if (Game::instance().getKey(int('x')) && sprite->animation() == MOVE_RIGHT_SH) doShoot(45.f, -40.f, 1.f, 0.0f, speedLinearBullet);
 					else if (!Game::instance().getKey(int('x')) && sprite->animation() != MOVE_RIGHT_NS) sprite->changeAnimation(MOVE_RIGHT_NS);
 
 
@@ -295,23 +306,23 @@ void Player::update(int deltaTime)
 				setBox(SWIMBOX);
 				if (Game::instance().getSpecialKey(GLUT_KEY_UP)) {
 					if (Game::instance().getKey(int('x')) && sprite->animation() != SWIM_DIAG_UP_RIGHT_SH) sprite->changeAnimation(SWIM_DIAG_UP_RIGHT_SH);
-					else if (Game::instance().getKey(int('x')) && sprite->animation() == SWIM_DIAG_UP_RIGHT_SH) doShoot(40.f, -30.f, 1.5f, -1.f, 3.5f);
+					else if (Game::instance().getKey(int('x')) && sprite->animation() == SWIM_DIAG_UP_RIGHT_SH) doShoot(40.f, -30.f, 1.5f, -1.f, speedDiagBullet);
 					else if (!Game::instance().getKey(int('x')) && sprite->animation() != SWIM_DIAG_UP_RIGHT_NS) sprite->changeAnimation(SWIM_DIAG_UP_RIGHT_NS);
 
 
 				}
 				else {
 					if (Game::instance().getKey(int('x')) && sprite->animation() != SWIM_FORW_RIGHT_SH) sprite->changeAnimation(SWIM_FORW_RIGHT_SH);
-					else if (Game::instance().getKey(int('x')) && sprite->animation() == SWIM_FORW_RIGHT_SH) doShoot(40.f, -8.f, 1.f, 0.0f, 6.0f);
+					else if (Game::instance().getKey(int('x')) && sprite->animation() == SWIM_FORW_RIGHT_SH) doShoot(40.f, -8.f, 1.f, 0.0f, speedLinearBullet);
 					else if (!Game::instance().getKey(int('x')) && sprite->animation() != SWIM_FORW_RIGHT_NS) sprite->changeAnimation(SWIM_FORW_RIGHT_NS);
 
 				}
 			}
 
-			posPlayer.x += WALK_STEP;
+			posPlayer.x += walkStep;
 			if (map->collisionMoveRight(posPlayer, glm::ivec2(32, 32)))
 			{
-				posPlayer.x -= WALK_STEP;
+				posPlayer.x -= walkStep;
 				if (!bJumping) sprite->changeAnimation(STAND_FORW_RIGHT_NS);
 			}
 		}
@@ -322,14 +333,14 @@ void Player::update(int deltaTime)
 				if (bDir) {
 					if (Game::instance().getKey(int('x'))) {
 						sprite->changeAnimation(BEND_RIGHT_SH);
-						doShoot(60.f, -13.f, 1.f, 0.f, 6.f);
+						doShoot(60.f, -13.f, 1.f, 0.f, speedLinearBullet);
 					}
 					else sprite->changeAnimation(BEND_RIGHT_NS);
 				}
 				else {
 					if (Game::instance().getKey(int('x'))) {
 						sprite->changeAnimation(BEND_LEFT_SH);
-						doShoot(0.f, -13.f, -1.f, 0.f, 6.f);
+						doShoot(0.f, -13.f, -1.f, 0.f, speedLinearBullet);
 					}
 					else sprite->changeAnimation(BEND_LEFT_NS);
 				}
@@ -348,14 +359,14 @@ void Player::update(int deltaTime)
 				if (bDir) {
 					if (Game::instance().getKey(int('x'))) {
 						sprite->changeAnimation(STAND_UP_RIGHT_SH);
-						doShoot(20.f, -80.f, 0.f, -1.f, 6.f);
+						doShoot(20.f, -80.f, 0.f, -1.f, speedLinearBullet);
 					}
 					else sprite->changeAnimation(STAND_UP_RIGHT_NS);
 				}
 				else {
 					if (Game::instance().getKey(int('x'))) {
 						sprite->changeAnimation(STAND_UP_LEFT_SH);
-						doShoot(5.f, -80.f, 0.f, -1.f, 6.f);
+						doShoot(5.f, -80.f, 0.f, -1.f, speedLinearBullet);
 					}
 					else sprite->changeAnimation(STAND_UP_LEFT_NS);
 				}
@@ -365,14 +376,14 @@ void Player::update(int deltaTime)
 				if (bDir) {
 					if (Game::instance().getKey(int('x'))) {
 						sprite->changeAnimation(SWIM_UP_RIGHT_SH);
-						doShoot(25.f, -50.f, 0.f, -1.f, 6.f);
+						doShoot(25.f, -50.f, 0.f, -1.f, speedLinearBullet);
 					}
 					else sprite->changeAnimation(SWIM_UP_RIGHT_NS);
 				}
 				else {
 					if (Game::instance().getKey(int('x'))) {
 						sprite->changeAnimation(SWIM_UP_LEFT_SH);
-						doShoot(5.f, -50.f, 0.f, -1.f, 6.f);
+						doShoot(5.f, -50.f, 0.f, -1.f, speedLinearBullet);
 					}
 					else sprite->changeAnimation(SWIM_UP_LEFT_NS);
 				}
@@ -387,14 +398,14 @@ void Player::update(int deltaTime)
 				if (bDir) {
 					if (Game::instance().getKey(int('x'))) {
 						sprite->changeAnimation(STAND_FORW_RIGHT_SH);
-						doShoot(41.f, -40.f, 1.f, 0.0f, 6.0f);
+						doShoot(41.f, -40.f, 1.f, 0.0f, speedLinearBullet);
 					}
 					else sprite->changeAnimation(STAND_FORW_RIGHT_NS);
 				}
 				else {
 					if (Game::instance().getKey(int('x'))) {
 						sprite->changeAnimation(STAND_FORW_LEFT_SH);
-						doShoot(0.f, -40.f, -1.f, 0.0f, 6.f);
+						doShoot(0.f, -40.f, -1.f, 0.0f, speedLinearBullet);
 					}
 					else sprite->changeAnimation(STAND_FORW_LEFT_NS);
 
@@ -405,14 +416,14 @@ void Player::update(int deltaTime)
 				if (bDir) {
 					if (Game::instance().getKey(int('x'))) {
 						sprite->changeAnimation(SWIM_FORW_RIGHT_SH);
-						doShoot(40.f, -8.f, 1.f, 0.0f, 6.0f);
+						doShoot(40.f, -8.f, 1.f, 0.0f, speedLinearBullet);
 					}
 					else sprite->changeAnimation(SWIM_FORW_RIGHT_NS);
 				}
 				else {
 					if (Game::instance().getKey(int('x'))) {
 						sprite->changeAnimation(SWIM_FORW_LEFT_SH);
-						doShoot(0.f, -8.f, -1.f, 0.0f, 6.f);
+						doShoot(0.f, -8.f, -1.f, 0.0f, speedLinearBullet);
 					}
 					else sprite->changeAnimation(SWIM_FORW_LEFT_NS);
 
@@ -425,7 +436,7 @@ void Player::update(int deltaTime)
 			if (bDir && sprite->animation() != JUMP_RIGHT) sprite->changeAnimation(JUMP_RIGHT);
 			else if (!bDir && sprite->animation() != JUMP_LEFT) sprite->changeAnimation(JUMP_LEFT);
 
-			jumpAngle += JUMP_ANGLE_STEP;
+			jumpAngle += jumpAngleStep;
 			if (jumpAngle == 180)
 			{
 				bJumping = false;
@@ -435,15 +446,15 @@ void Player::update(int deltaTime)
 			}
 			else
 			{
-				posPlayer.y = int(startY - 96 * sin(3.14159f * jumpAngle / 180.f));
+				posPlayer.y = int(startY - jumpHeight * sin(3.14159f * jumpAngle / 180.f));
 				if (jumpAngle > 90)
-					bJumping = !map->collisionMoveDown(posPlayer, glm::ivec2(32, 32), &posPlayer.y);
+					bJumping = !map->collisionMoveDown(posPlayer, glm::ivec2(32, 32), &posPlayer.y, magicNumber);
 			}
 		}
 		else if (!bSwim)
 		{
-			posPlayer.y += FALL_STEP;
-			if (map->collisionMoveDown(posPlayer, glm::ivec2(32, 32), &posPlayer.y))
+			posPlayer.y += fallStep;
+			if (map->collisionMoveDown(posPlayer, glm::ivec2(32, 32), &posPlayer.y, magicNumber))
 			{
 				//if(Game::instance().getSpecialKey(GLUT_KEY_UP))
 				if (Game::instance().getKey(int('z')))
@@ -461,8 +472,8 @@ void Player::update(int deltaTime)
 			if (bDir && sprite->animation() != DIE_RIGHT) sprite->changeAnimation(DIE_RIGHT);
 			else if (!bDir && sprite->animation() != DIE_LEFT) sprite->changeAnimation(DIE_LEFT);
 
-			posPlayer.y += FALL_STEP;
-			map->collisionMoveDown(posPlayer, glm::ivec2(32, 32), &posPlayer.y);
+			posPlayer.y += fallStep;
+			map->collisionMoveDown(posPlayer, glm::ivec2(32, 32), &posPlayer.y, magicNumber);
 		}
 		else {
 			if (sprite->animation() != DIE_SWIM) sprite->changeAnimation(DIE_SWIM);
@@ -547,9 +558,12 @@ void Player::doShoot(float desplX, float desplY, float dirX, float dirY, float s
 }
 
 void Player::setDeadState(bool dead) {
-	isDead = dead;
-	if (isDead) --lifes;
-	else {
+	if (dead && !isDead) {
+		isDead = dead;
+		--lifes;
+	}
+	else if (!dead && isDead) {
+		isDead = dead;
 		sprite->changeAnimation(STAND_FORW_RIGHT_NS);
 		deadTime = 0;
 	}
@@ -565,6 +579,44 @@ int Player::getDeadTime() {
 
 int Player::getLifes() {
 	return lifes;
+}
+
+void Player::changeToSuperMode() {
+	if (hasPowerUp) {
+		powerTime = Time::instance().getMili();
+		hasPowerUp = false;
+
+		superMode = true;
+		speedLinearBullet = 6.0f; //6
+		speedDiagBullet = 7.0f; //3.5
+		walkStep = 4; //2
+		fallStep = 8; //4
+		jumpHeight = 192; //96
+		jumpAngleStep = 4; //4
+		magicNumber = 16;
+	}
+}
+
+void Player::changeToNormalMode() {
+	if (Time::instance().getMili() - powerTime > SUPERMODETIME) {
+		
+		superMode = false;
+		speedLinearBullet = 6.0f; //6
+		speedDiagBullet = 3.5f; //3.5
+		walkStep = 2; //2
+		fallStep = 4; //4
+		jumpHeight = 96; //96
+		jumpAngleStep = 4; //4
+		magicNumber = 8;
+	}
+}
+
+bool Player::getMode() {
+	return superMode;
+}
+
+bool Player::getHasPower() {
+	return hasPowerUp;
 }
 
 

@@ -1,5 +1,5 @@
-#ifndef _BOLS2_INCLUDE
-#define _BOLS2_INCLUDE
+#ifndef _BIGS2_INCLUDE
+#define _BIGS2_INCLUDE
 
 
 #include "Sprite.h"
@@ -9,7 +9,7 @@
 
 
 
-class BolS2 : public Enemy
+class BigS2 : public Enemy
 {
 
 public:

@@ -184,7 +184,7 @@ bool TileMap::collisionMoveRight(const glm::ivec2 &pos, const glm::ivec2 &size) 
 	return false;
 }
 
-bool TileMap::collisionMoveDown(const glm::ivec2 &pos, const glm::ivec2 &size, int *posY) const
+bool TileMap::collisionMoveDown(const glm::ivec2 &pos, const glm::ivec2 &size, int *posY, int magicNumber) const
 {
 	int x0, x1, y;
 	x0 = pos.x / tileSize;
@@ -197,8 +197,8 @@ bool TileMap::collisionMoveDown(const glm::ivec2 &pos, const glm::ivec2 &size, i
 			if (map[y * mapSize.x + x] == 1 || map[y * mapSize.x + x] == 2 || 
 				map[y * mapSize.x + x] == 36 || map[y * mapSize.x + x] == 37)
 			{
-				//antes el valor era 4
-				if (*posY - tileSize * y + size.y <= 8)
+				//antes el valor era 4, para normal 8, super 16
+				if (*posY - tileSize * y + size.y <= magicNumber)
 				{
 					*posY = tileSize * y - size.y;
 					return true;
@@ -218,7 +218,12 @@ bool TileMap::inWaterToSwim(const glm::ivec2& pos, const glm::ivec2& size) {
 	y = (pos.y + 4 + size.y - 1) / tileSize;
 	for (int x = x0; x <= x1; x++)
 	{
-		if (y < 13 || map[y * mapSize.x + x] == 1 || map[y * mapSize.x + x] == 2) return false;
+		if (y < 13 || map[y * mapSize.x + x] == 1 || map[y * mapSize.x + x] == 2 ||
+			map[y * mapSize.x + x] == 5 || map[y * mapSize.x + x] == 6 ||
+			map[y * mapSize.x + x] == 40 || map[y * mapSize.x + x] == 125) {
+			return false;
+		}
+		if (y > 13) return false;
 		
 	}
 	return true;
