@@ -13,7 +13,7 @@
 #define SCREEN_X 0
 #define SCREEN_Y 0
 
-#define INIT_PLAYER_X_TILES 25
+#define INIT_PLAYER_X_TILES 3
 #define INIT_PLAYER_Y_TILES 1
 
 #define INIT_PLAYER2_X_TILES 9
@@ -100,8 +100,6 @@ void Scene::update(int deltaTime)
 {
 	currentTime += deltaTime;
 
-	if (Game::instance().getKey(int('q'))) init();
-
 	if (getMode() == MENU) {
 		menu->update(deltaTime);
 		if (Game::instance().getKey(13)) {
@@ -126,7 +124,7 @@ void Scene::update(int deltaTime)
 			init();
 		}
 		else {
-			if (BulletManager::instance().isEnemyBulletInside(player->getPosition(), player->getBox()) ||
+			if (BulletManager::instance().isEnemyBulletInside(player->getPosition(), player->getBox(), player->getStartP()) ||
 				EnemyManager::instance().isEnemyInside(player->getPosition(), player->getBox())) {
 				//player->setDeadState(true);
 			}
@@ -146,7 +144,7 @@ void Scene::update(int deltaTime)
 
 		//lvl2->update(deltaTime, playerLevel2->getPosX(), playerLevel2->getPosY());
 		lvl2->update(deltaTime, texProgram);
-		if (BulletManager::instance().isPlayerBulletInside(playerLevel2->getPosition(), playerLevel2->getBox(), glm::vec2(0.0, 0.0))) {
+		if (BulletManager::instance().isEnemyBulletInside(playerLevel2->getPosition(), playerLevel2->getBox(), glm::vec2(0.0,0.0))) {
 			playerLevel2->setDeadState(true);
 		}
 

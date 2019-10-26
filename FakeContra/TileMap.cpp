@@ -194,7 +194,8 @@ bool TileMap::collisionMoveDown(const glm::ivec2 &pos, const glm::ivec2 &size, i
 	{
 		//if (!Game::instance().getSpecialKey(GLUT_KEY_DOWN)) {
 		if (!Game::instance().getSpecialKey(GLUT_KEY_DOWN) || !Game::instance().getKey((int('z')))) { 
-			if (map[y * mapSize.x + x] == 1 || map[y * mapSize.x + x] == 2 || map[y * mapSize.x + x] == 36 || map[y * mapSize.x + x] == 37 || (y == 13))
+			if (map[y * mapSize.x + x] == 1 || map[y * mapSize.x + x] == 2 || 
+				map[y * mapSize.x + x] == 36 || map[y * mapSize.x + x] == 37 || (y == 13))
 			{
 				if (*posY - tileSize * y + size.y <= 4)
 				{

@@ -31,7 +31,7 @@ public:
 	float getPosY();
 	glm::vec2 getPosition();
 	glm::vec2 getBox();
-	glm::vec2 getStratP();
+	glm::vec2 getStartP();
 	void setStartP(glm::vec2 start);
 
 	void doShoot(float posX, float posY, float dirX, float dirY, float speed);

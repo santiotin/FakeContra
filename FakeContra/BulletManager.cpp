@@ -15,6 +15,10 @@ void BulletManager::init(const glm::ivec2& tileMapPos, ShaderProgram& shaderProg
 	if (!playerBullets.empty())  playerBullets.clear();
 	if (!enemyBullets.empty()) enemyBullets.clear();
 
+	createEnemyBullet(glm::vec2(450, 100), glm::vec2(-1.0, 0.0), 3, 0);
+	createEnemyBullet(glm::vec2(550, 150), glm::vec2(-1.0, 0.0), 3, 0);
+	createEnemyBullet(glm::vec2(650, 190), glm::vec2(-1.0, 0.0), 3, 0);
+
 }
 
 void BulletManager::update(int deltaTime, float posPlayerX) {
@@ -100,12 +104,12 @@ bool BulletManager::isPlayerBulletInside(glm::vec2 pos, glm::vec2 box, glm::vec2
 	}
 	return false;
 }
-bool BulletManager::isEnemyBulletInside(glm::vec2 pos, glm::vec2 box) {
+bool BulletManager::isEnemyBulletInside(glm::vec2 pos, glm::vec2 box, glm::vec2 startP) {
 
 	for (int i = 0; i < enemyBullets.size(); i++) {
 		Bullet* bullet = enemyBullets[i];
 		if (bullet != NULL) {
-			if (hitBox(bullet->getPosition(), pos, box, glm::vec2 (0.0,0.0))) {
+			if (hitBox(bullet->getPosition(), pos, box, startP)) {
 				OutputDebugStringA("DEAD/n");
 				bullet->setDead();
 				return true;
@@ -118,7 +122,7 @@ bool BulletManager::isEnemyBulletInside(glm::vec2 pos, glm::vec2 box) {
 
 bool BulletManager::hitBox(glm::vec2 bulletPos, glm::vec2 entityPos, glm::vec2 entityBox, glm::vec2 entityStartP) {
 	if (bulletPos.x > entityPos.x && bulletPos.x < (entityPos.x + entityBox.x)) {
-		if ((bulletPos.y + bulletOffset) > entityPos.y+entityStartP.y && (bulletPos.y + bulletOffset) < (entityPos.y + entityBox.y)) {
+		if ((bulletPos.y + bulletOffset) > entityPos.y+entityStartP.y && (bulletPos.y + bulletOffset) < (entityPos.y+ entityStartP.y+ entityBox.y)) {
 			return true;
 		}
 		else return false;
