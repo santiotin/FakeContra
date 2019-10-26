@@ -79,13 +79,13 @@ float Runner::getPosY()
 }
 
 glm::vec2 Runner::getPosition() {
-
 	return glm::vec2(posRunner.x, posRunner.y);
-
 }
 
 glm::vec2 Runner::getBoxCollider() {
+	return glm::vec2(32.0, 64.0);
+}
 
-	return glm::vec2(40.0, 80.0);
-
+glm::vec2 Runner::getStartP() {
+	return glm::vec2(0.0, 0.0);
 }

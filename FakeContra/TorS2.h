@@ -22,6 +22,8 @@ public:
 
 	float getPosX(), getPosY();
 
+	glm::vec2 getStartP();
+
 	glm::vec2 getPosition() override;
 	glm::vec2 getBoxCollider() override;
 

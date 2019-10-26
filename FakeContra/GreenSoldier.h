@@ -20,6 +20,7 @@ public:
 	void setPosition(const glm::vec2& pos);
 
 	float getPosX(), getPosY();
+	glm::vec2 getStartP();
 
 	glm::vec2 getPosition() override;
 	glm::vec2 getBoxCollider() override;

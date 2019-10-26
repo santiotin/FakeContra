@@ -96,8 +96,12 @@ glm::vec2 GreenSoldier::getPosition() {
 
 glm::vec2 GreenSoldier::getBoxCollider() {
 
-	return glm::vec2(35.0, 40.0);
+	return glm::vec2(32.0, 64.0);
 
+}
+
+glm::vec2 GreenSoldier::getStartP() {
+	return glm::vec2(0.0, 0.0);
 }
 
 

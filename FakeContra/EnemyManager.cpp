@@ -4,12 +4,12 @@
 #define SCREEN_X 0
 #define SCREEN_Y 0
 
-#define INIT_TURRET1_X_TILES 102
-#define INIT_TURRET1_Y_TILES 8.4
-#define INIT_TURRET2_X_TILES 114
-#define INIT_TURRET2_Y_TILES 8.4
-#define INIT_TURRET3_X_TILES 78
-#define INIT_TURRET3_Y_TILES 10.4
+#define INIT_TURRET1_X_TILES 30
+#define INIT_TURRET1_Y_TILES 7
+#define INIT_TURRET2_X_TILES 35
+#define INIT_TURRET2_Y_TILES 8
+#define INIT_TURRET3_X_TILES 40
+#define INIT_TURRET3_Y_TILES 9
 #define INIT_TURRET4_X_TILES 186
 #define INIT_TURRET4_Y_TILES 12.4
 #define INIT_TURRET5_X_TILES 194
@@ -68,7 +68,7 @@ void EnemyManager::init(TileMap *tileMap, ShaderProgram& shaderProgram, int leve
 {
 	this->sh = shaderProgram;
 	kills = 0;
-	segs = 0;
+	segs = 0; //boom boom
 	if (level == 1)
 	{
 		if (!enemies.empty()) enemies.clear();
@@ -119,7 +119,7 @@ void EnemyManager::update(int deltaTime, float posPlayerX, float posPlayerY)
 		Enemy* enemy = enemies[i];
 		if (enemy != NULL) {
 			glm::vec2 aux = enemy->getPosition();
-			if (BulletManager::instance().isPlayerBulletInside(aux, enemy->getBoxCollider())) {
+			if (BulletManager::instance().isPlayerBulletInside(aux, enemy->getBoxCollider(), enemy->getStartP())) {
 				enemies[i] = NULL;
 				kills++;
 			}
@@ -219,13 +219,13 @@ void EnemyManager::initLevel1(TileMap* tileMap, ShaderProgram& shaderProgram) {
 	runner1->init(glm::ivec2(SCREEN_X, SCREEN_Y), shaderProgram);
 	runner1->setPosition(glm::vec2((INIT_RUNNER1_X_TILES * tileMap->getTileSize()), INIT_RUNNER1_Y_TILES * tileMap->getTileSize()));
 	runner1->setTileMap(tileMap);
-	enemies.push_back(runner1);
+	//enemies.push_back(runner1);
 
 	Enemy* runner2 = new Runner();
 	runner2->init(glm::ivec2(SCREEN_X, SCREEN_Y), shaderProgram);
 	runner2->setPosition(glm::vec2((INIT_RUNNER2_X_TILES * tileMap->getTileSize()), INIT_RUNNER2_Y_TILES * tileMap->getTileSize()));
 	runner2->setTileMap(tileMap);
-	enemies.push_back(runner2);
+	//enemies.push_back(runner2);
 
 
 	Enemy* soldier1 = new Soldier();
@@ -347,6 +347,7 @@ void EnemyManager::initLevel2_4( ShaderProgram& shaderProgram)
 	bol22->setPosition(glm::vec2(INIT_BOLS22_X_TILES , INIT_BOLS22_Y_TILES ));
 	enemies.push_back(bol22);
 }
+
 void EnemyManager::greenSoldier(ShaderProgram& shaderProgram) {
 	//long long segs = Time::instance().getMili();
 	if (segs == 0) {
