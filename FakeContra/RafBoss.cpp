@@ -16,7 +16,7 @@ enum RafBossAnims
 void RafBoss::init(const glm::ivec2& tileMapPos, ShaderProgram& shaderProgram)
 {
 	spritesheet.loadFromFile("images/RafBoss.png", TEXTURE_PIXEL_FORMAT_RGBA);
-	sprite = Sprite::createSprite(glm::ivec2(32, 32), glm::vec2(0.50, 1.00), &spritesheet, &shaderProgram);
+	sprite = Sprite::createSprite(glm::ivec2(80, 68), glm::vec2(0.50, 1.00), &spritesheet, &shaderProgram);
 	sprite->setNumberAnimations(2);
 
 
