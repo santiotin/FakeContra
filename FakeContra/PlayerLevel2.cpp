@@ -202,9 +202,6 @@ void PlayerLevel2::update(int deltaTime)
 	else {
 
 		sprite->changeAnimation(DIE);
-
-		posPlayer.y += FALL_STEP;
-		map->collisionMoveDown(posPlayer, glm::ivec2(32, 32), &posPlayer.y);
 		
 
 	}

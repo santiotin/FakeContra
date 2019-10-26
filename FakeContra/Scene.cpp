@@ -13,7 +13,7 @@
 #define SCREEN_X 0
 #define SCREEN_Y 0
 
-#define INIT_PLAYER_X_TILES 100
+#define INIT_PLAYER_X_TILES 3
 #define INIT_PLAYER_Y_TILES 1
 
 #define INIT_PLAYER2_X_TILES 10
@@ -72,8 +72,10 @@ void Scene::init()
 		BulletManager::instance().init(glm::ivec2(SCREEN_X, SCREEN_Y), texProgram);
 		EnemyManager::instance().init(map, texProgram, 1);
 
-		icon = new LifeIcon();
-		icon->init(glm::ivec2(SCREEN_X, SCREEN_Y), texProgram);
+		lifeIcon = new LifeIcon();
+		lifeIcon->init(glm::ivec2(SCREEN_X, SCREEN_Y), texProgram);
+		powerUpIcon = new PowerUpIcon();
+		powerUpIcon->init(glm::ivec2(SCREEN_X, SCREEN_Y), texProgram);
 
 		player = new Player();
 		player->init(glm::ivec2(SCREEN_X, SCREEN_Y), texProgram);
@@ -132,8 +134,9 @@ void Scene::update(int deltaTime)
 		if (player->getDeadState() && player->getLifes() > 0 && player->getDeadTime() > DEAD_TIME) {
 			glm::vec2 aux = player->getPosition();
 			aux.y = 80.0;
-			player->setDeadState(false);
 			player->setPosition(aux);
+			player->setDeadState(false);
+			
 		}
 		else if (player->getDeadState() && player->getLifes() > 0 && player->getDeadTime() < DEAD_TIME) {
 			//do nothing
@@ -145,7 +148,7 @@ void Scene::update(int deltaTime)
 		else {
 			if (BulletManager::instance().isEnemyBulletInside(player->getPosition(), player->getBox(), player->getStartP()) ||
 				EnemyManager::instance().isEnemyInside(player->getPosition(), player->getBox())) {
-				//player->setDeadState(true);
+				if(!player->getMode()) player->setDeadState(true);
 			}
 		}
 
@@ -154,8 +157,10 @@ void Scene::update(int deltaTime)
 		EnemyManager::instance().update(deltaTime, player->getPosX(), player->getPosY());
 		BulletManager::instance().update(deltaTime, player->getPosX(), 1);
 
-		icon->changeLife(player->getLifes());
-		icon->update(deltaTime);
+		lifeIcon->changeLife(player->getLifes());
+		lifeIcon->update(deltaTime);
+		powerUpIcon->changePower(player->getHasPower());
+		powerUpIcon->update(deltaTime);
 	}
 
 	else if (getMode() == LEVEL_2) {
@@ -219,7 +224,8 @@ void Scene::render()
 		EnemyManager::instance().render();
 		player->render();
 		BulletManager::instance().render();
-		icon->render();
+		lifeIcon->render();
+		powerUpIcon->render();
 	}
 	else if (getMode() == LEVEL_2) {
 		lvl2->render();
@@ -275,13 +281,16 @@ void Scene::updateCamera() {
 		if (player->getPosX() < ((SCREEN_WIDTH - 1) / 2)) {
 			projection = glm::ortho(0.f, float(SCREEN_WIDTH - 1), float(SCREEN_HEIGHT - 1), 0.f);
 			
-			icon->setPosition(glm::vec2(30.0, 0.0));
+			lifeIcon->setPosition(glm::vec2(30.0, 0.0));
+			powerUpIcon->setPosition(glm::vec2(SCREEN_WIDTH - 100.0, 30.0));
 		}
 		else {
 			projection = glm::ortho(player->getPosX() - ((SCREEN_WIDTH - 1) / 2), player->getPosX() + ((SCREEN_WIDTH - 1) / 2), float(SCREEN_HEIGHT - 1), 0.f);
 			
 			glm::vec2 aux = glm::vec2(player->getPosX() + 30.0 - ((SCREEN_WIDTH - 1) / 2), 0.0f);
-			icon->setPosition(aux);
+			lifeIcon->setPosition(aux);
+			glm::vec2 aux1 = glm::vec2(player->getPosX() - 100.0 + ((SCREEN_WIDTH - 1) / 2), 30.0f);
+			powerUpIcon->setPosition(aux1);
 		}
 	}
 	else if (getMode() == LEVEL_2) {

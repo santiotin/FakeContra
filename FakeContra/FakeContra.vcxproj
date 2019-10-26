@@ -25,6 +25,8 @@
     <ClInclude Include="MapLevel3.h" />
     <ClInclude Include="Menu.h" />
     <ClInclude Include="Player.h" />
+    <ClInclude Include="PowerUp.h" />
+    <ClInclude Include="PowerUpIcon.h" />
     <ClInclude Include="Runner.h" />
     <ClInclude Include="PlayerLevel2.h" />
     <ClInclude Include="Scene.h" />
@@ -55,6 +57,8 @@
     <ClCompile Include="MapLevel3.cpp" />
     <ClCompile Include="Menu.cpp" />
     <ClCompile Include="Player.cpp" />
+    <ClCompile Include="PowerUp.cpp" />
+    <ClCompile Include="PowerUpIcon.cpp" />
     <ClCompile Include="Runner.cpp" />
     <ClCompile Include="PlayerLevel2.cpp" />
     <ClCompile Include="Scene.cpp" />
