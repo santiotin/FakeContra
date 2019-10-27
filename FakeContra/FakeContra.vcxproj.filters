@@ -33,6 +33,7 @@
     <ClCompile Include="PowerUpIcon.cpp" />
     <ClCompile Include="TorBoss.cpp" />
     <ClCompile Include="RafBoss.cpp" />
+    <ClCompile Include="TorBlue.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Runner.h" />
@@ -50,6 +51,7 @@
     <ClInclude Include="PowerUpIcon.h" />
     <ClInclude Include="TorBoss.h" />
     <ClInclude Include="RafBoss.h" />
+    <ClInclude Include="TorBlue.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Game.cpp">

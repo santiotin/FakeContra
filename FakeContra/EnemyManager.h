@@ -13,6 +13,7 @@
 #include "Time.h"
 #include "Enemy.h"
 #include "TorBoss.h"
+#include "TorBlue.h"
 #include "BigS2.h"
 #include "RafBoss.h"
 #include <glm/gtc/matrix_transform.hpp>
@@ -54,6 +55,8 @@ public:
 	void isFaseBoss(bool fb);
 	void transition(bool trans);
 	void cleanEnemies();
+	bool isBoss();
+	bool isTrans();
 	bool isEnemyInside(glm::vec2 pos, glm::vec2 box);
 
 private:

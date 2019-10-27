@@ -25,7 +25,7 @@ public:
 	void setPosition(const glm::vec2 &pos);
 	void setBox(glm::vec2 box);
 	void setDeadState(bool dead);
-	bool Player::getDeadState();
+	bool getDeadState();
 
 	float getPosX();
 	float getPosY();
@@ -35,7 +35,6 @@ public:
 	void setStartP(glm::vec2 start);
 
 	void doShoot(float posX, float posY, float dirX, float dirY, float speed);
-
 	
 	int getDeadTime();
 	int getLifes();

@@ -112,29 +112,47 @@ void MapLevel2::update(int deltaTime, ShaderProgram& shaderProgram)
 		EnemyManager::instance().transition(false);
 		if (EnemyManager::instance().getKills() >= EnemyManager::instance().getSize()) {
 			fase4 = false;
-			countBoss = 35;
+			count4 = 35;
 		}
 	}
-	if (countBoss > 6) {
+	if (count4 > 6) {
 		EnemyManager::instance().transition(true);
 		EnemyManager::instance().cleanEnemies();
 		if (sprite->animation() != FASE_2) sprite->changeAnimation(FASE_2);
 		fase4 = false;
-		++countBoss;
-		if (countBoss > 120) {
-			countBoss = 0;
-			fase4 = true;
-			if (sprite->animation() != FASE_1)sprite->changeAnimation(FASE_1);
+		++count4;
+		if (count4 > 120) {
+			count4 = 0;
+			faseBoss = true;
+			initBoss = true;
+			if (sprite->animation() != FASE_BOSS)sprite->changeAnimation(FASE_BOSS);
 			BulletManager::instance().init(glm::ivec2(0, 0), shaderProgram);
 			EnemyManager::instance().init(map, shaderProgram, 6);
+			
 		}
 	}
 	else if (faseBoss) {
+		initBoss = false;
+		//if (sprite->animation() != FASE_BOSS)sprite->changeAnimation(FASE_BOSS);
 		EnemyManager::instance().isFaseBoss(true);
 		EnemyManager::instance().transition(false);
-		if (EnemyManager::instance().getKills() >= EnemyManager::instance().getSize()) {
-			fase4 = false;
-			countBoss = 35;
+		if (count1 < 5) { //dos vidas son count1 < 5
+			if (BulletManager::instance().isPlayerBulletInside(glm::vec2(155, 105), glm::vec2(78, 160), glm::vec2(0, 0)))	count1++;
+		}
+		if (count2 < 5) { //dos vidas son count1 < 5
+			if (BulletManager::instance().isPlayerBulletInside(glm::vec2(280, 105), glm::vec2(78, 160), glm::vec2(0, 0)))	count2++;
+		}
+		if (count3 < 5) { //dos vidas son count1 < 5
+			if (BulletManager::instance().isPlayerBulletInside(glm::vec2(400, 105), glm::vec2(78, 160), glm::vec2(0, 0)))	count3++;
+		}
+		if (count4 < 5) { //dos vidas son count1 < 5
+			if (BulletManager::instance().isPlayerBulletInside(glm::vec2(155, 210), glm::vec2(78, 160), glm::vec2(0, 0)))	count4++;
+		}
+		if (count5 < 5) { //dos vidas son count1 < 5
+			if (BulletManager::instance().isPlayerBulletInside(glm::vec2(280, 210), glm::vec2(78, 160), glm::vec2(0, 0)))	count5++;
+		}
+		if (count6 < 5) { //dos vidas son count1 < 5
+			if (BulletManager::instance().isPlayerBulletInside(glm::vec2(400, 210), glm::vec2(78, 160), glm::vec2(0, 0)))	count6++;
 		}
 	}
 	if (countBoss > 6) {
@@ -168,7 +186,7 @@ void MapLevel2::setPosition(const glm::vec2& pos)
 
 bool MapLevel2::isFaseBoss()
 {
-	return faseBoss;
+	return initBoss;
 }
 
 

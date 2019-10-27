@@ -25,9 +25,11 @@ void BulletManager::update(int deltaTime, float posPlayerX, int level) {
 		if (bullet != NULL) {
 			if (level == 1) {
 				outside = isLevel1BulletOutside(bullet->getPosition(), posPlayerX);
-			}else {
+			}
+			else if (level == 2 && !EnemyManager::instance().isBoss()) {
 				outside = isLevel2BulletOutside(bullet->getPosition(), posPlayerX);
 			}
+			else outside = isLevel3BulletOutside(bullet->getPosition(), posPlayerX);
 
 			if (outside) {
 				playerBullets[i] = NULL;
@@ -157,6 +159,17 @@ bool BulletManager::isLevel2BulletOutside(glm::vec2 posBullet, float posPlayerX)
 		return true;
 	}
 	else if ((posBullet.y + 20.0) < SCREEN_HEIGHT * 0.30 || posBullet.y > SCREEN_HEIGHT - 100.0) {
+		//OutputDebugStringA("Bullet OUTSIDE");
+		return true;
+	}
+	else return false;
+}
+
+bool BulletManager::isLevel3BulletOutside(glm::vec2 posBullet, float posPlayerX) {
+	if (posBullet.x > SCREEN_WIDTH + 10.0 || posBullet.x < -10.0) {
+		return true;
+	}
+	else if ((posBullet.y + 120.0) < SCREEN_HEIGHT * 0.30 || posBullet.y > SCREEN_HEIGHT - 100.0) {
 		//OutputDebugStringA("Bullet OUTSIDE");
 		return true;
 	}

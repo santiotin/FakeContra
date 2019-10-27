@@ -48,19 +48,19 @@ void GreenSoldier::update(int deltaTime, float posPlayerX, float posPlayerY)
 	float posGreenSoldierY = getPosY();
 	float distX = posGreenSoldierX - posPlayerX;
 	if (distX < 65 && distX > -65) shooting = true;
-	else if (distX > 64) {
+	else if (distX > 64 && posGreenSoldierX > 230) {
 		if(sprite->animation() != MOVE_LEFT)sprite->changeAnimation(MOVE_LEFT);
 		posGreenSoldierX--;
 		setPosition(glm::vec2(posGreenSoldierX, posGreenSoldierY));
 		shooting = false;
 	}
-	else if (distX < -64) {
+	else if (distX < -64 && posGreenSoldierX < 360) {
 		if (sprite->animation() != MOVE_RIGHT)sprite->changeAnimation(MOVE_RIGHT);
 		posGreenSoldierX++;
 		setPosition(glm::vec2(posGreenSoldierX,posGreenSoldierY));
 		shooting = false;
 	}
-	if (shooting) {
+	if (shooting || (posPlayerX < 231 && posGreenSoldierX < 235) || (posPlayerX > 359 && posGreenSoldierX > 355)) {
 		sprite->changeAnimation(SHOOT);
 		doShoot(13.0, -65.0, distX * -0.006, 1.0, 2);
 	}

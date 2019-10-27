@@ -25,6 +25,7 @@ public:
 	void setPosition(const glm::vec2& pos);
 	void setBox(glm::vec2 box);
 	void setDeadState(bool dead);
+	bool getDeadState();
 
 	float getPosX();
 	float getPosY();
@@ -34,7 +35,13 @@ public:
 	void setStartP(glm::vec2 start);
 	void doShoot(float posX, float posY, float dirX, float dirY);
 
+	int getDeadTime();
+	int getLifes();
+
+	void setLifes(int l);
+
 private:
+	int posxmin, posxmax;
 	bool bJumping, bDir, isDead;
 	glm::ivec2 tileMapDispl, posPlayer, boxPlayer, startP;
 	int jumpAngle, startY;
@@ -42,6 +49,9 @@ private:
 	Texture spritesheet;
 	Sprite* sprite;
 	TileMap* map;
+
+	int lifes;
+	int deadTime;
 
 };
 

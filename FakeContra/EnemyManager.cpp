@@ -63,22 +63,25 @@
 #define INIT_BOLS22_X_TILES 355
 #define INIT_BOLS22_Y_TILES 215
 
-#define INIT_BBS2_X_TILES 232
-#define INIT_BBS2_Y_TILES 220
+#define INIT_BBS2_X_TILES 290
+#define INIT_BBS2_Y_TILES 250
 
-#define INIT_TORBOSS1_X_TILES 300
-#define INIT_TORBOSS1_Y_TILES 200
-#define INIT_TORBOSS2_X_TILES 232
-#define INIT_TORBOSS2_Y_TILES 250
-#define INIT_TORBOSS3_X_TILES 300
-#define INIT_TORBOSS3_Y_TILES 250
-#define INIT_TORBOSS4_X_TILES 355
-#define INIT_TORBOSS4_Y_TILES 250
+#define INIT_TORBOSS1_X_TILES 285
+#define INIT_TORBOSS1_Y_TILES 182
+#define INIT_TORBOSS2_X_TILES 160
+#define INIT_TORBOSS2_Y_TILES 285
+#define INIT_TORBOSS3_X_TILES 285
+#define INIT_TORBOSS3_Y_TILES 285
+#define INIT_TORBOSS4_X_TILES 405
+#define INIT_TORBOSS4_Y_TILES 285
 
-#define INIT_RAFBOSS1_X_TILES 238
-#define INIT_RAFBOSS1_Y_TILES 200
-#define INIT_RAFBOSS2_X_TILES 355
-#define INIT_RAFBOSS2_Y_TILES 200
+#define INIT_RAFBOSS1_X_TILES 160
+#define INIT_RAFBOSS1_Y_TILES 182
+#define INIT_RAFBOSS2_X_TILES 405
+#define INIT_RAFBOSS2_Y_TILES 182
+
+#define INIT_TORBLUE_X_TILES 290
+#define INIT_TORBLUE_Y_TILES 115
 
 void EnemyManager::init(TileMap *tileMap, ShaderProgram& shaderProgram, int level)//pasa tmb lvl
 {
@@ -132,9 +135,15 @@ int EnemyManager::getSize()
 void EnemyManager::isFaseBoss(bool fb) {
 	boss = fb;
 }
-
+bool EnemyManager::isBoss() {
+	return boss;
+}
+bool EnemyManager::isTrans() {
+	return changing;
+}
 void EnemyManager::update(int deltaTime, float posPlayerX, float posPlayerY)
 {
+	
 	for (int i = 0; i < enemies.size(); i++) {
 		Enemy* enemy = enemies[i];
 		if (enemy != NULL) {
@@ -312,6 +321,7 @@ void EnemyManager::initLevel2_2(ShaderProgram& shaderProgram)
 	tors21->init(glm::ivec2(SCREEN_X, SCREEN_Y), shaderProgram);
 	tors21->setPosition(glm::vec2(INIT_TORS21_X_TILES , INIT_TORS21_Y_TILES ));
 	enemies.push_back(tors21);
+
 	Enemy* tors22 = new TorS2();
 	tors22->init(glm::ivec2(SCREEN_X, SCREEN_Y), shaderProgram);
 	tors22->setPosition(glm::vec2(INIT_TORS22_X_TILES , INIT_TORS22_Y_TILES ));
@@ -388,6 +398,11 @@ void EnemyManager::initLevel_Boss(ShaderProgram& shaderProgram)
 	rafbos2->init(glm::ivec2(SCREEN_X, SCREEN_Y), shaderProgram);
 	rafbos2->setPosition(glm::vec2(INIT_RAFBOSS2_X_TILES, INIT_RAFBOSS2_Y_TILES));
 	enemies.push_back(rafbos2);
+
+	Enemy* torblue = new TorBlue();
+	torblue->init(glm::ivec2(SCREEN_X, SCREEN_Y), shaderProgram);
+	torblue->setPosition(glm::vec2(INIT_TORBLUE_X_TILES, INIT_TORBLUE_Y_TILES));
+	enemies.push_back(torblue);
 }
 void EnemyManager::greenSoldier(ShaderProgram& shaderProgram) {
 	//long long segs = Time::instance().getMili();

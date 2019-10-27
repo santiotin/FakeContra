@@ -1,5 +1,5 @@
-#ifndef _BOLS2_INCLUDE
-#define _BOLS2_INCLUDE
+#ifndef _TORBLUE_INCLUDE
+#define _TORBLUE_INCLUDE
 
 
 #include "Sprite.h"
@@ -9,7 +9,7 @@
 
 
 
-class BolS2 : public Enemy
+class TorBlue : public Enemy
 {
 
 public:
@@ -27,18 +27,14 @@ public:
 	glm::vec2 getPosition() override;
 	glm::vec2 getBoxCollider() override;
 
-	void doShoot(float desplX, float desplY, float dirX, float dirY, float speed);
-
-
 private:
+	bool shooting;
 	glm::ivec2 tileMapDispl, posTurret;
 	int startY;
 	float distX, distY;
 	Texture spritesheet;
 	Sprite* sprite;
 	TileMap* map;
-
-	long long lastShoot;
 
 };
 

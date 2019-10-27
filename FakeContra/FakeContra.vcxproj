@@ -39,6 +39,7 @@
     <ClInclude Include="Texture.h" />
     <ClInclude Include="TileMap.h" />
     <ClInclude Include="Time.h" />
+    <ClInclude Include="TorBlue.h" />
     <ClInclude Include="TorBoss.h" />
     <ClInclude Include="TorRafaga1.h" />
     <ClInclude Include="TorS2.h" />
@@ -73,6 +74,7 @@
     <ClCompile Include="Texture.cpp" />
     <ClCompile Include="TileMap.cpp" />
     <ClCompile Include="Time.cpp" />
+    <ClCompile Include="TorBlue.cpp" />
     <ClCompile Include="TorBoss.cpp" />
     <ClCompile Include="TorRafaga1.cpp" />
     <ClCompile Include="TorS2.cpp" />

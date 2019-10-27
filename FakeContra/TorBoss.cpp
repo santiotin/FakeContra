@@ -79,7 +79,7 @@ glm::vec2 TorBoss::getPosition() {
 
 glm::vec2 TorBoss::getBoxCollider() {
 
-	return glm::vec2(32.0, 32.0);
+	return glm::vec2(70.0, 55.0);
 
 }
 
