@@ -23,7 +23,7 @@ public:
 
 private:
 	long long segs;
-	bool fase1, fase2, fase3, fase4, faseBoss, faseEnd;
+	bool fase1, fase2, fase3, fase4, faseBoss, faseEnd, done;
 	glm::ivec2 tileMapDispl, posMapLevel2;
 	int startY;
 	Texture spritesheet;
