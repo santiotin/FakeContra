@@ -215,12 +215,13 @@ void PlayerLevel2::update(int deltaTime)
 
 			}
 		}
-	else {
-		deadTime++;
-		sprite->changeAnimation(DIE);
+		else {
+			deadTime++;
+			sprite->changeAnimation(DIE);
+		}
+
+		sprite->setPosition(glm::vec2(float(tileMapDispl.x + posPlayer.x), float(tileMapDispl.y + posPlayer.y)));
 	}
-	
-	sprite->setPosition(glm::vec2(float(tileMapDispl.x + posPlayer.x), float(tileMapDispl.y + posPlayer.y)));
 }
 
 void PlayerLevel2::render()
