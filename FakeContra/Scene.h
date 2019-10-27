@@ -61,6 +61,8 @@ private:
 	glm::mat4 projection;
 	int mode;
 
+	int playerLives;
+
 };
 
 

@@ -41,6 +41,8 @@ void PlayerLevel2::init(const glm::ivec2& tileMapPos, ShaderProgram& shaderProgr
 	bJumping = false;
 	lastShoot = 0;
 	isDead = false;
+	lifes = 3;
+	deadTime = 0;
 
 	boxPlayer = glm::vec2(35.0f, 35.0);
 
@@ -200,9 +202,8 @@ void PlayerLevel2::update(int deltaTime)
 		}
 	}
 	else {
-
+		deadTime++;
 		sprite->changeAnimation(DIE);
-		
 
 	}
 
@@ -246,7 +247,6 @@ glm::vec2 PlayerLevel2::getBox()
 	return boxPlayer;
 }
 
-
 glm::vec2 PlayerLevel2::getStartP() {
 	if (getBox().x == STANDBOX.x && getBox().y == STANDBOX.y) return STANDSTARTP;
 	else if (getBox().x == BENDBOX.x && getBox().y == BENDBOX.y) return BENDSTARTP;
@@ -282,5 +282,29 @@ void PlayerLevel2::doShoot(float desplX, float desplY, float dirX, float dirY) {
 }
 
 void PlayerLevel2::setDeadState(bool dead) {
-	isDead = dead;
+	if (dead && !isDead) {
+		isDead = dead;
+		--lifes;
+	}
+	else if (!dead && isDead) {
+		isDead = dead;
+		sprite->changeAnimation(STAND_NS);
+		deadTime = 0;
+	}
+}
+
+bool PlayerLevel2::getDeadState() {
+	return isDead;
+}
+
+int PlayerLevel2::getDeadTime() {
+	return deadTime;
+}
+
+int PlayerLevel2::getLifes() {
+	return lifes;
+}
+
+void PlayerLevel2::setLifes(int l) {
+	lifes = l;
 }
