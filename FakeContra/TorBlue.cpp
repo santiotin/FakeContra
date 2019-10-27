@@ -52,8 +52,9 @@ void TorBlue::update(int deltaTime, float posPlayerX, float posPlayerY)
 	}
 
 	if (shooting) {
-		doShoot(0.0, -30.0, distX * -0.004, 1.0, 4);
+		
 	}
+	doShoot(0.0, -30.0, distX * -0.004, 1.0, 4);
 
 }
 

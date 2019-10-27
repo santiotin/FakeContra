@@ -170,7 +170,7 @@ void Scene::update(int deltaTime)
 				EnemyManager::instance().isEnemyInside(player->getPosition(), player->getBox())) {
 				if (!player->getMode()) {
 					//player->setDeadState(true);
-					playerLives--;
+					//playerLives--;
 				}
 			}
 			else if (player->getPosition().y > SCREEN_HEIGHT + 10.0) {
