@@ -35,6 +35,7 @@ public:
 	void doShoot(float posX, float posY, float dirX, float dirY);
 
 private:
+	int posxmin, posxmax;
 	bool bJumping, bDir, isDead;
 	glm::ivec2 tileMapDispl, posPlayer, boxPlayer, startP;
 	int jumpAngle, startY;
