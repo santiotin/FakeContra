@@ -13,10 +13,14 @@ public:
 	void update(int deltaTime);
 	void render();
 
+	bool canStartGame();
+
 private:
 	glm::ivec2 tileMapDispl;
 	Texture spritesheet;
 	Sprite* sprite;
+
+	long long lastPulse;
 };
 
 

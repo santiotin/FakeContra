@@ -134,7 +134,7 @@ void Scene::update(int deltaTime)
 
 	if (getMode() == MENU) {
 		menu->update(deltaTime);
-		if (Game::instance().getKey(13)) {
+		if (Game::instance().getKey(13) && menu->canStartGame()) {
 			setMode(LEVEL_1);
 			init();
 		}
