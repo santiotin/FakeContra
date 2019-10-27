@@ -142,7 +142,7 @@ bool EnemyManager::isBoss() {
 bool EnemyManager::isTrans() {
 	return changing;
 }
-void EnemyManager::update(int deltaTime, float posPlayerX, float posPlayerY)
+void EnemyManager::update(int deltaTime, float posPlayerX, float posPlayerY, bool isDead)
 {
 	
 	for (int i = 0; i < enemies.size(); i++) {
@@ -153,7 +153,7 @@ void EnemyManager::update(int deltaTime, float posPlayerX, float posPlayerY)
 				enemies[i] = NULL;
 				kills++;
 			}
-			else enemy->update(deltaTime, posPlayerX, posPlayerY);
+			else enemy->update(deltaTime, posPlayerX, posPlayerY, isDead);
 		}
 
 	}

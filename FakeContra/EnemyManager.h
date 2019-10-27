@@ -44,7 +44,7 @@ public:
 	void initLevel2_4( ShaderProgram& shaderProgram);
 	void initLevel_Boss(ShaderProgram& shaderProgram);
 
-	void update(int deltaTime, float posPlayerX, float posPlayerY);
+	void update(int deltaTime, float posPlayerX, float posPlayerY, bool isDead);
 	void render();
 	void greenSoldier(ShaderProgram& shaderProgram);
 	

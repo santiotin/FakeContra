@@ -44,7 +44,7 @@ void TorRafaga::init(const glm::ivec2& tileMapPos, ShaderProgram& shaderProgram)
 
 }
 
-void TorRafaga::update(int deltaTime, float posPlayerX, float posPlayerY)
+void TorRafaga::update(int deltaTime, float posPlayerX, float posPlayerY, bool isDead)
 {
 	sprite->update(deltaTime);
 	float posTorRafX = getPosX();
@@ -65,7 +65,7 @@ void TorRafaga::update(int deltaTime, float posPlayerX, float posPlayerY)
 	else if (valor == 1)sprite->changeAnimation(POINT_11);
 
 	if (abs(distX) <= 320) {
-		shootFromAnimation();
+		if (!isDead) shootFromAnimation();
 	}
 	
 }

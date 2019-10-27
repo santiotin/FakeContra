@@ -31,7 +31,7 @@ void TorBlue::init(const glm::ivec2& tileMapPos, ShaderProgram& shaderProgram)
 
 }
 
-void TorBlue::update(int deltaTime, float posPlayerX, float posPlayerY)
+void TorBlue::update(int deltaTime, float posPlayerX, float posPlayerY, bool isDead)
 {
 	sprite->update(deltaTime);
 	float posTorBlueX = getPosX();
@@ -54,7 +54,7 @@ void TorBlue::update(int deltaTime, float posPlayerX, float posPlayerY)
 	if (shooting) {
 		
 	}
-	doShoot(0.0, -30.0, distX * -0.004, 1.0, 4);
+	if(!isDead) doShoot(20.0, -50.0, distX * -0.004, 1.0, 4);
 
 }
 

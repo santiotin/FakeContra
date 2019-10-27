@@ -33,7 +33,7 @@ void RafBoss::init(const glm::ivec2& tileMapPos, ShaderProgram& shaderProgram)
 
 }
 
-void RafBoss::update(int deltaTime, float posPlayerX, float posPlayerY)
+void RafBoss::update(int deltaTime, float posPlayerX, float posPlayerY, bool isDead)
 {
 	sprite->update(deltaTime);
 	float posTurretX = getPosX();
@@ -43,7 +43,7 @@ void RafBoss::update(int deltaTime, float posPlayerX, float posPlayerY)
 
 	distY = posTurretY - posPlayerY;
 
-	doShoot(20.0, -40.0, distX * -0.006, 1.0, 2);
+	if(!isDead) doShoot(20.0, -40.0, distX * -0.006, 1.0, 2);
 
 }
 

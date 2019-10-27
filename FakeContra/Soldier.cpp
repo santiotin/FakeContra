@@ -49,7 +49,7 @@ void Soldier::init(const glm::ivec2& tileMapPos, ShaderProgram& shaderProgram)
 
 }
 
-void Soldier::update(int deltaTime, float posPlayerX, float posPlayerY)
+void Soldier::update(int deltaTime, float posPlayerX, float posPlayerY, bool isDead)
 {
 	sprite->update(deltaTime);
 	float posSoldierX = getPosX();
@@ -79,7 +79,7 @@ void Soldier::update(int deltaTime, float posPlayerX, float posPlayerY)
 	else if (valor == 11)sprite->changeAnimation(POINT_9L);
 
 	if (abs(distX) <= 320) {
-		shootFromAnimation();
+		if (!isDead) shootFromAnimation();
 	}
 }
 

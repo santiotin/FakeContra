@@ -123,7 +123,8 @@ bool BulletManager::isEnemyBulletInside(glm::vec2 pos, glm::vec2 box, glm::vec2 
 	for (int i = 0; i < enemyBullets.size(); i++) {
 		Bullet* bullet = enemyBullets[i];
 		if (bullet != NULL) {
-			if (hitBox(bullet->getPosition(), pos, box, startP) || hitBox(bullet->getInversePosition(), pos, box, startP)) {
+			if (hitBox(bullet->getPosition(), pos, box, startP) || 
+				hitBox(bullet->getInversePosition(), pos, box, startP)) {
 				OutputDebugStringA("DEAD/n");
 				bullet->setDead();
 				return true;

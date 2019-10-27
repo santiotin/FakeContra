@@ -63,12 +63,15 @@ bool Time::isAbleToShootEnemyLevel2(long long lastShoot) {
 
 bool Time::isAbleToShootEnemyLevel3(long long lastShoot) {
 
-	if (getMili() - lastShoot < 3500) return false;
-	else {
-		int num = rand() % 90;
-		if (num == 11) return true;
-		else return false;
-	}
+	//if (getMili() - lastShoot < 3500) return false;
+	//else {
+		//int num = rand() % 90;
+		//if (num == 11) return true;
+		//else return false;
+	//}
+	int num = rand() % 400;
+	if (num == 11) return true;
+	else return false;
 }
 
 //commit

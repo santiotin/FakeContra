@@ -115,8 +115,8 @@ void Scene::init()
 		lvl3->init(glm::ivec2(SCREEN_X, SCREEN_Y), texProgram);
 		lvl3->setPosition(glm::vec2((INIT_LVL3_X_TILES * map->getTileSize()), INIT_LVL3_Y_TILES * map->getTileSize()));
 
-		/*BulletManager::instance().init(glm::ivec2(SCREEN_X, SCREEN_Y), texProgram);
-		EnemyManager::instance().init(map, texProgram, 6);*/
+		BulletManager::instance().init(glm::ivec2(SCREEN_X, SCREEN_Y), texProgram);
+		/*EnemyManager::instance().init(map, texProgram, 6);*/
 
 		playerLevel3 = new PlayerLevel3();
 		playerLevel3->init(glm::ivec2(SCREEN_X, SCREEN_Y), texProgram);
@@ -191,7 +191,7 @@ void Scene::update(int deltaTime)
 
 		player->update(deltaTime);
 
-		EnemyManager::instance().update(deltaTime, player->getPosX(), player->getPosY());
+		EnemyManager::instance().update(deltaTime, player->getPosX(), player->getPosY(), player->getDeadState());
 		BulletManager::instance().update(deltaTime, player->getPosX(), 1);
 
 		lifeIcon->changeLife(player->getLifes());
@@ -235,7 +235,7 @@ void Scene::update(int deltaTime)
 		//lvl2->update(deltaTime, playerLevel2->getPosX(), playerLevel2->getPosY());
 		lvl2->update(deltaTime, texProgram);
     
-		EnemyManager::instance().update(deltaTime, playerLevel2->getPosX(), playerLevel2->getPosY());
+		EnemyManager::instance().update(deltaTime, playerLevel2->getPosX(), playerLevel2->getPosY(), playerLevel2->getDeadState());
 		BulletManager::instance().update(deltaTime, playerLevel2->getPosX(), 2);
 
 		lifeIcon->changeLife(playerLevel2->getLifes());
@@ -269,7 +269,7 @@ void Scene::update(int deltaTime)
 		//lvl2->update(deltaTime, playerLevel2->getPosX(), playerLevel2->getPosY());
 		lvl3->update(deltaTime, texProgram);
 		
-		EnemyManager::instance().update(deltaTime, playerLevel3->getPosX(), playerLevel3->getPosY());
+		EnemyManager::instance().update(deltaTime, playerLevel3->getPosX(), playerLevel3->getPosY(), playerLevel3->getDeadState());
 		BulletManager::instance().update(deltaTime, playerLevel3->getPosX(), 2);
 
 		lifeIcon->changeLife(playerLevel3->getLifes());

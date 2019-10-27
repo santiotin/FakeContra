@@ -15,7 +15,7 @@ class Soldier : public Enemy
 public:
 
 	void init(const glm::ivec2& tileMapPos, ShaderProgram& shaderProgram) override; 
-	void update(int deltaTime, float posPlayerX, float posPlayerY) override;
+	void update(int deltaTime, float posPlayerX, float posPlayerY, bool isDead) override;
 	void render() override;
 
 	void setTileMap(TileMap* tileMap) override;

@@ -46,7 +46,7 @@ void Sniper::init(const glm::ivec2& tileMapPos, ShaderProgram& shaderProgram)
 
 }
 
-void Sniper::update(int deltaTime, float posPlayerX, float posPlayerY)
+void Sniper::update(int deltaTime, float posPlayerX, float posPlayerY, bool isDead)
 {
 	sprite->update(deltaTime);
 	float posSniperX = getPosX();
@@ -63,7 +63,7 @@ void Sniper::update(int deltaTime, float posPlayerX, float posPlayerY)
 	else if (distX < -300) sprite->changeAnimation(HEAT_R);
 
 	if (abs(distX) <= 320) {
-		shootFromAnimation();
+		if (!isDead) shootFromAnimation();
 	}
 
 }

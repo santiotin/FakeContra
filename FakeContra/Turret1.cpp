@@ -68,7 +68,7 @@ void Turret::init(const glm::ivec2& tileMapPos, ShaderProgram& shaderProgram)
 
 }
 
-void Turret::update(int deltaTime, float posPlayerX, float posPlayerY)
+void Turret::update(int deltaTime, float posPlayerX, float posPlayerY, bool isDead)
 {
 	sprite->update(deltaTime);
 	float posTurretX = getPosX();
@@ -98,7 +98,7 @@ void Turret::update(int deltaTime, float posPlayerX, float posPlayerY)
 	else if (valor == 11)sprite->changeAnimation(POINT_9);
 
 	if (abs(distX) <= 320) {
-		shootFromAnimation();
+		if (!isDead) shootFromAnimation();
 	}
 }
 
