@@ -27,6 +27,7 @@ void BolS2::init(const glm::ivec2& tileMapPos, ShaderProgram& shaderProgram)
 
 	sprite->changeAnimation(0);
 	tileMapDispl = tileMapPos;
+	lastShoot = 0;
 
 
 }
@@ -40,6 +41,8 @@ void BolS2::update(int deltaTime, float posPlayerX, float posPlayerY)
 	distX = posTurretX - posPlayerX;
 
 	distY = posTurretY - posPlayerY;
+
+	doShoot(13.0, -65.0, distX * -0.006, 1.0, 2);
 
 
 }
@@ -77,14 +80,34 @@ glm::vec2 BolS2::getPosition() {
 }
 
 glm::vec2 BolS2::getBoxCollider() {
-
 	return glm::vec2(32.0, 32.0);
-
 }
 
 glm::vec2 BolS2::getStartP() {
 	return glm::vec2(0.0, 0.0);
 }
+
+void BolS2::doShoot(float desplX, float desplY, float dirX, float dirY, float speed) {
+	if (lastShoot == 0) {
+		int num = rand() % 153;
+		if (num == 7) {
+			glm::vec2 pos = glm::vec2(posTurret.x + desplX, posTurret.y + desplY);
+			glm::vec2 dir = glm::vec2(dirX, dirY);
+			BulletManager::instance().createEnemyBullet(pos, dir, speed, 0);
+			lastShoot = Time::instance().getMili();
+		}
+	}
+	else {
+		if (Time::instance().isAbleToShootEnemyLevel2(lastShoot)) {
+			glm::vec2 pos = glm::vec2(posTurret.x + desplX, posTurret.y + desplY);
+			glm::vec2 dir = glm::vec2(dirX, dirY);
+			BulletManager::instance().createEnemyBullet(pos, dir, speed, 0);
+			lastShoot = Time::instance().getMili();
+		}
+	}
+}
+
+
 
 
 

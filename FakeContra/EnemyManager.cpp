@@ -321,6 +321,7 @@ void EnemyManager::initLevel2_2(ShaderProgram& shaderProgram)
 	tors21->init(glm::ivec2(SCREEN_X, SCREEN_Y), shaderProgram);
 	tors21->setPosition(glm::vec2(INIT_TORS21_X_TILES , INIT_TORS21_Y_TILES ));
 	enemies.push_back(tors21);
+
 	Enemy* tors22 = new TorS2();
 	tors22->init(glm::ivec2(SCREEN_X, SCREEN_Y), shaderProgram);
 	tors22->setPosition(glm::vec2(INIT_TORS22_X_TILES , INIT_TORS22_Y_TILES ));
