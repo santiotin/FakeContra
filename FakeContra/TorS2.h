@@ -4,7 +4,6 @@
 
 #include "Sprite.h"
 #include "TileMap.h"
-#include "TorS2.h"
 #include "Enemy.h"
 
 

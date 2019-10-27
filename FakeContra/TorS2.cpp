@@ -17,7 +17,7 @@ void TorS2::init(const glm::ivec2& tileMapPos, ShaderProgram& shaderProgram)
 {
 	spritesheet.loadFromFile("images/TorS2.png", TEXTURE_PIXEL_FORMAT_RGBA);
 	sprite = Sprite::createSprite(glm::ivec2(32, 32), glm::vec2(0.33, 1.00), &spritesheet, &shaderProgram);
-	sprite->setNumberAnimations(12);
+	sprite->setNumberAnimations(1);
 
 	lastShoot = 0;
 

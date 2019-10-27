@@ -7,6 +7,7 @@
 #include "TileMap.h"
 #include "Player.h"
 #include "PlayerLevel2.h"
+#include "PlayerLevel3.h"
 #include "BulletManager.h"
 #include "EnemyManager.h"
 #include "BulletManager.h"
@@ -47,6 +48,7 @@ private:
 
 	Player *player;
 	PlayerLevel2* playerLevel2;
+	PlayerLevel3* playerLevel3;
 	LifeIcon* lifeIcon;
 	PowerUpIcon* powerUpIcon;
 	PowerUp* powerUp;

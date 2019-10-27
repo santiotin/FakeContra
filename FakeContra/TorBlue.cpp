@@ -19,6 +19,7 @@ void TorBlue::init(const glm::ivec2& tileMapPos, ShaderProgram& shaderProgram)
 	sprite = Sprite::createSprite(glm::ivec2(64, 64), glm::vec2(0.5, 1.00), &spritesheet, &shaderProgram);
 	sprite->setNumberAnimations(2);
 
+	lastShoot = 0;
 
 	sprite->setAnimationSpeed(SHOOT, 8);
 	sprite->addKeyframe(SHOOT, glm::vec2(0.00f, 0.00f));
@@ -49,9 +50,11 @@ void TorBlue::update(int deltaTime, float posPlayerX, float posPlayerY)
 		setPosition(glm::vec2(posTorBlueX, posTorBlueY));
 		shooting = false;
 	}
+
 	if (shooting) {
-		//doShoot(13.0, -65.0, distX * -0.006, 1.0, 2);
+		
 	}
+	doShoot(0.0, -30.0, distX * -0.004, 1.0, 4);
 
 }
 
@@ -95,6 +98,26 @@ glm::vec2 TorBlue::getBoxCollider() {
 
 glm::vec2 TorBlue::getStartP() {
 	return glm::vec2(0.0, 0.0);
+}
+
+void TorBlue::doShoot(float desplX, float desplY, float dirX, float dirY, float speed) {
+	if (lastShoot == 0) {
+		int num = rand() % 153;
+		if (num == 1) {
+			glm::vec2 pos = glm::vec2(posTurret.x + desplX, posTurret.y + desplY);
+			glm::vec2 dir = glm::vec2(dirX, dirY);
+			BulletManager::instance().createEnemyBullet(pos, dir, speed, 3);
+			lastShoot = Time::instance().getMili();
+		}
+	}
+	else {
+		if (Time::instance().isAbleToShootEnemyLevel3(lastShoot)) {
+			glm::vec2 pos = glm::vec2(posTurret.x + desplX, posTurret.y + desplY);
+			glm::vec2 dir = glm::vec2(dirX, dirY);
+			BulletManager::instance().createEnemyBullet(pos, dir, speed, 3);
+			lastShoot = Time::instance().getMili();
+		}
+	}
 }
 
 

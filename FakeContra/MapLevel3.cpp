@@ -11,50 +11,78 @@
 
 enum MapLevel3Anims
 {
-	FASE_BOSS,TOR_ROTA, FASE_END
+	FASE_BOSS,FASE_INI, FASE_END
 };
 
 void MapLevel3::init(const glm::ivec2& tileMapPos, ShaderProgram& shaderProgram)
 {
 	count1 = count2 = count3 = count4 = count5 = count6 = 0;
 	fase1 = true;
-	fase2 = fase3 = fase4 = false;
-	spritesheet.loadFromFile("images/boss.png", TEXTURE_PIXEL_FORMAT_RGBA);
-	sprite = Sprite::createSprite(glm::ivec2(640, 480), glm::vec2(1.00, 1.00), &spritesheet, &shaderProgram);
-	sprite->setNumberAnimations(2);
+	fase2 = fase3 = fase4 = done = false;
+	spritesheet.loadFromFile("images/boss_final.png", TEXTURE_PIXEL_FORMAT_RGBA);
+	sprite = Sprite::createSprite(glm::ivec2(640, 480), glm::vec2(0.20, 1.00), &spritesheet, &shaderProgram);
+	sprite->setNumberAnimations(4);
 
-	sprite->setAnimationSpeed(FASE_BOSS, 2);
-	sprite->addKeyframe(FASE_BOSS, glm::vec2(0.00f, 0.00f));
+	sprite->setAnimationSpeed(FASE_INI, 2);
+	sprite->addKeyframe(FASE_INI, glm::vec2(0.00f, 0.00f));
+
+	sprite->setAnimationSpeed(FASE_BOSS, 8);
+	sprite->addKeyframe(FASE_BOSS, glm::vec2(0.20f, 0.00f));
+	sprite->addKeyframe(FASE_BOSS, glm::vec2(0.40f, 0.00f));
+	sprite->addKeyframe(FASE_BOSS, glm::vec2(0.60f, 0.00f));
+
+	sprite->setAnimationSpeed(FASE_END, 2);
+	sprite->addKeyframe(FASE_END, glm::vec2(0.80f, 0.00f));
 
 	EnemyManager::instance().cleanEnemies();
 	sprite->changeAnimation(0);
 	tileMapDispl = tileMapPos;
+
+	segs = Time::instance().getMili();
+	sprite->changeAnimation(0);
 }
 
 void MapLevel3::update(int deltaTime, ShaderProgram& shaderProgram)
 {
 	sprite->update(deltaTime);
-	if (sprite->animation() != FASE_BOSS)sprite->changeAnimation(FASE_BOSS);
-	EnemyManager::instance().transition(false);
-	EnemyManager::instance().isFaseBoss(true);
-	if (count1 < 5) { //dos vidas son count1 < 5
-		if (BulletManager::instance().isPlayerBulletInside(glm::vec2(155, 105), glm::vec2(78, 160), glm::vec2(0, 0)))	count1++;
+	if (Time::instance().getMili() - segs < 2000) {
+		if (sprite->animation() != FASE_INI) sprite->changeAnimation(FASE_INI);
 	}
-	if (count2 < 5) { //dos vidas son count1 < 5
-		if (BulletManager::instance().isPlayerBulletInside(glm::vec2(280, 105), glm::vec2(78, 160), glm::vec2(0, 0)))	count2++;
+	else {
+		if (!done) {
+			done = true;
+			BulletManager::instance().init(glm::ivec2(0, 0), shaderProgram);
+			EnemyManager::instance().init(map, shaderProgram, 6);
+		}
+		if (sprite->animation() != FASE_BOSS)sprite->changeAnimation(FASE_BOSS);
+		EnemyManager::instance().transition(false);
+		EnemyManager::instance().isFaseBoss(true);
+		if (count1 < 5) { //dos vidas son count1 < 5
+			if (BulletManager::instance().isPlayerBulletInside(glm::vec2(155, 105), glm::vec2(78, 160), glm::vec2(0, 0)))	count1++;
+		}
+		if (count2 < 5) { //dos vidas son count1 < 5
+			if (BulletManager::instance().isPlayerBulletInside(glm::vec2(280, 105), glm::vec2(78, 160), glm::vec2(0, 0)))	count2++;
+		}
+		if (count3 < 5) { //dos vidas son count1 < 5
+			if (BulletManager::instance().isPlayerBulletInside(glm::vec2(400, 105), glm::vec2(78, 160), glm::vec2(0, 0)))	count3++;
+		}
+		if (count4 < 5) { //dos vidas son count1 < 5
+			if (BulletManager::instance().isPlayerBulletInside(glm::vec2(155, 210), glm::vec2(78, 160), glm::vec2(0, 0)))	count4++;
+		}
+		if (count5 < 5) { //dos vidas son count1 < 5
+			if (BulletManager::instance().isPlayerBulletInside(glm::vec2(280, 210), glm::vec2(78, 160), glm::vec2(0, 0)))	count5++;
+		}
+		if (count6 < 5) { //dos vidas son count1 < 5
+			if (BulletManager::instance().isPlayerBulletInside(glm::vec2(400, 210), glm::vec2(78, 160), glm::vec2(0, 0)))	count6++;
+		}
+		if (count1 < 5 || count2 < 5 || count3 < 5 || count4 < 5 || count5 < 5 || count6 < 5 ) {
+			BulletManager::instance().isPlayerBulletInside(glm::vec2(160, 50), glm::vec2(350, 160), glm::vec2(0, 0));
+		}
+		if (EnemyManager::instance().getKills() > 6) {
+			if (sprite->animation() != FASE_END)sprite->changeAnimation(FASE_END);
+		}
 	}
-	if (count3 < 5) { //dos vidas son count1 < 5
-		if (BulletManager::instance().isPlayerBulletInside(glm::vec2(400, 105), glm::vec2(78, 160), glm::vec2(0, 0)))	count3++;
-	}
-	if (count4 < 5) { //dos vidas son count1 < 5
-		if (BulletManager::instance().isPlayerBulletInside(glm::vec2(155, 210), glm::vec2(78, 160), glm::vec2(0, 0)))	count4++;
-	}
-	if (count5 < 5) { //dos vidas son count1 < 5
-		if (BulletManager::instance().isPlayerBulletInside(glm::vec2(280, 210), glm::vec2(78, 160), glm::vec2(0, 0)))	count5++;
-	}
-	if (count6 < 5) { //dos vidas son count1 < 5
-		if (BulletManager::instance().isPlayerBulletInside(glm::vec2(400, 210), glm::vec2(78, 160), glm::vec2(0, 0)))	count6++;
-	}
+	
 	
 	/*if (count1 < 35 && faseBoss) {
 		EnemyManager::instance().transition(false);

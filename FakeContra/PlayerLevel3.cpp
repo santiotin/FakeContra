@@ -2,7 +2,7 @@
 #include <iostream>
 #include <GL/glew.h>
 #include <GL/glut.h>
-#include "PlayerLevel2.h"
+#include "PlayerLevel3.h"
 #include "Game.h"
 
 //prueba rama nueva de la ultima semana
@@ -21,13 +21,13 @@
 #define JUMPSTARTP glm::vec2(0.f, 60.f)
 
 
-enum PlayerLevel2Anims
+enum PlayerLevel3Anims
 {
-	RUN_FORW, 
+	RUN_FORW,
 
 	STAND_NS, STAND_SH,
 
-	MOVE_LEFT, MOVE_RIGHT, 
+	MOVE_LEFT, MOVE_RIGHT,
 
 	JUMP_LEFT, JUMP_RIGHT,
 
@@ -36,7 +36,7 @@ enum PlayerLevel2Anims
 	DIE,
 };
 
-void PlayerLevel2::init(const glm::ivec2& tileMapPos, ShaderProgram& shaderProgram)
+void PlayerLevel3::init(const glm::ivec2& tileMapPos, ShaderProgram& shaderProgram)
 {
 	bJumping = false;
 	lastShoot = 0;
@@ -110,7 +110,7 @@ void PlayerLevel2::init(const glm::ivec2& tileMapPos, ShaderProgram& shaderProgr
 
 }
 
-void PlayerLevel2::update(int deltaTime)
+void PlayerLevel3::update(int deltaTime)
 {
 	sprite->update(deltaTime);
 	cout << EnemyManager::instance().isTrans() << endl;
@@ -218,51 +218,51 @@ void PlayerLevel2::update(int deltaTime)
 		else {
 			deadTime++;
 			sprite->changeAnimation(DIE);
-			if (posPlayer.y < 336) posPlayer.y = posPlayer.y + 4;
+			if (posPlayer.y < 410) posPlayer.y = posPlayer.y + 4;
 		}
 
 		sprite->setPosition(glm::vec2(float(tileMapDispl.x + posPlayer.x), float(tileMapDispl.y + posPlayer.y)));
 	}
 }
 
-void PlayerLevel2::render()
+void PlayerLevel3::render()
 {
 	sprite->render();
 }
 
-void PlayerLevel2::setTileMap(TileMap* tileMap)
+void PlayerLevel3::setTileMap(TileMap* tileMap)
 {
 	map = tileMap;
 }
 
-void PlayerLevel2::setPosition(const glm::vec2& pos)
+void PlayerLevel3::setPosition(const glm::vec2& pos)
 {
 	posPlayer = pos;
 	sprite->setPosition(glm::vec2(float(tileMapDispl.x + posPlayer.x), float(tileMapDispl.y + posPlayer.y)));
 }
 
-glm::vec2 PlayerLevel2::getPosition()
+glm::vec2 PlayerLevel3::getPosition()
 {
 	return posPlayer;
 }
 
-float PlayerLevel2::getPosX()
+float PlayerLevel3::getPosX()
 {
 	//prova de canvi de branca
 	return float(posPlayer.x);
 }
 
-float PlayerLevel2::getPosY()
+float PlayerLevel3::getPosY()
 {
 	return float(posPlayer.y);
 }
 
-glm::vec2 PlayerLevel2::getBox()
+glm::vec2 PlayerLevel3::getBox()
 {
 	return boxPlayer;
 }
 
-glm::vec2 PlayerLevel2::getStartP() {
+glm::vec2 PlayerLevel3::getStartP() {
 	if (getBox().x == STANDBOX.x && getBox().y == STANDBOX.y) return STANDSTARTP;
 	else if (getBox().x == BENDBOX.x && getBox().y == BENDBOX.y) return BENDSTARTP;
 	else if (getBox().x == JUMPBOX.x && getBox().y == JUMPBOX.y) return JUMPSTARTP;
@@ -270,16 +270,16 @@ glm::vec2 PlayerLevel2::getStartP() {
 	return STANDSTARTP;
 }
 
-void PlayerLevel2::setStartP(glm::vec2 start) {
+void PlayerLevel3::setStartP(glm::vec2 start) {
 	startP = start;
 }
 
-void PlayerLevel2::setBox(glm::vec2 box)
+void PlayerLevel3::setBox(glm::vec2 box)
 {
 	boxPlayer = box;
 }
 
-void PlayerLevel2::doShoot(float desplX, float desplY, float dirX, float dirY) {
+void PlayerLevel3::doShoot(float desplX, float desplY, float dirX, float dirY) {
 	if (lastShoot == 0) {
 		glm::vec2 pos = glm::vec2(posPlayer.x + desplX, posPlayer.y + desplY);
 		glm::vec2 dir = glm::vec2(dirX, dirY);
@@ -296,7 +296,7 @@ void PlayerLevel2::doShoot(float desplX, float desplY, float dirX, float dirY) {
 	}
 }
 
-void PlayerLevel2::setDeadState(bool dead) {
+void PlayerLevel3::setDeadState(bool dead) {
 	if (dead && !isDead) {
 		isDead = dead;
 		--lifes;
@@ -308,18 +308,18 @@ void PlayerLevel2::setDeadState(bool dead) {
 	}
 }
 
-bool PlayerLevel2::getDeadState() {
+bool PlayerLevel3::getDeadState() {
 	return isDead;
 }
 
-int PlayerLevel2::getDeadTime() {
+int PlayerLevel3::getDeadTime() {
 	return deadTime;
 }
 
-int PlayerLevel2::getLifes() {
+int PlayerLevel3::getLifes() {
 	return lifes;
 }
 
-void PlayerLevel2::setLifes(int l) {
+void PlayerLevel3::setLifes(int l) {
 	lifes = l;
 }

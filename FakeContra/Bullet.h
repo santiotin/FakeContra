@@ -27,6 +27,8 @@ public:
 	glm::vec2 getPosition();
 	glm::vec2 getDirection();
 
+	glm::vec2 getInversePosition();
+
 
 private:
 	glm::ivec2 tileMapDispl;
@@ -39,6 +41,8 @@ private:
 	TileMap* map;
 
 	float deadTime;
+
+	int type;
 
 };
 
