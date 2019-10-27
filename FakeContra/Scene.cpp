@@ -20,7 +20,7 @@
 #define INIT_PLAYER2_Y_TILES 10.5
 
 #define INIT_PLAYER3_X_TILES 10
-#define INIT_PLAYER3_Y_TILES 12.5
+#define INIT_PLAYER3_Y_TILES 12.85
 
 #define INIT_LVL2_X_TILES 0.0
 #define INIT_LVL2_Y_TILES 1.4
@@ -201,14 +201,13 @@ void Scene::update(int deltaTime)
 				playerLevel2->setDeadState(true);
 				playerLives--;
 			}
-			if (lvl2->isFaseBoss())playerLevel2->setPosition(glm::vec2());
+			if (lvl2->isFaseBoss())playerLevel2->setPosition(glm::vec2(INIT_PLAYER3_X_TILES,INIT_PLAYER3_Y_TILES+400));
 		}
 		playerLevel2->update(deltaTime);
 
 		//lvl2->update(deltaTime, playerLevel2->getPosX(), playerLevel2->getPosY());
 		lvl2->update(deltaTime, texProgram);
-		
-
+    
 		EnemyManager::instance().update(deltaTime, playerLevel2->getPosX(), playerLevel2->getPosY());
 		BulletManager::instance().update(deltaTime, playerLevel2->getPosX(), 2);
 

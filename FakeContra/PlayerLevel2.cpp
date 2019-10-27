@@ -41,6 +41,16 @@ void PlayerLevel2::init(const glm::ivec2& tileMapPos, ShaderProgram& shaderProgr
 	bJumping = false;
 	lastShoot = 0;
 	isDead = false;
+
+	if (EnemyManager::instance().isBoss()) {
+		posxmin = 70;
+		posxmax = 540;
+	}
+	else {
+		posxmin = 85;
+		posxmax = 500;
+	}
+
 	lifes = 3;
 	deadTime = 0;
 
@@ -103,110 +113,113 @@ void PlayerLevel2::init(const glm::ivec2& tileMapPos, ShaderProgram& shaderProgr
 void PlayerLevel2::update(int deltaTime)
 {
 	sprite->update(deltaTime);
+	cout << EnemyManager::instance().isTrans() << endl;
+	if (EnemyManager::instance().isTrans()) {
+		if (sprite->animation() != RUN_FORW) sprite->changeAnimation(RUN_FORW);
+	}
+	else {
+		if (!isDead) {
+			if (Game::instance().getSpecialKey(GLUT_KEY_LEFT) && posPlayer.x > posxmin) {
+				bDir = false;
 
-	if (!isDead) {
-		if (Game::instance().getSpecialKey(GLUT_KEY_LEFT)) {
-			bDir = false;
-
-			if (!bJumping) {
-				if (sprite->animation() != MOVE_LEFT) sprite->changeAnimation(MOVE_LEFT);
-				setBox(STANDBOX);
-				if (Game::instance().getKey(int('x'))) {
-					doShoot(15.0, -90.0, 0.0, -1.0);
+				if (!bJumping) {
+					if (sprite->animation() != MOVE_LEFT) sprite->changeAnimation(MOVE_LEFT);
+					setBox(STANDBOX);
+					if (Game::instance().getKey(int('x'))) {
+						doShoot(15.0, -90.0, 0.0, -1.0);
+					}
 				}
-			}
 
-			posPlayer.x -= WALK_STEP;
-			if (map->collisionMoveLeft(posPlayer, glm::ivec2(32, 32)))
-			{
-				posPlayer.x += WALK_STEP;
-				if (!bJumping) sprite->changeAnimation(STAND_NS);
-			}
-		}
-
-		else if (Game::instance().getSpecialKey(GLUT_KEY_RIGHT)) {
-			bDir = true;
-			if (!bJumping) {
-				if (sprite->animation() != MOVE_RIGHT) sprite->changeAnimation(MOVE_RIGHT);
-				setBox(STANDBOX);
-				if (Game::instance().getKey(int('x'))) {
-					doShoot(17.5, -90.0, 0.0, -1.0);
-				}
-				
-			}
-
-			posPlayer.x += WALK_STEP;
-			if (map->collisionMoveRight(posPlayer, glm::ivec2(32, 32)))
-			{
 				posPlayer.x -= WALK_STEP;
-				if (!bJumping) sprite->changeAnimation(STAND_NS);
-			}
-		}
-
-		else if (Game::instance().getSpecialKey(GLUT_KEY_DOWN)) {
-			if (!bJumping) {
-				setBox(BENDBOX);
-				if (Game::instance().getKey(int('x'))) {
-					sprite->changeAnimation(BEND_SH);
-					doShoot(20.0, -70.0, 0.0, -1.0);
+				if (map->collisionMoveLeft(posPlayer, glm::ivec2(32, 32)))
+				{
+					posPlayer.x += WALK_STEP;
+					if (!bJumping) sprite->changeAnimation(STAND_NS);
 				}
-				else sprite->changeAnimation(BEND_NS);
 			}
 
-		}
+			else if (Game::instance().getSpecialKey(GLUT_KEY_RIGHT) && posPlayer.x < posxmax) {
+				bDir = true;
+				if (!bJumping) {
+					if (sprite->animation() != MOVE_RIGHT) sprite->changeAnimation(MOVE_RIGHT);
+					setBox(STANDBOX);
+					if (Game::instance().getKey(int('x'))) {
+						doShoot(17.5, -90.0, 0.0, -1.0);
+					}
 
-		else
-		{
-			if (!bJumping) {
-				setBox(STANDBOX);
-				if (Game::instance().getKey(int('x'))) {
-					sprite->changeAnimation(STAND_SH);
-					doShoot(17.5, -90.0, 0.0, -1.0);
 				}
-				else sprite->changeAnimation(STAND_NS);
-			}
-		}
 
-		if (bJumping) {
-			setBox(JUMPBOX);
-			if (bDir && sprite->animation() != JUMP_RIGHT) sprite->changeAnimation(JUMP_RIGHT);
-			else if (!bDir && sprite->animation() != JUMP_LEFT) sprite->changeAnimation(JUMP_LEFT);
-
-			if (Game::instance().getKey(int('x'))) {
-				doShoot(15.0, -50.0, 0.0, -1.0);
+				posPlayer.x += WALK_STEP;
+				if (map->collisionMoveRight(posPlayer, glm::ivec2(32, 32)))
+				{
+					posPlayer.x -= WALK_STEP;
+					if (!bJumping) sprite->changeAnimation(STAND_NS);
+				}
 			}
-			
 
-			jumpAngle += JUMP_ANGLE_STEP;
-			if (jumpAngle == 180)
-			{
-				bJumping = false;
-				posPlayer.y = startY;
-				sprite->changeAnimation(STAND_NS);
+			else if (Game::instance().getSpecialKey(GLUT_KEY_DOWN)) {
+				if (!bJumping) {
+					setBox(BENDBOX);
+					if (Game::instance().getKey(int('x'))) {
+						sprite->changeAnimation(BEND_SH);
+						doShoot(20.0, -70.0, 0.0, -1.0);
+					}
+					else sprite->changeAnimation(BEND_NS);
+				}
+
 			}
+
 			else
 			{
-				posPlayer.y = int(startY - 96 * sin(3.14159f * jumpAngle / 180.f));
+				if (!bJumping) {
+					setBox(STANDBOX);
+					if (Game::instance().getKey(int('x'))) {
+						sprite->changeAnimation(STAND_SH);
+						doShoot(17.5, -90.0, 0.0, -1.0);
+					}
+					else sprite->changeAnimation(STAND_NS);
+				}
+			}
+
+			if (bJumping) {
+				setBox(JUMPBOX);
+				if (bDir && sprite->animation() != JUMP_RIGHT) sprite->changeAnimation(JUMP_RIGHT);
+				else if (!bDir && sprite->animation() != JUMP_LEFT) sprite->changeAnimation(JUMP_LEFT);
+
+				if (Game::instance().getKey(int('x'))) {
+					doShoot(15.0, -50.0, 0.0, -1.0);
+				}
+
+
+				jumpAngle += JUMP_ANGLE_STEP;
+				if (jumpAngle == 180)
+				{
+					bJumping = false;
+					posPlayer.y = startY;
+					sprite->changeAnimation(STAND_NS);
+				}
+				else
+				{
+					posPlayer.y = int(startY - 96 * sin(3.14159f * jumpAngle / 180.f));
+				}
+			}
+			else {
+
+				//if(Game::instance().getSpecialKey(GLUT_KEY_UP))
+				if (Game::instance().getKey(int('z')))
+				{
+					bJumping = true;
+					jumpAngle = 0;
+					startY = posPlayer.y;
+				}
+
 			}
 		}
-		else{
-			
-			//if(Game::instance().getSpecialKey(GLUT_KEY_UP))
-			if (Game::instance().getKey(int('z')))
-			{
-				bJumping = true;
-				jumpAngle = 0;
-				startY = posPlayer.y;
-			}
-			
-		}
-	}
 	else {
 		deadTime++;
 		sprite->changeAnimation(DIE);
-
 	}
-
+	
 	sprite->setPosition(glm::vec2(float(tileMapDispl.x + posPlayer.x), float(tileMapDispl.y + posPlayer.y)));
 }
 
