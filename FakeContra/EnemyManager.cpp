@@ -86,6 +86,7 @@
 void EnemyManager::init(TileMap *tileMap, ShaderProgram& shaderProgram, int level)//pasa tmb lvl
 {
 	this->sh = shaderProgram;
+	changing = true;
 	kills = 0;
 	segs = 0; //boom 
 	lvl = level;

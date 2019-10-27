@@ -8,7 +8,7 @@
 #include <windows.h>
 
 
-#define SUPERMODETIME 6000
+#define SUPERMODETIME 6000//6000
 
 #define STANDBOX glm::vec2(40.f, 70.f)
 #define BENDBOX glm::vec2(60.f, 25.f)

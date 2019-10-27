@@ -61,7 +61,6 @@ Scene::~Scene()
 void Scene::init()
 {
 	initShaders();
-	
 	if (getMode() == MENU) {
 		map = TileMap::createTileMap("levels/fakelevel01.txt", glm::vec2(SCREEN_X, SCREEN_Y), texProgram);
 		menu = new Menu();
@@ -114,8 +113,8 @@ void Scene::init()
 		lvl3->init(glm::ivec2(SCREEN_X, SCREEN_Y), texProgram);
 		lvl3->setPosition(glm::vec2((INIT_LVL3_X_TILES * map->getTileSize()), INIT_LVL3_Y_TILES * map->getTileSize()));
 
-		BulletManager::instance().init(glm::ivec2(SCREEN_X, SCREEN_Y), texProgram);
-		EnemyManager::instance().init(map, texProgram, 6);
+		/*BulletManager::instance().init(glm::ivec2(SCREEN_X, SCREEN_Y), texProgram);
+		EnemyManager::instance().init(map, texProgram, 6);*/
 
 		playerLevel2 = new PlayerLevel2();
 		playerLevel2->init(glm::ivec2(SCREEN_X, SCREEN_Y), texProgram);
@@ -142,6 +141,10 @@ void Scene::update(int deltaTime)
 
 	else if(getMode() == LEVEL_1){
 
+		if (player->getPosX() > 7475) {
+			setMode(LEVEL_2);
+			init();
+		}
 		if (player->getDeadState() && player->getLifes() > 0 && player->getDeadTime() > DEAD_TIME) {
 			glm::vec2 aux = player->getPosition();
 			aux.y = 80.0;
@@ -161,7 +164,7 @@ void Scene::update(int deltaTime)
 			if (BulletManager::instance().isEnemyBulletInside(player->getPosition(), player->getBox(), player->getStartP()) ||
 				EnemyManager::instance().isEnemyInside(player->getPosition(), player->getBox())) {
 				if (!player->getMode()) {
-					player->setDeadState(true);
+					//player->setDeadState(true);
 					playerLives--;
 				}
 			}
@@ -181,6 +184,10 @@ void Scene::update(int deltaTime)
 
 	else if (getMode() == LEVEL_2) {
 
+		if (lvl2->isFaseBoss()) {
+			setMode(LEVEL_3);
+			init();
+		}
 		if (playerLevel2->getDeadState() && playerLevel2->getLifes() > 0 && playerLevel2->getDeadTime() > DEAD_TIME) {
 			glm::vec2 aux = playerLevel2->getPosition();
 			aux.x = 100.0;
@@ -198,7 +205,7 @@ void Scene::update(int deltaTime)
 		}
 		else {
 			if (BulletManager::instance().isEnemyBulletInside(playerLevel2->getPosition(), playerLevel2->getBox(), playerLevel2->getStartP())) {
-				playerLevel2->setDeadState(true);
+				//playerLevel2->setDeadState(true);
 				playerLives--;
 			}
 			if (lvl2->isFaseBoss())playerLevel2->setPosition(glm::vec2(INIT_PLAYER3_X_TILES,INIT_PLAYER3_Y_TILES+400));
