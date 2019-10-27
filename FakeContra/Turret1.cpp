@@ -98,7 +98,7 @@ void Turret::update(int deltaTime, float posPlayerX, float posPlayerY, bool isDe
 	else if (valor == 11)sprite->changeAnimation(POINT_9);
 
 	if (abs(distX) <= 320) {
-		if (!isDead) shootFromAnimation();
+		shootFromAnimation();
 	}
 }
 

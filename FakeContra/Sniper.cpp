@@ -63,7 +63,7 @@ void Sniper::update(int deltaTime, float posPlayerX, float posPlayerY, bool isDe
 	else if (distX < -300) sprite->changeAnimation(HEAT_R);
 
 	if (abs(distX) <= 320) {
-		if (!isDead) shootFromAnimation();
+		shootFromAnimation();
 	}
 
 }

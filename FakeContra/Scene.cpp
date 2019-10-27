@@ -171,8 +171,8 @@ void Scene::update(int deltaTime)
 			if (BulletManager::instance().isEnemyBulletInside(player->getPosition(), player->getBox(), player->getStartP()) ||
 				EnemyManager::instance().isEnemyInside(player->getPosition(), player->getBox())) {
 				if (!player->getMode()) {
-					//player->setDeadState(true);
-					//playerLives--;
+					player->setDeadState(true);
+					playerLives--;
 				}
 			}
 			else if (player->getPosition().y > SCREEN_HEIGHT + 10.0) {

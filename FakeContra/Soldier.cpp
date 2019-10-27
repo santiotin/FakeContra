@@ -79,7 +79,7 @@ void Soldier::update(int deltaTime, float posPlayerX, float posPlayerY, bool isD
 	else if (valor == 11)sprite->changeAnimation(POINT_9L);
 
 	if (abs(distX) <= 320) {
-		if (!isDead) shootFromAnimation();
+		shootFromAnimation();
 	}
 }
 
