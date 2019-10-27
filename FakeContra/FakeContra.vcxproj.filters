@@ -35,6 +35,7 @@
     <ClCompile Include="RafBoss.cpp" />
     <ClCompile Include="TorBlue.cpp" />
     <ClCompile Include="PlayerLevel3.cpp" />
+    <ClCompile Include="SpreadGun.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Runner.h" />
@@ -54,6 +55,7 @@
     <ClInclude Include="RafBoss.h" />
     <ClInclude Include="TorBlue.h" />
     <ClInclude Include="PlayerLevel3.h" />
+    <ClInclude Include="SpreadGun.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Game.cpp">

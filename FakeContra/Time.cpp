@@ -28,6 +28,12 @@ bool Time::isAbleToShoot(long long lastShoot) {
 	else return true;
 }
 
+bool Time::isAbleToShootSpread(long long lastShoot) {
+
+	if (getMili() - lastShoot < 750) return false;
+	else return true;
+}
+
 bool Time::isAbleToShootSoldier(long long lastShoot) {
 
 	if (getMili() - lastShoot < 250) return false;

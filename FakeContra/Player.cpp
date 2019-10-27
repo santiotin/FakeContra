@@ -56,6 +56,7 @@ void Player::init(const glm::ivec2& tileMapPos, ShaderProgram& shaderProgram)
 	isDead = false;
 	lifes = 3;
 	deadTime = 0;
+	hasSpreadGun = false;
 
 	hasPowerUp = false;
 	powerTime = 0;
@@ -543,19 +544,58 @@ void Player::setBox(glm::vec2 box)
 
 void Player::doShoot(float desplX, float desplY, float dirX, float dirY, float speed) {
 	if (lastShoot == 0) {
-		glm::vec2 pos = glm::vec2(posPlayer.x + desplX, posPlayer.y + desplY);
-		glm::vec2 dir = glm::vec2(dirX, dirY);
-		BulletManager::instance().createPlayerBullet(pos, dir, speed, 0);
 		lastShoot = Time::instance().getMili();
-	}
-	else {
-		if (Time::instance().isAbleToShoot(lastShoot)) {
+		if (hasSpreadGun) {
+			doShootSpreadGun(desplX, desplY, dirX, dirY, speed);
+		}
+		else {
 			glm::vec2 pos = glm::vec2(posPlayer.x + desplX, posPlayer.y + desplY);
 			glm::vec2 dir = glm::vec2(dirX, dirY);
 			BulletManager::instance().createPlayerBullet(pos, dir, speed, 0);
-			lastShoot = Time::instance().getMili();
 		}
 	}
+	else {
+		if (hasSpreadGun) {
+			if (Time::instance().isAbleToShootSpread(lastShoot)) {
+				lastShoot = Time::instance().getMili();
+				doShootSpreadGun(desplX, desplY, dirX, dirY, speed);
+			}
+		}
+		else {
+			if (Time::instance().isAbleToShoot(lastShoot)) {
+				lastShoot = Time::instance().getMili();
+				glm::vec2 pos = glm::vec2(posPlayer.x + desplX, posPlayer.y + desplY);
+				glm::vec2 dir = glm::vec2(dirX, dirY);
+				BulletManager::instance().createPlayerBullet(pos, dir, speed, 0);
+			}
+		}
+	}
+}
+
+void Player::doShootSpreadGun(float desplX, float desplY, float dirX, float dirY, float speed) {
+	glm::vec2 pos = glm::vec2(posPlayer.x + desplX, posPlayer.y + desplY);
+	glm::vec2 dir1;
+	glm::vec2 dir2;
+	glm::vec2 dir3;
+	if (dirX == 0) {
+		dir1 = glm::vec2(dirX, dirY);
+		dir2 = glm::vec2(dirX + 1.0, dirY);
+		dir3 = glm::vec2(dirX - 1.0, dirY);
+	}
+	else if (dirY == 0) {
+		dir1 = glm::vec2(dirX, dirY);
+		dir2 = glm::vec2(dirX, dirY + 1.0 );
+		dir3 = glm::vec2(dirX, dirY - 1.0);
+	}
+	else {
+		dir1 = glm::vec2(dirX, dirY);
+		dir2 = glm::vec2(dirX * 2.0, dirY);
+		dir3 = glm::vec2(dirX, dirY * 2.0);
+	}
+	
+	BulletManager::instance().createPlayerBullet(pos, dir1, speed + 1.0, 0);
+	BulletManager::instance().createPlayerBullet(pos, dir2, speed - 0.5, 0);
+	BulletManager::instance().createPlayerBullet(pos, dir3, speed - 0.5, 0);
 }
 
 void Player::setDeadState(bool dead) {
@@ -623,6 +663,15 @@ bool Player::getHasPower() {
 void Player::setHasPower() {
 	hasPowerUp = true;
 }
+
+bool Player::getHasSpreadGun() {
+	return hasSpreadGun;
+}
+
+void Player::setHasSpreadGun() {
+	hasSpreadGun = true;
+}
+
 
 
 

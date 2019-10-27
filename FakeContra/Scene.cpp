@@ -85,6 +85,8 @@ void Scene::init()
 
 		powerUp = new PowerUp();
 		powerUp->init(glm::ivec2(SCREEN_X, SCREEN_Y), texProgram, glm::ivec2(500, 165), player);
+		spreadGun = new SpreadGun();
+		spreadGun->init(glm::ivec2(SCREEN_X, SCREEN_Y), texProgram, glm::ivec2(600, 165), player);
 
 	}
 	else if (getMode() == LEVEL_2) {
@@ -197,6 +199,7 @@ void Scene::update(int deltaTime)
 		powerUpIcon->changePower(player->getHasPower());
 		powerUpIcon->update(deltaTime);
 		powerUp->update(deltaTime);
+		spreadGun->update(deltaTime);
 	}
 
 	else if (getMode() == LEVEL_2) {
@@ -312,6 +315,7 @@ void Scene::render()
 	else if (getMode() == LEVEL_1) {
 		EnemyManager::instance().render();
 		powerUp->render();
+		spreadGun->render();
 		player->render();
 		BulletManager::instance().render();
 		lifeIcon->render();

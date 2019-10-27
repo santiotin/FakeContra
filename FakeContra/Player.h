@@ -35,6 +35,7 @@ public:
 	void setStartP(glm::vec2 start);
 
 	void doShoot(float posX, float posY, float dirX, float dirY, float speed);
+	void doShootSpreadGun(float posX, float posY, float dirX, float dirY, float speed);
 	
 	int getDeadTime();
 	int getLifes();
@@ -45,9 +46,13 @@ public:
 	bool getHasPower();
 
 	void setHasPower();
+
+	void setHasSpreadGun();
+	bool getHasSpreadGun();
+
 	
 private:
-	bool bJumping, bDir, bSwim, isDead, superMode, hasPowerUp;
+	bool bJumping, bDir, bSwim, isDead, superMode, hasPowerUp, hasSpreadGun;
 	glm::ivec2 tileMapDispl, posPlayer, boxPlayer, startP;
 	int jumpAngle, startY;
 	long long lastShoot;
