@@ -46,7 +46,7 @@ void Sniper::init(const glm::ivec2& tileMapPos, ShaderProgram& shaderProgram)
 
 }
 
-void Sniper::update(int deltaTime, float posPlayerX, float posPlayerY)
+void Sniper::update(int deltaTime, float posPlayerX, float posPlayerY, bool isDead)
 {
 	sprite->update(deltaTime);
 	float posSniperX = getPosX();

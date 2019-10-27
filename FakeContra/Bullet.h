@@ -26,7 +26,7 @@ public:
 
 	glm::vec2 getPosition();
 	glm::vec2 getDirection();
-
+	glm::vec2 getHalfPosition();
 	glm::vec2 getInversePosition();
 
 

@@ -50,7 +50,7 @@ void Bullet::init(const glm::ivec2& tileMapPos, ShaderProgram& shaderProgram, gl
 	}
 	else {
 		sprite->setAnimationSpeed(BULLET_LIVE, 8);
-		sprite->addKeyframe(BULLET_LIVE, glm::vec2(0.65f, 0.25f));
+		sprite->addKeyframe(BULLET_LIVE, glm::vec2(0.65f, 0.30f));
 		sprite->setAnimationSpeed(BULLET_DEAD, 8);
 		sprite->addKeyframe(BULLET_DEAD, glm::vec2(0.60f, 0.15f));
 		sprite->addKeyframe(BULLET_DEAD, glm::vec2(0.65f, 0.15f));
@@ -95,6 +95,11 @@ glm::vec2 Bullet::getInversePosition() {
 	else if (type == 3) {
 		return glm::vec2(pos.x + 50.0, pos.y);
 	}
+}
+
+glm::vec2 Bullet::getHalfPosition() {
+	glm::vec2 aux = glm::vec2(pos.x + getInversePosition().x * 0.5, pos.y);
+	return aux;
 }
 
 bool Bullet::isDead() {

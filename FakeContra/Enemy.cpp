@@ -5,7 +5,7 @@ void Enemy::init(const glm::ivec2& tileMapPos, ShaderProgram& shaderProgram) {
 
 }
 
-void Enemy::update(int deltaTime, float posPlayerX, float posPlayerY) {
+void Enemy::update(int deltaTime, float posPlayerX, float posPlayerY, bool isDead) {
 
 }
 void Enemy::render() {

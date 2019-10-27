@@ -68,7 +68,7 @@ void Turret::init(const glm::ivec2& tileMapPos, ShaderProgram& shaderProgram)
 
 }
 
-void Turret::update(int deltaTime, float posPlayerX, float posPlayerY)
+void Turret::update(int deltaTime, float posPlayerX, float posPlayerY, bool isDead)
 {
 	sprite->update(deltaTime);
 	float posTurretX = getPosX();

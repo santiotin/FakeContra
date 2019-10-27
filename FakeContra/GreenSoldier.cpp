@@ -41,7 +41,7 @@ void GreenSoldier::init(const glm::ivec2& tileMapPos, ShaderProgram& shaderProgr
 
 }
 
-void GreenSoldier::update(int deltaTime, float posPlayerX, float posPlayerY)
+void GreenSoldier::update(int deltaTime, float posPlayerX, float posPlayerY, bool isDead)
 {
 	sprite->update(deltaTime);
 	float posGreenSoldierX = getPosX();
@@ -62,7 +62,7 @@ void GreenSoldier::update(int deltaTime, float posPlayerX, float posPlayerY)
 	}
 	if (shooting || (posPlayerX < 231 && posGreenSoldierX < 235) || (posPlayerX > 359 && posGreenSoldierX > 355)) {
 		sprite->changeAnimation(SHOOT);
-		doShoot(13.0, -65.0, distX * -0.006, 1.0, 2);
+		if (!isDead) doShoot(13.0, -65.0, distX * -0.006, 1.0, 2);
 	}
 }
 

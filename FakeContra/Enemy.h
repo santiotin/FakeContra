@@ -9,7 +9,7 @@ class Enemy {
 public:
 
 	virtual void init(const glm::ivec2& tileMapPos, ShaderProgram& shaderProgram);
-	virtual void update(int deltaTime, float posPlayerX, float posPlayerY);
+	virtual void update(int deltaTime, float posPlayerX, float posPlayerY, bool isDead);
 	virtual void render();
 
 	virtual void setTileMap(TileMap* tileMap);

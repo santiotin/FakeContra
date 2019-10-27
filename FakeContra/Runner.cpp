@@ -37,7 +37,7 @@ void Runner::init(const glm::ivec2& tileMapPos, ShaderProgram& shaderProgram)
 
 }
 
-void Runner::update(int deltaTime, float posPlayerX, float posPlayerY)
+void Runner::update(int deltaTime, float posPlayerX, float posPlayerY, bool isDead)
 {
 	sprite->update(deltaTime);
 	float posRunnerX = getPosX();

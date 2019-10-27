@@ -31,7 +31,7 @@ void BigS2::init(const glm::ivec2& tileMapPos, ShaderProgram& shaderProgram)
 
 }
 
-void BigS2::update(int deltaTime, float posPlayerX, float posPlayerY)
+void BigS2::update(int deltaTime, float posPlayerX, float posPlayerY, bool isDead)
 {
 	sprite->update(deltaTime);
 	float posTurretX = getPosX();

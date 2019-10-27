@@ -49,7 +49,7 @@ void Soldier::init(const glm::ivec2& tileMapPos, ShaderProgram& shaderProgram)
 
 }
 
-void Soldier::update(int deltaTime, float posPlayerX, float posPlayerY)
+void Soldier::update(int deltaTime, float posPlayerX, float posPlayerY, bool isDead)
 {
 	sprite->update(deltaTime);
 	float posSoldierX = getPosX();

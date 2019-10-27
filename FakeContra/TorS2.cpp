@@ -33,7 +33,7 @@ void TorS2::init(const glm::ivec2& tileMapPos, ShaderProgram& shaderProgram)
 
 }
 
-void TorS2::update(int deltaTime, float posPlayerX, float posPlayerY)
+void TorS2::update(int deltaTime, float posPlayerX, float posPlayerY, bool isDead)
 {
 	sprite->update(deltaTime);
 	float posTurretX = getPosX();
@@ -43,7 +43,7 @@ void TorS2::update(int deltaTime, float posPlayerX, float posPlayerY)
 
 	distY = posTurretY - posPlayerY;
 
-	doShoot(13.0, -65.0, distX * -0.006, 1.0, 2);
+	if (!isDead) doShoot(13.0, -65.0, distX * -0.006, 1.0, 2);
 
 
 }

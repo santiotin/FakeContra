@@ -34,7 +34,7 @@ void TorBoss::init(const glm::ivec2& tileMapPos, ShaderProgram& shaderProgram)
 
 }
 
-void TorBoss::update(int deltaTime, float posPlayerX, float posPlayerY)
+void TorBoss::update(int deltaTime, float posPlayerX, float posPlayerY, bool isDead)
 {
 	sprite->update(deltaTime);
 	float posTurretX = getPosX();
@@ -44,7 +44,7 @@ void TorBoss::update(int deltaTime, float posPlayerX, float posPlayerY)
 
 	distY = posTurretY - posPlayerY;
 
-	doShoot(35.0, -55.0, distX * -0.006, 1.0, 2);
+	if (!isDead) doShoot(35.0, -55.0, distX * -0.006, 1.0, 2);
 
 
 }

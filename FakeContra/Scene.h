@@ -17,6 +17,7 @@
 #include "LifeIcon.h"
 #include "PowerUpIcon.h"
 #include "PowerUp.h"
+#include "SpreadGun.h"
 
 
 // Scene contains all the entities of our game.
@@ -52,6 +53,7 @@ private:
 	LifeIcon* lifeIcon;
 	PowerUpIcon* powerUpIcon;
 	PowerUp* powerUp;
+	SpreadGun* spreadGun;
 
 	MapLevel2 *lvl2;
 	MapLevel3* lvl3;
