@@ -117,10 +117,16 @@ void Scene::init()
 		BulletManager::instance().init(glm::ivec2(SCREEN_X, SCREEN_Y), texProgram);
 		EnemyManager::instance().init(map, texProgram, 6);
 
-		playerLevel2 = new PlayerLevel2();
-		playerLevel2->init(glm::ivec2(SCREEN_X, SCREEN_Y), texProgram);
-		playerLevel2->setPosition(glm::vec2((INIT_PLAYER3_X_TILES * map->getTileSize()), INIT_PLAYER3_Y_TILES * map->getTileSize()));
-		playerLevel2->setTileMap(map);
+		playerLevel3 = new PlayerLevel3();
+		playerLevel3->init(glm::ivec2(SCREEN_X, SCREEN_Y), texProgram);
+		playerLevel3->setPosition(glm::vec2((INIT_PLAYER3_X_TILES * map->getTileSize()), INIT_PLAYER3_Y_TILES * map->getTileSize()));
+		playerLevel3->setTileMap(map);
+		if (playerLevel2 != NULL) playerLevel3->setLifes(playerLevel2->getLifes());
+		else playerLevel3->setLifes(playerLives);
+
+		lifeIcon = new LifeIcon();
+		lifeIcon->init(glm::ivec2(SCREEN_X, SCREEN_Y), texProgram);
+		lifeIcon->changeLife(playerLevel3->getLifes());
 	}
 
 
@@ -148,7 +154,6 @@ void Scene::update(int deltaTime)
 			player->setPosition(aux);
 			player->setDeadState(false);
 			
-			
 		}
 		else if (player->getDeadState() && player->getLifes() > 0 && player->getDeadTime() < DEAD_TIME) {
 			//do nothing
@@ -161,9 +166,21 @@ void Scene::update(int deltaTime)
 			if (BulletManager::instance().isEnemyBulletInside(player->getPosition(), player->getBox(), player->getStartP()) ||
 				EnemyManager::instance().isEnemyInside(player->getPosition(), player->getBox())) {
 				if (!player->getMode()) {
-					player->setDeadState(true);
-					playerLives--;
+					//player->setDeadState(true);
+					//playerLives--;
 				}
+			}
+			else if (player->getPosition().y > SCREEN_HEIGHT + 10.0) {
+				player->setDeadState(true);
+				glm::vec2 aux = glm::vec2(player->getPosition());
+				aux.x -= 50.0;
+				player->setPosition(aux);
+				playerLives--;
+			}
+			else if (player->getPosition().x < -10.0) {
+				player->setDeadState(true);
+				playerLives--;
+				player->setPosition(glm::vec2((INIT_PLAYER_X_TILES * map->getTileSize()), INIT_PLAYER_Y_TILES * map->getTileSize()));
 			}
 		}
 
@@ -216,15 +233,37 @@ void Scene::update(int deltaTime)
 	}
 
 	else if (getMode() == LEVEL_3) {
-		playerLevel2->update(deltaTime);
+		if (playerLevel3->getDeadState() && playerLevel3->getLifes() > 0 && playerLevel3->getDeadTime() > DEAD_TIME) {
+			glm::vec2 aux = playerLevel3->getPosition();
+			aux.x = 100.0;
+			playerLevel3->setPosition(aux);
+			playerLevel3->setDeadState(false);
+
+		}
+		else if (playerLevel3->getDeadState() && playerLevel3->getLifes() > 0 && playerLevel3->getDeadTime() < DEAD_TIME) {
+			//do nothing
+		}
+		else if (playerLevel3->getDeadState() && playerLevel3->getLifes() == 0) {
+			setMode(MENU);
+			init();
+		}
+		else {
+			if (BulletManager::instance().isEnemyBulletInside(playerLevel3->getPosition(), playerLevel3->getBox(), playerLevel3->getStartP())) {
+				playerLevel3->setDeadState(true);
+				playerLives--;
+			}
+			if (lvl3->isFaseBoss())playerLevel3->setPosition(glm::vec2(INIT_PLAYER3_X_TILES, INIT_PLAYER3_Y_TILES + 400));
+		}
+		playerLevel3->update(deltaTime);
 
 		//lvl2->update(deltaTime, playerLevel2->getPosX(), playerLevel2->getPosY());
 		lvl3->update(deltaTime, texProgram);
-		if (BulletManager::instance().isEnemyBulletInside(playerLevel2->getPosition(), playerLevel2->getBox(), playerLevel2->getStartP())) {
-			playerLevel2->setDeadState(true);
-		}
-		EnemyManager::instance().update(deltaTime, playerLevel2->getPosX(), playerLevel2->getPosY());
-		BulletManager::instance().update(deltaTime, playerLevel2->getPosX(), 2);
+		
+		EnemyManager::instance().update(deltaTime, playerLevel3->getPosX(), playerLevel3->getPosY());
+		BulletManager::instance().update(deltaTime, playerLevel3->getPosX(), 2);
+
+		lifeIcon->changeLife(playerLevel3->getLifes());
+		lifeIcon->update(deltaTime);
 	}
 
 
@@ -282,8 +321,9 @@ void Scene::render()
 	else if (getMode() == LEVEL_3) {
 		lvl3->render();
 		EnemyManager::instance().render();
-		playerLevel2->render();
+		playerLevel3->render();
 		BulletManager::instance().render();
+		lifeIcon->render();
 	}
 	
 
@@ -344,6 +384,12 @@ void Scene::updateCamera() {
 		projection = glm::ortho(0.f, float(SCREEN_WIDTH - 1), float(SCREEN_HEIGHT - 1), 0.f);
 		lifeIcon->setPosition(glm::vec2(30.0, 0.0));
 		
+	}
+	else if (getMode() == LEVEL_3) {
+
+		projection = glm::ortho(0.f, float(SCREEN_WIDTH - 1), float(SCREEN_HEIGHT - 1), 0.f);
+		lifeIcon->setPosition(glm::vec2(30.0, 0.0));
+
 	}
 	
 }

@@ -25,6 +25,7 @@ public:
 	bool isAbleToShootSoldier(long long lastShoot);
 	bool isAbleToShootEnemy(long long lastShoot);
 	bool isAbleToShootEnemyLevel2(long long lastShoot);
+	bool isAbleToShootEnemyLevel3(long long lastShoot);
 	bool createGS(long long lastCreate);
 };
 

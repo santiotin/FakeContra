@@ -11,7 +11,7 @@ enum BulletAnims
 };
 
 
-void Bullet::init(const glm::ivec2& tileMapPos, ShaderProgram& shaderProgram, glm::vec2 posBullet, glm::vec2 dirBullet, float s, int type)
+void Bullet::init(const glm::ivec2& tileMapPos, ShaderProgram& shaderProgram, glm::vec2 posBullet, glm::vec2 dirBullet, float s, int t)
 {
 	pos = posBullet;
 	dir = dirBullet;
@@ -19,6 +19,7 @@ void Bullet::init(const glm::ivec2& tileMapPos, ShaderProgram& shaderProgram, gl
 	speed = s;
 	tileMapDispl = tileMapPos;
 	deadTime = 0.0;
+	type = t;
 
 	spritesheet.loadFromFile("images/personaje.png", TEXTURE_PIXEL_FORMAT_RGBA);
 	sprite = Sprite::createSprite(glm::ivec2(96, 96), glm::vec2(0.05, 0.05), &spritesheet, &shaderProgram);
@@ -33,11 +34,23 @@ void Bullet::init(const glm::ivec2& tileMapPos, ShaderProgram& shaderProgram, gl
 		sprite->addKeyframe(BULLET_DEAD, glm::vec2(0.60f, 0.15f));
 		sprite->addKeyframe(BULLET_DEAD, glm::vec2(0.65f, 0.15f));
 	}
-	else { 
+	else if(type == 1){ 
 		sprite->setAnimationSpeed(BULLET_LIVE, 8);
 		sprite->addKeyframe(BULLET_LIVE, glm::vec2(0.65f, 0.05f)); 
-		//sprite->addKeyframe(BULLET_LIVE, glm::vec2(0.70f, 0.05f));
-		//sprite->addKeyframe(BULLET_LIVE, glm::vec2(0.60f, 0.10f));
+		sprite->setAnimationSpeed(BULLET_DEAD, 8);
+		sprite->addKeyframe(BULLET_DEAD, glm::vec2(0.60f, 0.15f));
+		sprite->addKeyframe(BULLET_DEAD, glm::vec2(0.65f, 0.15f));
+	}
+	else if(type == 2){
+		sprite->setAnimationSpeed(BULLET_LIVE, 8);
+		sprite->addKeyframe(BULLET_LIVE, glm::vec2(0.60f, 0.30f));
+		sprite->setAnimationSpeed(BULLET_DEAD, 8);
+		sprite->addKeyframe(BULLET_DEAD, glm::vec2(0.60f, 0.15f));
+		sprite->addKeyframe(BULLET_DEAD, glm::vec2(0.65f, 0.15f));
+	}
+	else {
+		sprite->setAnimationSpeed(BULLET_LIVE, 8);
+		sprite->addKeyframe(BULLET_LIVE, glm::vec2(0.65f, 0.25f));
 		sprite->setAnimationSpeed(BULLET_DEAD, 8);
 		sprite->addKeyframe(BULLET_DEAD, glm::vec2(0.60f, 0.15f));
 		sprite->addKeyframe(BULLET_DEAD, glm::vec2(0.65f, 0.15f));
@@ -70,6 +83,18 @@ glm::vec2 Bullet::getDirection() {
 
 glm::vec2 Bullet::getPosition() {
 	return pos;
+}
+
+glm::vec2 Bullet::getInversePosition() {
+	if (type == 0 || type == 1) {
+		return glm::vec2(pos.x + 10.0, pos.y);
+	} 
+	else if (type == 2) {
+		return glm::vec2(pos.x + 50.0, pos.y);
+	}
+	else if (type == 3) {
+		return glm::vec2(pos.x + 50.0, pos.y);
+	}
 }
 
 bool Bullet::isDead() {

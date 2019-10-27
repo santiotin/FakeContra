@@ -23,7 +23,7 @@ void PowerUpIcon::init(const glm::ivec2& tileMapPos, ShaderProgram& shaderProgra
 	sprite->addKeyframe(Has_Power, glm::vec2(0.60f, 0.25f));
 
 	sprite->setAnimationSpeed(No_Power, 8);
-	sprite->addKeyframe(No_Power, glm::vec2(0.65f, 0.25f));
+	sprite->addKeyframe(No_Power, glm::vec2(0.80f, 0.25f));
 
 
 	sprite->changeAnimation(No_Power);

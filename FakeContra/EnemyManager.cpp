@@ -394,6 +394,7 @@ void EnemyManager::initLevel_Boss(ShaderProgram& shaderProgram)
 	rafbos1->init(glm::ivec2(SCREEN_X, SCREEN_Y), shaderProgram);
 	rafbos1->setPosition(glm::vec2(INIT_RAFBOSS1_X_TILES, INIT_RAFBOSS1_Y_TILES));
 	enemies.push_back(rafbos1);
+
 	Enemy* rafbos2 = new RafBoss();
 	rafbos2->init(glm::ivec2(SCREEN_X, SCREEN_Y), shaderProgram);
 	rafbos2->setPosition(glm::vec2(INIT_RAFBOSS2_X_TILES, INIT_RAFBOSS2_Y_TILES));

@@ -19,6 +19,8 @@ void TorBoss::init(const glm::ivec2& tileMapPos, ShaderProgram& shaderProgram)
 	sprite = Sprite::createSprite(glm::ivec2(80, 68), glm::vec2(0.50, 1.00), &spritesheet, &shaderProgram);
 	sprite->setNumberAnimations(2);
 
+	lastShoot = 0;
+
 
 	sprite->setAnimationSpeed(SHOOT, 8);
 	sprite->addKeyframe(SHOOT, glm::vec2(0.00f, 0.00f));
@@ -41,6 +43,8 @@ void TorBoss::update(int deltaTime, float posPlayerX, float posPlayerY)
 	distX = posTurretX - posPlayerX;
 
 	distY = posTurretY - posPlayerY;
+
+	doShoot(35.0, -55.0, distX * -0.006, 1.0, 2);
 
 
 }
@@ -86,6 +90,30 @@ glm::vec2 TorBoss::getBoxCollider() {
 glm::vec2 TorBoss::getStartP() {
 	return glm::vec2(0.0, 0.0);
 }
+
+void TorBoss::doShoot(float desplX, float desplY, float dirX, float dirY, float speed) {
+	if (lastShoot == 0) {
+		int num = rand() % 153;
+		if (num == 7) {
+			glm::vec2 pos = glm::vec2(posTurret.x + desplX, posTurret.y + desplY);
+			glm::vec2 dir = glm::vec2(dirX, dirY);
+			BulletManager::instance().createEnemyBullet(pos, dir, speed, 0);
+			lastShoot = Time::instance().getMili();
+		}
+	}
+	else {
+		if (Time::instance().isAbleToShootEnemyLevel3(lastShoot)) {
+			glm::vec2 pos = glm::vec2(posTurret.x + desplX, posTurret.y + desplY);
+			glm::vec2 dir = glm::vec2(dirX, dirY);
+			BulletManager::instance().createEnemyBullet(pos, dir, speed, 0);
+			lastShoot = Time::instance().getMili();
+		}
+	}
+}
+
+
+
+
 
 
 
