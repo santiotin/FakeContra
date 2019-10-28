@@ -18,7 +18,7 @@
 #include "PowerUpIcon.h"
 #include "PowerUp.h"
 #include "SpreadGun.h"
-
+#include "Music.h"
 
 // Scene contains all the entities of our game.
 // It is responsible for updating and render them.

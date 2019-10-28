@@ -139,6 +139,7 @@ void Soldier::doShoot(float desplX, float desplY, float dirX, float dirY, float 
 	if (lastShoot == 0) {
 		glm::vec2 pos = glm::vec2(posSoldier.x + desplX, posSoldier.y + desplY);
 		glm::vec2 dir = glm::vec2(dirX, dirY);
+		sndPlaySound(TEXT("musica/level01-sniper-shoot.wav"), SND_ASYNC);
 		BulletManager::instance().createEnemyBullet(pos, dir, speed, 0);
 		lastShoot = Time::instance().getMili();
 	}
@@ -146,6 +147,7 @@ void Soldier::doShoot(float desplX, float desplY, float dirX, float dirY, float 
 		if (Time::instance().isAbleToShootEnemy(lastShoot)) {
 			glm::vec2 pos = glm::vec2(posSoldier.x + desplX, posSoldier.y + desplY);
 			glm::vec2 dir = glm::vec2(dirX, dirY);
+			sndPlaySound(TEXT("musica/level01-sniper-shoot.wav"), SND_ASYNC);
 			BulletManager::instance().createEnemyBullet(pos, dir, speed, 0);
 			lastShoot = Time::instance().getMili();
 		}

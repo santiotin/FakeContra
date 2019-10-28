@@ -5,7 +5,9 @@
 #include <GL/glut.h>
 #include "Scene.h"
 #include "Game.h"
-
+#include "Music.h"
+#include <Windows.h>
+#include <mmsystem.h>
 
 //commit para branch
 
@@ -65,6 +67,7 @@ void Scene::init()
 		map = TileMap::createTileMap("levels/fakelevel01.txt", glm::vec2(SCREEN_X, SCREEN_Y), texProgram);
 		menu = new Menu();
 		menu->init(glm::ivec2(SCREEN_X - 640, SCREEN_Y), texProgram);
+		Music::instance().song(0);
 	}
 	else if (getMode() == LEVEL_1) {
 		map = TileMap::createTileMap("levels/fakelevel01.txt", glm::vec2(SCREEN_X, SCREEN_Y), texProgram);
@@ -88,6 +91,7 @@ void Scene::init()
 		spreadGun = new SpreadGun();
 		spreadGun->init(glm::ivec2(SCREEN_X, SCREEN_Y), texProgram, glm::ivec2(600, 165), player);
 
+		Music::instance().song(1);
 	}
 	else if (getMode() == LEVEL_2) {
 		map = TileMap::createTileMap("levels/fakelevel01.txt", glm::vec2(SCREEN_X, SCREEN_Y), texProgram);
@@ -108,6 +112,8 @@ void Scene::init()
 		lifeIcon = new LifeIcon();
 		lifeIcon->init(glm::ivec2(SCREEN_X, SCREEN_Y), texProgram);
 		lifeIcon->changeLife(playerLevel2->getLifes());
+
+		Music::instance().song(1);
 	}
 	else if (getMode() == LEVEL_3) {
 		map = TileMap::createTileMap("levels/fakelevel01.txt", glm::vec2(SCREEN_X, SCREEN_Y), texProgram);
@@ -128,6 +134,8 @@ void Scene::init()
 		lifeIcon = new LifeIcon();
 		lifeIcon->init(glm::ivec2(SCREEN_X, SCREEN_Y), texProgram);
 		lifeIcon->changeLife(playerLevel3->getLifes());
+
+		Music::instance().song(1);
 	}
 
 
@@ -171,7 +179,7 @@ void Scene::update(int deltaTime)
 			if (BulletManager::instance().isEnemyBulletInside(player->getPosition(), player->getBox(), player->getStartP()) ||
 				EnemyManager::instance().isEnemyInside(player->getPosition(), player->getBox())) {
 				if (!player->getMode()) {
-					player->setDeadState(true);
+					//player->setDeadState(true);
 					playerLives--;
 				}
 			}

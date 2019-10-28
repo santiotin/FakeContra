@@ -20,6 +20,8 @@
 #define JUMPSTARTP glm::vec2(0.f, 60.f)
 #define SWIMSTARTP glm::vec2(0.f, 55.f)
 
+#include <Windows.h>
+#include <mmsystem.h>
 
 enum PlayerAnims
 {
@@ -549,8 +551,10 @@ void Player::doShoot(float desplX, float desplY, float dirX, float dirY, float s
 			doShootSpreadGun(desplX, desplY, dirX, dirY, speed);
 		}
 		else {
+
 			glm::vec2 pos = glm::vec2(posPlayer.x + desplX, posPlayer.y + desplY);
 			glm::vec2 dir = glm::vec2(dirX, dirY);
+			sndPlaySound(TEXT("musica/level01-shoot.wav"), SND_ASYNC);
 			BulletManager::instance().createPlayerBullet(pos, dir, speed, 0);
 		}
 	}
@@ -566,6 +570,7 @@ void Player::doShoot(float desplX, float desplY, float dirX, float dirY, float s
 				lastShoot = Time::instance().getMili();
 				glm::vec2 pos = glm::vec2(posPlayer.x + desplX, posPlayer.y + desplY);
 				glm::vec2 dir = glm::vec2(dirX, dirY);
+				sndPlaySound(TEXT("musica/level01-shoot.wav"), SND_ASYNC);
 				BulletManager::instance().createPlayerBullet(pos, dir, speed, 0);
 			}
 		}
@@ -592,7 +597,7 @@ void Player::doShootSpreadGun(float desplX, float desplY, float dirX, float dirY
 		dir2 = glm::vec2(dirX * 2.0, dirY);
 		dir3 = glm::vec2(dirX, dirY * 2.0);
 	}
-	
+	sndPlaySound(TEXT("musica/level01-shoot.wav"), SND_ASYNC);
 	BulletManager::instance().createPlayerBullet(pos, dir1, speed + 1.0, 0);
 	BulletManager::instance().createPlayerBullet(pos, dir2, speed - 0.5, 0);
 	BulletManager::instance().createPlayerBullet(pos, dir3, speed - 0.5, 0);

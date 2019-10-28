@@ -15,6 +15,7 @@ enum BigS2Anims
 
 void BigS2::init(const glm::ivec2& tileMapPos, ShaderProgram& shaderProgram)
 {
+	lastShoot = 0;
 	spritesheet.loadFromFile("images/BBS2.png", TEXTURE_PIXEL_FORMAT_RGBA);
 	sprite = Sprite::createSprite(glm::ivec2(42, 42), glm::vec2(0.33, 1.00), &spritesheet, &shaderProgram);
 	sprite->setNumberAnimations(12);
@@ -41,6 +42,7 @@ void BigS2::update(int deltaTime, float posPlayerX, float posPlayerY, bool isDea
 
 	distY = posTurretY - posPlayerY;
 
+	if (!isDead) doShoot(13.0, -65.0, distX * -0.006, 1.0, 2);
 
 }
 
@@ -86,6 +88,26 @@ glm::vec2 BigS2::getStartP() {
 	return glm::vec2(0.0, 0.0);
 }
 
-
+void BigS2::doShoot(float desplX, float desplY, float dirX, float dirY, float speed) {
+	if (lastShoot == 0) {
+		int num = rand() % 153;
+		if (num == 7) {
+			glm::vec2 pos = glm::vec2(posTurret.x + desplX, posTurret.y + desplY);
+			glm::vec2 dir = glm::vec2(dirX, dirY);
+			sndPlaySound(TEXT("musica/level01-turret-shoot.wav"), SND_ASYNC);
+			BulletManager::instance().createEnemyBullet(pos, dir, speed, 0);
+			lastShoot = Time::instance().getMili();
+		}
+	}
+	else {
+		if (Time::instance().isAbleToShootEnemyLevel2(lastShoot)) {
+			glm::vec2 pos = glm::vec2(posTurret.x + desplX, posTurret.y + desplY);
+			glm::vec2 dir = glm::vec2(dirX, dirY);
+			sndPlaySound(TEXT("musica/level01-turret-shoot.wav"), SND_ASYNC);
+			BulletManager::instance().createEnemyBullet(pos, dir, speed, 0);
+			lastShoot = Time::instance().getMili();
+		}
+	}
+}
 
 

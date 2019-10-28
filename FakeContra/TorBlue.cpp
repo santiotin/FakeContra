@@ -104,6 +104,7 @@ void TorBlue::doShoot(float desplX, float desplY, float dirX, float dirY, float 
 		if (num == 1) {
 			glm::vec2 pos = glm::vec2(posTurret.x + desplX, posTurret.y + desplY);
 			glm::vec2 dir = glm::vec2(dirX, dirY);
+			sndPlaySound(TEXT("musica/level01-turret-shoot.wav"), SND_ASYNC);
 			BulletManager::instance().createEnemyBullet(pos, dir, speed, 3);
 			lastShoot = Time::instance().getMili();
 		}
@@ -112,6 +113,7 @@ void TorBlue::doShoot(float desplX, float desplY, float dirX, float dirY, float 
 		if (Time::instance().isAbleToShootEnemyLevel3(lastShoot)) {
 			glm::vec2 pos = glm::vec2(posTurret.x + desplX, posTurret.y + desplY);
 			glm::vec2 dir = glm::vec2(dirX, dirY);
+			sndPlaySound(TEXT("musica/level01-turret-shoot.wav"), SND_ASYNC);
 			BulletManager::instance().createEnemyBullet(pos, dir, speed, 3);
 			lastShoot = Time::instance().getMili();
 		}
