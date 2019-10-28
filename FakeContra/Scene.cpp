@@ -203,7 +203,6 @@ void Scene::update(int deltaTime)
 	}
 
 	else if (getMode() == LEVEL_2) {
-
 		if (lvl2->isFaseBoss()) {
 			setMode(LEVEL_3);
 			init();
@@ -243,6 +242,10 @@ void Scene::update(int deltaTime)
 	}
 
 	else if (getMode() == LEVEL_3) {
+		if (lvl3->goMenu()) {
+			setMode(MENU);
+			init();
+		}
 		if (playerLevel3->getDeadState() && playerLevel3->getLifes() > 0 && playerLevel3->getDeadTime() > DEAD_TIME) {
 			glm::vec2 aux = playerLevel3->getPosition();
 			aux.x = 100.0;

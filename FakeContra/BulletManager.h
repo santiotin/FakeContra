@@ -39,7 +39,7 @@ public:
 	bool isLevel1BulletOutside(glm::vec2 posBullet, float posPlayerX);
 	bool isLevel2BulletOutside(glm::vec2 posBullet, float posPlayerX);
 	bool isLevel3BulletOutside(glm::vec2 posBullet, float posPlayerX);
-
+	void cleanBullets();
 	bool hitBox(glm::vec2 bulletPos, glm::vec2 entityPos, glm::vec2 entityBox, glm::vec2 entityStartP);
 
 private:

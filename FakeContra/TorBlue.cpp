@@ -40,13 +40,11 @@ void TorBlue::update(int deltaTime, float posPlayerX, float posPlayerY, bool isD
 	if (distX < 65 && distX > -65) shooting = true;
 	else if (distX > 64 && posTorBlueX > 185) {
 		posTorBlueX -= 2;
-		cout << posTorBlueX << endl;
 		setPosition(glm::vec2(posTorBlueX, posTorBlueY));
 		shooting = false;
 	}
 	else if (distX < -64 && posTorBlueX < 400) {
 		posTorBlueX += 2;
-		cout << posTorBlueX << endl;
 		setPosition(glm::vec2(posTorBlueX, posTorBlueY));
 		shooting = false;
 	}
@@ -92,7 +90,7 @@ glm::vec2 TorBlue::getPosition() {
 
 glm::vec2 TorBlue::getBoxCollider() {
 
-	return glm::vec2(32.0, 32.0);
+	return glm::vec2(64.0, 64.0);
 
 }
 

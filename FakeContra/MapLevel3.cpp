@@ -18,7 +18,7 @@ void MapLevel3::init(const glm::ivec2& tileMapPos, ShaderProgram& shaderProgram)
 {
 	count1 = count2 = count3 = count4 = count5 = count6 = 0;
 	fase1 = true;
-	fase2 = fase3 = fase4 = done = false;
+	fase2 = fase3 = fase4 = done = win = end =false;
 	spritesheet.loadFromFile("images/boss_final.png", TEXTURE_PIXEL_FORMAT_RGBA);
 	sprite = Sprite::createSprite(glm::ivec2(640, 480), glm::vec2(0.20, 1.00), &spritesheet, &shaderProgram);
 	sprite->setNumberAnimations(4);
@@ -35,6 +35,7 @@ void MapLevel3::init(const glm::ivec2& tileMapPos, ShaderProgram& shaderProgram)
 	sprite->addKeyframe(FASE_END, glm::vec2(0.80f, 0.00f));
 
 	EnemyManager::instance().cleanEnemies();
+	BulletManager::instance().cleanBullets();
 	sprite->changeAnimation(0);
 	tileMapDispl = tileMapPos;
 
@@ -46,6 +47,7 @@ void MapLevel3::update(int deltaTime, ShaderProgram& shaderProgram)
 {
 	sprite->update(deltaTime);
 	if (Time::instance().getMili() - segs < 2000) {
+		EnemyManager::instance().transition(true);
 		if (sprite->animation() != FASE_INI) sprite->changeAnimation(FASE_INI);
 	}
 	else {
@@ -78,8 +80,15 @@ void MapLevel3::update(int deltaTime, ShaderProgram& shaderProgram)
 		if (count1 < 5 || count2 < 5 || count3 < 5 || count4 < 5 || count5 < 5 || count6 < 5 ) {
 			BulletManager::instance().isPlayerBulletInside(glm::vec2(160, 50), glm::vec2(350, 160), glm::vec2(0, 0));
 		}
-		if (EnemyManager::instance().getKills() > 6) {
+		if (EnemyManager::instance().getKills() > 6 && !end) {
+			end = true;
+			segswin = Time::instance().getMili();
+		}
+		if (Time::instance().getMili() - segswin < 2100) {
 			if (sprite->animation() != FASE_END)sprite->changeAnimation(FASE_END);
+			if (Time::instance().getMili() - segswin > 2000) {
+				win = true;
+			}
 		}
 	}
 	
@@ -122,6 +131,10 @@ void MapLevel3::setPosition(const glm::vec2& pos)
 bool MapLevel3::isFaseBoss()
 {
 	return faseBoss;
+}
+bool MapLevel3::goMenu()
+{
+	return win;
 }
 
 
