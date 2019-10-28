@@ -5,7 +5,9 @@
 #include <GL/glut.h>
 #include "Scene.h"
 #include "Game.h"
-
+#include "Music.h"
+#include <Windows.h>
+#include <mmsystem.h>
 
 //commit para branch
 
@@ -71,6 +73,7 @@ void Scene::init()
 		map = TileMap::createTileMap("levels/fakelevel01.txt", glm::vec2(SCREEN_X, SCREEN_Y), texProgram);
 		menu = new Menu();
 		menu->init(glm::ivec2(SCREEN_X - 640, SCREEN_Y), texProgram);
+		Music::instance().song(0);
 	}
 	else if (getMode() == LEVEL_1) {
 		map = TileMap::createTileMap("levels/fakelevel01.txt", glm::vec2(SCREEN_X, SCREEN_Y), texProgram);
@@ -93,6 +96,7 @@ void Scene::init()
 		spreadGun = new SpreadGun();
 		spreadGun->init(glm::ivec2(SCREEN_X, SCREEN_Y), texProgram, glm::vec2((INIT_SPREADGUN_X_TILES * map->getTileSize()), INIT_SPREADGUN_Y_TILES * map->getTileSize()), player);
 
+		Music::instance().song(1);
 	}
 	else if (getMode() == LEVEL_2) {
 		map = TileMap::createTileMap("levels/fakelevel01.txt", glm::vec2(SCREEN_X, SCREEN_Y), texProgram);
@@ -111,6 +115,8 @@ void Scene::init()
 		lifeIcon = new LifeIcon();
 		lifeIcon->init(glm::ivec2(SCREEN_X, SCREEN_Y), texProgram);
 		lifeIcon->changeLife(playerLevel2->getLifes());
+
+		Music::instance().song(1);
 	}
 	else if (getMode() == LEVEL_3) {
 		map = TileMap::createTileMap("levels/fakelevel01.txt", glm::vec2(SCREEN_X, SCREEN_Y), texProgram);
@@ -129,6 +135,8 @@ void Scene::init()
 		lifeIcon = new LifeIcon();
 		lifeIcon->init(glm::ivec2(SCREEN_X, SCREEN_Y), texProgram);
 		lifeIcon->changeLife(playerLevel3->getLifes());
+
+		Music::instance().song(1);
 	}
 
 	projection = glm::ortho(0.f, float(SCREEN_WIDTH - 1) , float(SCREEN_HEIGHT - 1), 0.f);
@@ -207,7 +215,6 @@ void Scene::update(int deltaTime)
 	}
 
 	else if (getMode() == LEVEL_2) {
-
 		if (lvl2->isFaseBoss()) {
 			setMode(LEVEL_3);
 			init();
@@ -245,6 +252,10 @@ void Scene::update(int deltaTime)
 	}
 
 	else if (getMode() == LEVEL_3) {
+		if (lvl3->goMenu()) {
+			setMode(MENU);
+			init();
+		}
 		if (playerLevel3->getDeadState() && playerLevel3->getLifes() > 0 && playerLevel3->getDeadTime() > DEAD_TIME) {
 			glm::vec2 aux = playerLevel3->getPosition();
 			aux.x = 100.0;

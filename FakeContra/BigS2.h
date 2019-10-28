@@ -27,7 +27,11 @@ public:
 	glm::vec2 getPosition() override;
 	glm::vec2 getBoxCollider() override;
 
+	void doShoot(float desplX, float desplY, float dirX, float dirY, float speed);
+
+
 private:
+	long long lastShoot;
 	glm::ivec2 tileMapDispl, posTurret;
 	int startY;
 	float distX, distY;

@@ -4,6 +4,8 @@
 #include <vector>
 #include "Sprite.h"
 #include "TileMap.h"
+#include <Windows.h>
+#include <mmsystem.h>
 
 class Enemy {
 public:

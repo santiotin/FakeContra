@@ -18,12 +18,12 @@ public:
 	void render();
 	bool isFaseBoss();
 	void setPosition(const glm::vec2& pos);
-
+	bool goMenu();
 	int count1, count2, count3, count4, count5, count6;
 
 private:
-	long long segs;
-	bool fase1, fase2, fase3, fase4, faseBoss, faseEnd, done;
+	long long segs, segswin;
+	bool fase1, fase2, fase3, fase4, faseBoss, faseEnd, done, win, end;
 	glm::ivec2 tileMapDispl, posMapLevel2;
 	int startY;
 	Texture spritesheet;

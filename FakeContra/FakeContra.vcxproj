@@ -24,6 +24,7 @@
     <ClInclude Include="MapLevel2.h" />
     <ClInclude Include="MapLevel3.h" />
     <ClInclude Include="Menu.h" />
+    <ClInclude Include="Music.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="PlayerLevel3.h" />
     <ClInclude Include="PowerUp.h" />
@@ -61,6 +62,7 @@
     <ClCompile Include="MapLevel2.cpp" />
     <ClCompile Include="MapLevel3.cpp" />
     <ClCompile Include="Menu.cpp" />
+    <ClCompile Include="Music.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="PlayerLevel3.cpp" />
     <ClCompile Include="PowerUp.cpp" />
@@ -115,6 +117,8 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
+    <IncludePath>D:\Videojocs\OpenGL\entrenamiento\libs\irrKlang-64bit-1.6.0\include;$(SolutionDir)\includes;$(IncludePath)</IncludePath>
+    <LibraryPath>$(SolutionDir)\libraries;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
@@ -126,14 +130,18 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+
+      <AdditionalIncludeDirectories>..\..\..\libs\irrKlang-64bit-1.6.0\lib\Winx64-visualStudio\irrKlang.lib;..\..\..\libs\irrKlang-1.6.0\lib\Winx64-visualStudio\irrKlang.lib;..\..\..\libs\irrKlang-1.6.0\include;..\..\..\libs\irrKlang-64bit-1.6.0\include;..\..\..\libs\irrKlang-1.6.0\lib;..\..\..\libs\irrKlang-64bit-1.6.0\lib;..\..\..\libs\Simple OpenGL Image Library\src;..\..\..\libs\freeglut\include;..\..\..\libs\glew-1.13.0\include;..\..\..\libs\glm;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+
       <AdditionalIncludeDirectories>..\..\..\libs\Simple OpenGL Image Library\src;..\..\..\libs\freeglut\include;..\..\..\libs\glew-1.13.0\include;..\..\..\libs\glm;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
+
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>..\..\..\libs\Simple OpenGL Image Library\projects\VC9\Debug;..\..\..\libs\freeglut\lib;..\..\..\libs\glew-1.13.0\lib\Release\Win32;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>SOIL.lib;glew32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>..\..\..\libs\irrKlang-64bit-1.6.0\lib\Winx64-visualStudio\irrklang.lib;..\..\..\libs\irrKlang-64bit-1.6.0;..\..\..\libs\Simple OpenGL Image Library\projects\VC9\Debug;..\..\..\libs\freeglut\lib;..\..\..\libs\glew-1.13.0\lib\Release\Win32;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>SOIL.lib;glew32.lib;irrKlang.lib;opengl32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">

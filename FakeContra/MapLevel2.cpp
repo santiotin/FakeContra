@@ -45,6 +45,7 @@ void MapLevel2::init(const glm::ivec2& tileMapPos, ShaderProgram& shaderProgram)
 
 void MapLevel2::update(int deltaTime, ShaderProgram& shaderProgram)
 {
+	EnemyManager::instance().isFaseBoss(false);
 	sprite->update(deltaTime);
 	if (Time::instance().getMili() - segs < 2000) {
 		if (sprite->animation() != STAGE) sprite->changeAnimation(STAGE);
@@ -60,6 +61,7 @@ void MapLevel2::update(int deltaTime, ShaderProgram& shaderProgram)
 		else if (count1 > 6 || EnemyManager::instance().getKills() >= EnemyManager::instance().getSize() && fase1) {
 			EnemyManager::instance().transition(true);
 			EnemyManager::instance().cleanEnemies();
+			BulletManager::instance().cleanBullets();
 			if (sprite->animation() != FASE_2) sprite->changeAnimation(FASE_2);
 			fase1 = false;
 			++count1;
@@ -81,6 +83,7 @@ void MapLevel2::update(int deltaTime, ShaderProgram& shaderProgram)
 		if (count2 > 6) {
 			EnemyManager::instance().transition(true);
 			EnemyManager::instance().cleanEnemies();
+			BulletManager::instance().cleanBullets();
 			if (sprite->animation() != FASE_2) sprite->changeAnimation(FASE_2);
 			fase2 = false;
 			++count2;
@@ -102,6 +105,7 @@ void MapLevel2::update(int deltaTime, ShaderProgram& shaderProgram)
 		if (count3 > 6) {
 			EnemyManager::instance().transition(true);
 			EnemyManager::instance().cleanEnemies();
+			BulletManager::instance().cleanBullets();
 			if (sprite->animation() != FASE_2) sprite->changeAnimation(FASE_2);
 			fase3 = false;
 			++count3;
@@ -123,6 +127,7 @@ void MapLevel2::update(int deltaTime, ShaderProgram& shaderProgram)
 		if (count4 > 6) {
 			EnemyManager::instance().transition(true);
 			EnemyManager::instance().cleanEnemies();
+			BulletManager::instance().cleanBullets();
 			if (sprite->animation() != FASE_2) sprite->changeAnimation(FASE_2);
 			fase4 = false;
 			++count4;
