@@ -19,6 +19,7 @@ enum TorRafagaAnims
 
 void TorRafaga::init(const glm::ivec2& tileMapPos, ShaderProgram& shaderProgram)
 {
+	game_over = false;
 	spritesheet.loadFromFile("images/TorRafaga.png", TEXTURE_PIXEL_FORMAT_RGBA);
 	sprite = Sprite::createSprite(glm::ivec2(64, 64), glm::vec2(0.33, 1.0), &spritesheet, &shaderProgram);
 	sprite->setNumberAnimations(3);
@@ -119,7 +120,7 @@ void TorRafaga::doShoot(float desplX, float desplY, float dirX, float dirY, floa
 	if (lastShoot == 0) {
 		glm::vec2 pos = glm::vec2(posTorRafaga.x + desplX, posTorRafaga.y + desplY);
 		glm::vec2 dir = glm::vec2(dirX, dirY);
-		sndPlaySound(TEXT("musica/level01-turret-shoot.wav"), SND_ASYNC);
+		if (!game_over) sndPlaySound(TEXT("musica/level01-sniper-shoot.wav"), SND_ASYNC);
 		BulletManager::instance().createEnemyBullet(pos, dir, speed, 0);
 		lastShoot = Time::instance().getMili();
 	}
@@ -127,7 +128,7 @@ void TorRafaga::doShoot(float desplX, float desplY, float dirX, float dirY, floa
 		if (Time::instance().isAbleToShootEnemy(lastShoot)) {
 			glm::vec2 pos = glm::vec2(posTorRafaga.x + desplX, posTorRafaga.y + desplY);
 			glm::vec2 dir = glm::vec2(dirX, dirY);
-			sndPlaySound(TEXT("musica/level01-turret-shoot.wav"), SND_ASYNC);
+			if (!game_over) sndPlaySound(TEXT("musica/level01-sniper-shoot.wav"), SND_ASYNC);
 			BulletManager::instance().createEnemyBullet(pos, dir, speed, 0);
 			lastShoot = Time::instance().getMili();
 		}

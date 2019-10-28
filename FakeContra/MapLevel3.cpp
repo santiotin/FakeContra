@@ -81,12 +81,14 @@ void MapLevel3::update(int deltaTime, ShaderProgram& shaderProgram)
 			BulletManager::instance().isPlayerBulletInside(glm::vec2(160, 50), glm::vec2(350, 160), glm::vec2(0, 0));
 		}
 		if (EnemyManager::instance().getKills() > 6 && !end) {
+			BulletManager::instance().cleanBullets();
 			end = true;
 			segswin = Time::instance().getMili();
+			Music::instance().win();
 		}
-		if (Time::instance().getMili() - segswin < 2100) {
+		if (Time::instance().getMili() - segswin < 5100) {
 			if (sprite->animation() != FASE_END)sprite->changeAnimation(FASE_END);
-			if (Time::instance().getMili() - segswin > 2000) {
+			if (Time::instance().getMili() - segswin > 5000) {
 				win = true;
 			}
 		}

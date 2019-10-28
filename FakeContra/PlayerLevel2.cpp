@@ -282,6 +282,7 @@ void PlayerLevel2::doShoot(float desplX, float desplY, float dirX, float dirY) {
 	if (lastShoot == 0) {
 		glm::vec2 pos = glm::vec2(posPlayer.x + desplX, posPlayer.y + desplY);
 		glm::vec2 dir = glm::vec2(dirX, dirY);
+		sndPlaySound(TEXT("musica/level01-shoot.wav"), SND_ASYNC);
 		BulletManager::instance().createPlayerBullet(pos, dir, 6, 1);
 		lastShoot = Time::instance().getMili();
 	}
@@ -289,6 +290,7 @@ void PlayerLevel2::doShoot(float desplX, float desplY, float dirX, float dirY) {
 		if (Time::instance().isAbleToShoot(lastShoot)) {
 			glm::vec2 pos = glm::vec2(posPlayer.x + desplX, posPlayer.y + desplY);
 			glm::vec2 dir = glm::vec2(dirX, dirY);
+			sndPlaySound(TEXT("musica/level01-shoot.wav"), SND_ASYNC);
 			BulletManager::instance().createPlayerBullet(pos, dir, 6, 1);
 			lastShoot = Time::instance().getMili();
 		}
