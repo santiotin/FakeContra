@@ -221,7 +221,7 @@ void Scene::update(int deltaTime)
 		}
 		if (playerLevel2->getDeadState() && playerLevel2->getLifes() > 0 && playerLevel2->getDeadTime() > DEAD_TIME) {
 			glm::vec2 aux = playerLevel2->getPosition();
-			aux.x = 100.0;
+			//aux.x = 100.0;
 			playerLevel2->setPosition(aux);
 			playerLevel2->setDeadState(false);
 			
@@ -258,7 +258,7 @@ void Scene::update(int deltaTime)
 		}
 		if (playerLevel3->getDeadState() && playerLevel3->getLifes() > 0 && playerLevel3->getDeadTime() > DEAD_TIME) {
 			glm::vec2 aux = playerLevel3->getPosition();
-			aux.x = 100.0;
+			//aux.x = 100.0;
 			playerLevel3->setPosition(aux);
 			playerLevel3->setDeadState(false);
 
