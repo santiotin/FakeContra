@@ -100,7 +100,7 @@ glm::vec2 TorBlue::getStartP() {
 
 void TorBlue::doShoot(float desplX, float desplY, float dirX, float dirY, float speed) {
 	if (lastShoot == 0) {
-		int num = rand() % 153;
+		int num = rand() % 60;
 		if (num == 1) {
 			glm::vec2 pos = glm::vec2(posTurret.x + desplX, posTurret.y + desplY);
 			glm::vec2 dir = glm::vec2(dirX, dirY);
@@ -110,7 +110,7 @@ void TorBlue::doShoot(float desplX, float desplY, float dirX, float dirY, float 
 		}
 	}
 	else {
-		if (Time::instance().isAbleToShootEnemyLevel3(lastShoot)) {
+		if (Time::instance().isAbleToShootEnemyLevel3(lastShoot, 70, 3500)) {
 			glm::vec2 pos = glm::vec2(posTurret.x + desplX, posTurret.y + desplY);
 			glm::vec2 dir = glm::vec2(dirX, dirY);
 			sndPlaySound(TEXT("musica/level01-turret-shoot.wav"), SND_ASYNC);

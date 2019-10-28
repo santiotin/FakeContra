@@ -64,8 +64,9 @@ private:
 	float currentTime;
 	glm::mat4 projection;
 	int mode;
+	bool godMode;
 
-	int playerLives;
+	long long godModeTime;
 
 };
 
