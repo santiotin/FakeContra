@@ -91,7 +91,7 @@ glm::vec2 RafBoss::getStartP() {
 
 void RafBoss::doShoot(float desplX, float desplY, float dirX, float dirY, float speed) {
 	if (lastShoot == 0) {
-		int num = rand() % 153;
+		int num = rand() % 50;
 		if (num == 7) {
 			glm::vec2 pos = glm::vec2(posTurret.x + desplX, posTurret.y + desplY);
 			glm::vec2 dir = glm::vec2(dirX, dirY);
@@ -100,7 +100,7 @@ void RafBoss::doShoot(float desplX, float desplY, float dirX, float dirY, float 
 		}
 	}
 	else {
-		if (Time::instance().isAbleToShootEnemyLevel3(lastShoot)) {
+		if (Time::instance().isAbleToShootEnemyLevel3(lastShoot, 50, 2500)) {
 			glm::vec2 pos = glm::vec2(posTurret.x + desplX, posTurret.y + desplY);
 			glm::vec2 dir = glm::vec2(dirX, dirY);
 			BulletManager::instance().createEnemyBullet(pos, dir, speed, 2);
