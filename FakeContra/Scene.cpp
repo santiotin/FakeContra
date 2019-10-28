@@ -28,6 +28,12 @@
 #define INIT_LVL3_X_TILES 0.0
 #define INIT_LVL3_Y_TILES 1.4
 
+#define INIT_POWERUP_X_TILES 91
+#define INIT_POWERUP_Y_TILES 11
+
+#define INIT_SPREADGUN_X_TILES 109
+#define INIT_SPREADGUN_Y_TILES 7
+
 #define DEAD_TIME 110
 
 enum SceneModes
@@ -43,6 +49,8 @@ Scene::Scene()
 	menu = NULL;
 	mode = MENU;
 	godMode = false;
+
+	godModeTime = 0;
 
 }
 
@@ -81,9 +89,9 @@ void Scene::init()
 		player->setTileMap(map);
 
 		powerUp = new PowerUp();
-		powerUp->init(glm::ivec2(SCREEN_X, SCREEN_Y), texProgram, glm::ivec2(500, 165), player);
+		powerUp->init(glm::ivec2(SCREEN_X, SCREEN_Y), texProgram, glm::vec2((INIT_POWERUP_X_TILES * map->getTileSize()), INIT_POWERUP_Y_TILES * map->getTileSize()), player);
 		spreadGun = new SpreadGun();
-		spreadGun->init(glm::ivec2(SCREEN_X, SCREEN_Y), texProgram, glm::ivec2(600, 165), player);
+		spreadGun->init(glm::ivec2(SCREEN_X, SCREEN_Y), texProgram, glm::vec2((INIT_SPREADGUN_X_TILES * map->getTileSize()), INIT_SPREADGUN_Y_TILES * map->getTileSize()), player);
 
 	}
 	else if (getMode() == LEVEL_2) {
@@ -129,7 +137,12 @@ void Scene::init()
 
 void Scene::update(int deltaTime)
 {
-	if (Game::instance().getKey(int('g'))) godMode = !godMode;
+	if (Game::instance().getKey(int('g')) && Game::instance().getKey(int('m'))) {
+		if (Time::instance().isAbleToShoot(godModeTime)) {
+			godModeTime = Time::instance().getMili();
+			godMode = !godMode;
+		}
+	}
 
 	currentTime += deltaTime;
 

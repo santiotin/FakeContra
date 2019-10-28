@@ -4,18 +4,20 @@
 #define SCREEN_X 0
 #define SCREEN_Y 0
 
-#define INIT_TURRET1_X_TILES 30
-#define INIT_TURRET1_Y_TILES 7
-#define INIT_TURRET2_X_TILES 35
-#define INIT_TURRET2_Y_TILES 8
-#define INIT_TURRET3_X_TILES 40
-#define INIT_TURRET3_Y_TILES 9
+#define INIT_TURRET1_X_TILES 102
+#define INIT_TURRET1_Y_TILES 8.4
+#define INIT_TURRET2_X_TILES 114
+#define INIT_TURRET2_Y_TILES 8.4
+#define INIT_TURRET3_X_TILES 78
+#define INIT_TURRET3_Y_TILES 10.4
 #define INIT_TURRET4_X_TILES 186
 #define INIT_TURRET4_Y_TILES 12.4
 #define INIT_TURRET5_X_TILES 194
 #define INIT_TURRET5_Y_TILES 12.4
 #define INIT_TURRET6_X_TILES 214
 #define INIT_TURRET6_Y_TILES 12.4
+#define INIT_TURRET7_X_TILES 60
+#define INIT_TURRET7_Y_TILES 10
 
 #define INIT_TORRAFAGA1_X_TILES 136
 #define INIT_TORRAFAGA1_Y_TILES 4.4
@@ -24,12 +26,14 @@
 #define INIT_TORRAFAGA3_X_TILES 128
 #define INIT_TORRAFAGA3_Y_TILES 10.4
 
-#define INIT_RUNNER1_X_TILES 15
+#define INIT_RUNNER1_X_TILES 30
 #define INIT_RUNNER1_Y_TILES 6.8
-#define INIT_RUNNER2_X_TILES 17
+#define INIT_RUNNER2_X_TILES 32
 #define INIT_RUNNER2_Y_TILES 6.8
-#define INIT_RUNNER3_X_TILES 20
+#define INIT_RUNNER3_X_TILES 150
 #define INIT_RUNNER3_Y_TILES 6.8
+#define INIT_RUNNER4_X_TILES 152
+#define INIT_RUNNER4_Y_TILES 6.8
 
 #define INIT_SOLDIER1_X_TILES 18.8
 #define INIT_SOLDIER1_Y_TILES 11.8
@@ -117,31 +121,39 @@ void EnemyManager::init(TileMap *tileMap, ShaderProgram& shaderProgram, int leve
 		initLevel_Boss(shaderProgram);
 	}
 }
+
 bool EnemyManager::isEmpty()
 {
 	return enemies.empty();
 }
+
 void EnemyManager::transition(bool trans)
 {
 	changing = trans;
 }
+
 int EnemyManager::getKills()
 {
 	return kills;
 }
+
 int EnemyManager::getSize()
 {
 	return enemies.size();
 }
+
 void EnemyManager::isFaseBoss(bool fb) {
 	boss = fb;
 }
+
 bool EnemyManager::isBoss() {
 	return boss;
 }
+
 bool EnemyManager::isTrans() {
 	return changing;
 }
+
 void EnemyManager::update(int deltaTime, float posPlayerX, float posPlayerY, bool isDead)
 {
 	
@@ -164,10 +176,12 @@ void EnemyManager::update(int deltaTime, float posPlayerX, float posPlayerY, boo
 		else if (!changing && getSize() < 10 && lvl == 5)greenSoldier(sh);
 	}
 }
+
 void EnemyManager::cleanEnemies()
 {
 	enemies.clear();
 }
+
 void EnemyManager::render()
 {
 	for (Enemy* enemy : enemies) {
@@ -231,6 +245,12 @@ void EnemyManager::initLevel1(TileMap* tileMap, ShaderProgram& shaderProgram) {
 	turret6->setTileMap(tileMap);
 	enemies.push_back(turret6);
 
+	Enemy* turret7 = new Turret();
+	turret7->init(glm::ivec2(SCREEN_X, SCREEN_Y), shaderProgram);
+	turret7->setPosition(glm::vec2((INIT_TURRET7_X_TILES * tileMap->getTileSize()), INIT_TURRET7_Y_TILES * tileMap->getTileSize()));
+	turret7->setTileMap(tileMap);
+	enemies.push_back(turret7);
+
 	Enemy* torrafaga1 = new TorRafaga();
 	torrafaga1->init(glm::ivec2(SCREEN_X, SCREEN_Y), shaderProgram);
 	torrafaga1->setPosition(glm::vec2((INIT_TORRAFAGA1_X_TILES * tileMap->getTileSize()), INIT_TORRAFAGA1_Y_TILES * tileMap->getTileSize()));
@@ -253,13 +273,25 @@ void EnemyManager::initLevel1(TileMap* tileMap, ShaderProgram& shaderProgram) {
 	runner1->init(glm::ivec2(SCREEN_X, SCREEN_Y), shaderProgram);
 	runner1->setPosition(glm::vec2((INIT_RUNNER1_X_TILES * tileMap->getTileSize()), INIT_RUNNER1_Y_TILES * tileMap->getTileSize()));
 	runner1->setTileMap(tileMap);
-	//enemies.push_back(runner1);
+	enemies.push_back(runner1);
 
 	Enemy* runner2 = new Runner();
 	runner2->init(glm::ivec2(SCREEN_X, SCREEN_Y), shaderProgram);
 	runner2->setPosition(glm::vec2((INIT_RUNNER2_X_TILES * tileMap->getTileSize()), INIT_RUNNER2_Y_TILES * tileMap->getTileSize()));
 	runner2->setTileMap(tileMap);
-	//enemies.push_back(runner2);
+	enemies.push_back(runner2);
+
+	Enemy* runner3 = new Runner();
+	runner3->init(glm::ivec2(SCREEN_X, SCREEN_Y), shaderProgram);
+	runner3->setPosition(glm::vec2((INIT_RUNNER3_X_TILES * tileMap->getTileSize()), INIT_RUNNER3_Y_TILES * tileMap->getTileSize()));
+	runner3->setTileMap(tileMap);
+	enemies.push_back(runner3);
+
+	Enemy* runner4 = new Runner();
+	runner4->init(glm::ivec2(SCREEN_X, SCREEN_Y), shaderProgram);
+	runner4->setPosition(glm::vec2((INIT_RUNNER4_X_TILES * tileMap->getTileSize()), INIT_RUNNER4_Y_TILES * tileMap->getTileSize()));
+	runner4->setTileMap(tileMap);
+	enemies.push_back(runner4);
 
 
 	Enemy* soldier1 = new Soldier();
@@ -316,6 +348,7 @@ void EnemyManager::initLevel2_1(ShaderProgram& shaderProgram)
 {
 	
 }
+
 void EnemyManager::initLevel2_2(ShaderProgram& shaderProgram)
 {
 	Enemy* tors21 = new TorS2();
@@ -328,6 +361,7 @@ void EnemyManager::initLevel2_2(ShaderProgram& shaderProgram)
 	tors22->setPosition(glm::vec2(INIT_TORS22_X_TILES , INIT_TORS22_Y_TILES ));
 	enemies.push_back(tors22);
 }
+
 void EnemyManager::initLevel2_3(ShaderProgram& shaderProgram)
 {
 	Enemy* tors21 = new TorS2();
@@ -344,6 +378,7 @@ void EnemyManager::initLevel2_3(ShaderProgram& shaderProgram)
 	bol22->setPosition(glm::vec2(INIT_BOLS22_X_TILES , INIT_BOLS22_Y_TILES ));
 	enemies.push_back(bol22);
 }
+
 void EnemyManager::initLevel2_4( ShaderProgram& shaderProgram)
 {
 	Enemy* bb2 = new BigS2();
@@ -372,6 +407,7 @@ void EnemyManager::initLevel2_4( ShaderProgram& shaderProgram)
 
 	
 }
+
 void EnemyManager::initLevel_Boss(ShaderProgram& shaderProgram)
 {
 	Enemy* torbos1 = new TorBoss();
@@ -406,6 +442,7 @@ void EnemyManager::initLevel_Boss(ShaderProgram& shaderProgram)
 	torblue->setPosition(glm::vec2(INIT_TORBLUE_X_TILES, INIT_TORBLUE_Y_TILES));
 	enemies.push_back(torblue);
 }
+
 void EnemyManager::greenSoldier(ShaderProgram& shaderProgram) {
 	//long long segs = Time::instance().getMili();
 	if (segs == 0) {

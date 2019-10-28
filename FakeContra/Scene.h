@@ -66,6 +66,8 @@ private:
 	int mode;
 	bool godMode;
 
+	long long godModeTime;
+
 };
 
 
