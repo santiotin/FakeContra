@@ -55,7 +55,6 @@ void TorRafaga::update(int deltaTime, float posPlayerX, float posPlayerY, bool i
 	distY = posTorRafY - posPlayerY;
 
 	double alpha = atan2(distY, distX) - 0.25;
-	cout << alpha << endl;
 	if (alpha < 0.0f)
 		alpha += 2 * PI;
 	int valor = int(((6 * alpha) - (PI / 4)) / PI);

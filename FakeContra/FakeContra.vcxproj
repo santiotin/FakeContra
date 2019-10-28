@@ -19,6 +19,7 @@
     <ClInclude Include="Bullet.h" />
     <ClInclude Include="BulletManager.h" />
     <ClInclude Include="Game.h" />
+    <ClInclude Include="GameOver.h" />
     <ClInclude Include="GreenSoldier.h" />
     <ClInclude Include="LifeIcon.h" />
     <ClInclude Include="MapLevel2.h" />
@@ -56,6 +57,7 @@
     <ClCompile Include="Bullet.cpp" />
     <ClCompile Include="BulletManager.cpp" />
     <ClCompile Include="Game.cpp" />
+    <ClCompile Include="GameOver.cpp" />
     <ClCompile Include="GreenSoldier.cpp" />
     <ClCompile Include="LifeIcon.cpp" />
     <ClCompile Include="main.cpp" />
@@ -130,12 +132,9 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-
       <AdditionalIncludeDirectories>..\..\..\libs\irrKlang-64bit-1.6.0\lib\Winx64-visualStudio\irrKlang.lib;..\..\..\libs\irrKlang-1.6.0\lib\Winx64-visualStudio\irrKlang.lib;..\..\..\libs\irrKlang-1.6.0\include;..\..\..\libs\irrKlang-64bit-1.6.0\include;..\..\..\libs\irrKlang-1.6.0\lib;..\..\..\libs\irrKlang-64bit-1.6.0\lib;..\..\..\libs\Simple OpenGL Image Library\src;..\..\..\libs\freeglut\include;..\..\..\libs\glew-1.13.0\include;..\..\..\libs\glm;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-
       <AdditionalIncludeDirectories>..\..\..\libs\Simple OpenGL Image Library\src;..\..\..\libs\freeglut\include;..\..\..\libs\glew-1.13.0\include;..\..\..\libs\glm;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
-
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>

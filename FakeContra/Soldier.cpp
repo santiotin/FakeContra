@@ -60,7 +60,6 @@ void Soldier::update(int deltaTime, float posPlayerX, float posPlayerY, bool isD
 	distY = posSoldierY - posPlayerY;
 
 	double alpha = atan2(distY, distX) - 0;
-	cout << alpha << endl;
 	if (alpha < 0.0f)
 		alpha += 2 * PI;
 	int valor = int(((6 * alpha) - (PI / 4)) / PI);

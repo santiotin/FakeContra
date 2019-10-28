@@ -56,7 +56,6 @@ void Sniper::update(int deltaTime, float posPlayerX, float posPlayerY, bool isDe
 
 	distY = posSniperY - posPlayerY;
 
-	cout << distX << endl;
 	if (distX >= 300) sprite->changeAnimation(HEAT_L);
 	else if (distX <= 300 && distX > 0)sprite->changeAnimation(SHOOT_L);
 	else if (distX > -300 && distX <= 0) sprite->changeAnimation(SHOOT_R);
