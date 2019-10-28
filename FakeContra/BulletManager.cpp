@@ -179,3 +179,8 @@ bool BulletManager::isLevel3BulletOutside(glm::vec2 posBullet, float posPlayerX)
 	}
 	else return false;
 }
+void BulletManager::cleanBullets()
+{
+	playerBullets.clear();
+	enemyBullets.clear();
+}

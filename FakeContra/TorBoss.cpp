@@ -93,18 +93,20 @@ glm::vec2 TorBoss::getStartP() {
 
 void TorBoss::doShoot(float desplX, float desplY, float dirX, float dirY, float speed) {
 	if (lastShoot == 0) {
-		int num = rand() % 153;
+		int num = rand() % 80;
 		if (num == 7) {
 			glm::vec2 pos = glm::vec2(posTurret.x + desplX, posTurret.y + desplY);
 			glm::vec2 dir = glm::vec2(dirX, dirY);
+			sndPlaySound(TEXT("musica/level01-turret-shoot.wav"), SND_ASYNC);
 			BulletManager::instance().createEnemyBullet(pos, dir, speed, 0);
 			lastShoot = Time::instance().getMili();
 		}
 	}
 	else {
-		if (Time::instance().isAbleToShootEnemyLevel3(lastShoot)) {
+		if (Time::instance().isAbleToShootEnemyLevel3(lastShoot, 30, 2000)) {
 			glm::vec2 pos = glm::vec2(posTurret.x + desplX, posTurret.y + desplY);
 			glm::vec2 dir = glm::vec2(dirX, dirY);
+			sndPlaySound(TEXT("musica/level01-turret-shoot.wav"), SND_ASYNC);
 			BulletManager::instance().createEnemyBullet(pos, dir, speed, 0);
 			lastShoot = Time::instance().getMili();
 		}
