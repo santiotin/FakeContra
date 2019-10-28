@@ -35,7 +35,6 @@ enum SceneModes
 	MENU, LEVEL_1, LEVEL_2, LEVEL_3
 };
 
-
 Scene::Scene()
 {
 	map = NULL;
@@ -43,7 +42,7 @@ Scene::Scene()
 	playerLevel2 = NULL;
 	menu = NULL;
 	mode = MENU;
-	playerLives = 3;
+	godMode = false;
 
 }
 
@@ -56,7 +55,6 @@ Scene::~Scene()
 		delete player;
 
 }
-
 
 void Scene::init()
 {
@@ -77,7 +75,6 @@ void Scene::init()
 		powerUpIcon = new PowerUpIcon();
 		powerUpIcon->init(glm::ivec2(SCREEN_X, SCREEN_Y), texProgram);
 		
-
 		player = new Player();
 		player->init(glm::ivec2(SCREEN_X, SCREEN_Y), texProgram);
 		player->setPosition(glm::vec2((INIT_PLAYER_X_TILES * map->getTileSize()), INIT_PLAYER_Y_TILES * map->getTileSize()));
@@ -102,8 +99,6 @@ void Scene::init()
 		playerLevel2->init(glm::ivec2(SCREEN_X, SCREEN_Y), texProgram);
 		playerLevel2->setPosition(glm::vec2((INIT_PLAYER2_X_TILES * map->getTileSize()), INIT_PLAYER2_Y_TILES * map->getTileSize()));
 		playerLevel2->setTileMap(map);
-		if (player != NULL) playerLevel2->setLifes(player->getLifes());
-		else playerLevel2->setLifes(playerLives);
 
 		lifeIcon = new LifeIcon();
 		lifeIcon->init(glm::ivec2(SCREEN_X, SCREEN_Y), texProgram);
@@ -122,14 +117,11 @@ void Scene::init()
 		playerLevel3->init(glm::ivec2(SCREEN_X, SCREEN_Y), texProgram);
 		playerLevel3->setPosition(glm::vec2((INIT_PLAYER3_X_TILES * map->getTileSize()), INIT_PLAYER3_Y_TILES * map->getTileSize()));
 		playerLevel3->setTileMap(map);
-		if (playerLevel2 != NULL) playerLevel3->setLifes(playerLevel2->getLifes());
-		else playerLevel3->setLifes(playerLives);
 
 		lifeIcon = new LifeIcon();
 		lifeIcon->init(glm::ivec2(SCREEN_X, SCREEN_Y), texProgram);
 		lifeIcon->changeLife(playerLevel3->getLifes());
 	}
-
 
 	projection = glm::ortho(0.f, float(SCREEN_WIDTH - 1) , float(SCREEN_HEIGHT - 1), 0.f);
 	currentTime = 0.0f;
@@ -137,6 +129,8 @@ void Scene::init()
 
 void Scene::update(int deltaTime)
 {
+	if (Game::instance().getKey(int('g'))) godMode = !godMode;
+
 	currentTime += deltaTime;
 
 	if (getMode() == MENU) {
@@ -170,9 +164,8 @@ void Scene::update(int deltaTime)
 		else {
 			if (BulletManager::instance().isEnemyBulletInside(player->getPosition(), player->getBox(), player->getStartP()) ||
 				EnemyManager::instance().isEnemyInside(player->getPosition(), player->getBox())) {
-				if (!player->getMode()) {
+				if (!player->getMode() && !godMode) {
 					player->setDeadState(true);
-					playerLives--;
 				}
 			}
 			else if (player->getPosition().y > SCREEN_HEIGHT + 10.0) {
@@ -180,11 +173,9 @@ void Scene::update(int deltaTime)
 				glm::vec2 aux = glm::vec2(player->getPosition());
 				aux.x -= 50.0;
 				player->setPosition(aux);
-				playerLives--;
 			}
 			else if (player->getPosition().x < -10.0) {
 				player->setDeadState(true);
-				playerLives--;
 				player->setPosition(glm::vec2((INIT_PLAYER_X_TILES * map->getTileSize()), INIT_PLAYER_Y_TILES * map->getTileSize()));
 			}
 		}
@@ -225,14 +216,12 @@ void Scene::update(int deltaTime)
 		}
 		else {
 			if (BulletManager::instance().isEnemyBulletInside(playerLevel2->getPosition(), playerLevel2->getBox(), playerLevel2->getStartP())) {
-				//playerLevel2->setDeadState(true);
-				playerLives--;
+				if(!godMode) playerLevel2->setDeadState(true);
 			}
 			if (lvl2->isFaseBoss())playerLevel2->setPosition(glm::vec2(INIT_PLAYER3_X_TILES,INIT_PLAYER3_Y_TILES+400));
 		}
 		playerLevel2->update(deltaTime);
 
-		//lvl2->update(deltaTime, playerLevel2->getPosX(), playerLevel2->getPosY());
 		lvl2->update(deltaTime, texProgram);
     
 		EnemyManager::instance().update(deltaTime, playerLevel2->getPosX(), playerLevel2->getPosY(), playerLevel2->getDeadState());
@@ -259,9 +248,8 @@ void Scene::update(int deltaTime)
 		}
 		else {
 			if (BulletManager::instance().isEnemyBulletInside(playerLevel3->getPosition(), playerLevel3->getBox(), playerLevel3->getStartP())) {
-				playerLevel3->setDeadState(true);
-				playerLives--;
-			}
+				if (!godMode) playerLevel3->setDeadState(true);
+			} 
 			if (lvl3->isFaseBoss())playerLevel3->setPosition(glm::vec2(INIT_PLAYER3_X_TILES, INIT_PLAYER3_Y_TILES + 400));
 		}
 		playerLevel3->update(deltaTime);
