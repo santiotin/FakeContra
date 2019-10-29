@@ -154,7 +154,7 @@ void Scene::init()
 		lifeIcon->changeLife(playerLevel3->getLifes());
 
 		gameOver = new GameOver();
-		gameOver->init(glm::ivec2(SCREEN_X, SCREEN_Y), texProgram, glm::vec2((0 * map->getTileSize()), 0 * map->getTileSize()), player);
+		gameOver->init(glm::ivec2(SCREEN_X, SCREEN_Y), texProgram, glm::vec2((0 * map->getTileSize()), 50+0 * map->getTileSize()), player);
 
 		Music::instance().song(1);
 	}
@@ -315,8 +315,8 @@ void Scene::update(int deltaTime)
 			sndPlaySound(TEXT("musica/game_over.wav"), SND_ASYNC);
 			gameOver->update(deltaTime);
 			segslose = Time::instance().getMili();
-			lose = true;
 			Music::instance().stop_song();
+			lose = true;
 			Music::instance().gover(lose);
 		}
 		else {
@@ -326,7 +326,6 @@ void Scene::update(int deltaTime)
 			if (lvl3->isFaseBoss())playerLevel3->setPosition(glm::vec2(INIT_PLAYER3_X_TILES, INIT_PLAYER3_Y_TILES + 400));
 		}
 		if (lvl3->goMenu() || lose) {
-			//cout << "ENTRO MENU" << endl;
 			if (Time::instance().getMili() - segslose > 2100) {
 				setMode(MENU);
 				init();
@@ -410,7 +409,7 @@ void Scene::render()
 	else if (getMode() == LEVEL_3) {
 
 		if (lose) gameOver->render();
-		{
+		else{
 			lvl3->render();
 			EnemyManager::instance().render();
 			playerLevel3->render();
@@ -463,6 +462,11 @@ void Scene::updateCamera() {
 			
 			lifeIcon->setPosition(glm::vec2(30.0, 0.0));
 			powerUpIcon->setPosition(glm::vec2(SCREEN_WIDTH - 50.0, 0.0));
+		}
+		else if (player->getPosX() > (240*map->getTileSize()) - ((SCREEN_WIDTH - 1 )/2)){
+			projection = glm::ortho(float((240 * map->getTileSize()) - SCREEN_WIDTH), float((240 * map->getTileSize())), float(SCREEN_HEIGHT - 1), 0.f);
+			lifeIcon->setPosition(glm::vec2(((240 * map->getTileSize()) + 30 - ((SCREEN_WIDTH - 1))), 0.0));
+			powerUpIcon->setPosition(glm::vec2((240 * map->getTileSize()) - 50.0, 0.0));
 		}
 		else {
 			projection = glm::ortho(player->getPosX() - ((SCREEN_WIDTH - 1) / 2), player->getPosX() + ((SCREEN_WIDTH - 1) / 2), float(SCREEN_HEIGHT - 1), 0.f);
