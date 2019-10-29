@@ -133,13 +133,13 @@
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>..\..\..\libs\irrKlang-64bit-1.6.0\lib\Winx64-visualStudio\irrKlang.lib;..\..\..\libs\irrKlang-1.6.0\lib\Winx64-visualStudio\irrKlang.lib;..\..\..\libs\irrKlang-1.6.0\include;..\..\..\libs\irrKlang-64bit-1.6.0\include;..\..\..\libs\irrKlang-1.6.0\lib;..\..\..\libs\irrKlang-64bit-1.6.0\lib;..\..\..\libs\Simple OpenGL Image Library\src;..\..\..\libs\freeglut\include;..\..\..\libs\glew-1.13.0\include;..\..\..\libs\glm;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <AdditionalIncludeDirectories>..\..\..\libs\Simple OpenGL Image Library\src;..\..\..\libs\freeglut\include;..\..\..\libs\glew-1.13.0\include;..\..\..\libs\glm;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\libraries\glew-1.13.0\include;..\libraries\freeglut\include;..\libraries\Simple OpenGL Image Library\src;..\libraries\irrKlang-1.6.0;..\libraries\irrKlang-64bit-1.6.0;..\libraries\glm</AdditionalIncludeDirectories>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>..\..\..\libs\irrKlang-64bit-1.6.0\lib\Winx64-visualStudio\irrklang.lib;..\..\..\libs\irrKlang-64bit-1.6.0;..\..\..\libs\Simple OpenGL Image Library\projects\VC9\Debug;..\..\..\libs\freeglut\lib;..\..\..\libs\glew-1.13.0\lib\Release\Win32;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>..\libraries\irrKlang-64bit-1.6.0\lib\Winx64-visualStudio\irrklang.lib;..\libraries\irrKlang-64bit-1.6.0;..\libraries\Simple OpenGL Image Library\projects\VC9\Debug;..\libraries\freeglut\lib;..\libraries\glew-1.13.0\lib\Release\Win32</AdditionalLibraryDirectories>
       <AdditionalDependencies>SOIL.lib;glew32.lib;irrKlang.lib;opengl32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>

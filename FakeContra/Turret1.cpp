@@ -80,7 +80,7 @@ void Turret::update(int deltaTime, float posPlayerX, float posPlayerY, bool isDe
 	distY = posTurretY - posPlayerY;
 
 	double alpha = atan2(distY, distX) - 0.15;
-	cout << alpha << endl;
+	//cout << alpha << endl;
 	if (alpha < 0.0f)
 		alpha += 2 * PI;
 	int valor = int(((6 * alpha) - (PI / 4)) / PI);
