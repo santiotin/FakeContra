@@ -19,6 +19,7 @@ enum GreenSoldierAnims
 
 void GreenSoldier::init(const glm::ivec2& tileMapPos, ShaderProgram& shaderProgram)
 {
+	game_over = false;
 	spritesheet.loadFromFile("images/GreenSoldier.png", TEXTURE_PIXEL_FORMAT_RGBA);
 	sprite = Sprite::createSprite(glm::ivec2(32, 64), glm::vec2(0.33, 0.5), &spritesheet, &shaderProgram);
 	sprite->setNumberAnimations(6);
@@ -112,7 +113,7 @@ void GreenSoldier::doShoot(float desplX, float desplY, float dirX, float dirY, f
 	if (lastShoot == 0) {
 		glm::vec2 pos = glm::vec2(posGreenSoldier.x + desplX, posGreenSoldier.y + desplY);
 		glm::vec2 dir = glm::vec2(dirX, dirY);
-		sndPlaySound(TEXT("musica/level01-sniper-shoot.wav"), SND_ASYNC);
+		if (!game_over) sndPlaySound(TEXT("musica/level01-sniper-shoot.wav"), SND_ASYNC);
 		BulletManager::instance().createEnemyBullet(pos, dir, speed, 0);
 		lastShoot = Time::instance().getMili();
 	}
@@ -120,7 +121,7 @@ void GreenSoldier::doShoot(float desplX, float desplY, float dirX, float dirY, f
 		if (Time::instance().isAbleToShootEnemyLevel2(lastShoot)) {
 			glm::vec2 pos = glm::vec2(posGreenSoldier.x + desplX, posGreenSoldier.y + desplY);
 			glm::vec2 dir = glm::vec2(dirX, dirY);
-			sndPlaySound(TEXT("musica/level01-sniper-shoot.wav"), SND_ASYNC);
+			if (!game_over) sndPlaySound(TEXT("musica/level01-sniper-shoot.wav"), SND_ASYNC);
 			BulletManager::instance().createEnemyBullet(pos, dir, speed, 0);
 			lastShoot = Time::instance().getMili();
 		}

@@ -18,6 +18,8 @@ enum SoldierAnims
 
 void Soldier::init(const glm::ivec2& tileMapPos, ShaderProgram& shaderProgram)
 {
+
+	game_over = false;
 	spritesheet.loadFromFile("images/Soldier.png", TEXTURE_PIXEL_FORMAT_RGBA);
 	sprite = Sprite::createSprite(glm::ivec2(64, 96), glm::vec2(0.33, 0.5), &spritesheet, &shaderProgram);
 	sprite->setNumberAnimations(6);
@@ -54,13 +56,12 @@ void Soldier::update(int deltaTime, float posPlayerX, float posPlayerY, bool isD
 	sprite->update(deltaTime);
 	float posSoldierX = getPosX();
 	float posSoldierY = getPosY();
-
+	game_over = Music::instance().isGo();
 	distX = posSoldierX - posPlayerX;
 
 	distY = posSoldierY - posPlayerY;
 
 	double alpha = atan2(distY, distX) - 0;
-	cout << alpha << endl;
 	if (alpha < 0.0f)
 		alpha += 2 * PI;
 	int valor = int(((6 * alpha) - (PI / 4)) / PI);
@@ -139,7 +140,7 @@ void Soldier::doShoot(float desplX, float desplY, float dirX, float dirY, float 
 	if (lastShoot == 0) {
 		glm::vec2 pos = glm::vec2(posSoldier.x + desplX, posSoldier.y + desplY);
 		glm::vec2 dir = glm::vec2(dirX, dirY);
-		sndPlaySound(TEXT("musica/level01-sniper-shoot.wav"), SND_ASYNC);
+		if (!game_over) sndPlaySound(TEXT("musica/level01-sniper-shoot.wav"), SND_ASYNC);
 		BulletManager::instance().createEnemyBullet(pos, dir, speed, 0);
 		lastShoot = Time::instance().getMili();
 	}
@@ -147,7 +148,7 @@ void Soldier::doShoot(float desplX, float desplY, float dirX, float dirY, float 
 		if (Time::instance().isAbleToShootEnemy(lastShoot)) {
 			glm::vec2 pos = glm::vec2(posSoldier.x + desplX, posSoldier.y + desplY);
 			glm::vec2 dir = glm::vec2(dirX, dirY);
-			sndPlaySound(TEXT("musica/level01-sniper-shoot.wav"), SND_ASYNC);
+			if(!game_over)sndPlaySound(TEXT("musica/level01-sniper-shoot.wav"), SND_ASYNC);
 			BulletManager::instance().createEnemyBullet(pos, dir, speed, 0);
 			lastShoot = Time::instance().getMili();
 		}

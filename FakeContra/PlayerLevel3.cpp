@@ -113,7 +113,6 @@ void PlayerLevel3::init(const glm::ivec2& tileMapPos, ShaderProgram& shaderProgr
 void PlayerLevel3::update(int deltaTime)
 {
 	sprite->update(deltaTime);
-	cout << EnemyManager::instance().isTrans() << endl;
 	if (EnemyManager::instance().isTrans()) {
 		if (sprite->animation() != RUN_FORW) sprite->changeAnimation(RUN_FORW);
 	}

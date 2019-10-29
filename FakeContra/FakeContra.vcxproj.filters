@@ -37,6 +37,7 @@
     <ClCompile Include="PlayerLevel3.cpp" />
     <ClCompile Include="SpreadGun.cpp" />
     <ClCompile Include="Music.cpp" />
+    <ClCompile Include="GameOver.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Runner.h" />
@@ -58,6 +59,7 @@
     <ClInclude Include="PlayerLevel3.h" />
     <ClInclude Include="SpreadGun.h" />
     <ClInclude Include="Music.h" />
+    <ClInclude Include="GameOver.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Game.cpp">

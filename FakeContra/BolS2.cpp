@@ -15,6 +15,7 @@ enum BolS2Anims
 
 void BolS2::init(const glm::ivec2& tileMapPos, ShaderProgram& shaderProgram)
 {
+	game_over = false;
 	spritesheet.loadFromFile("images/BolS2.png", TEXTURE_PIXEL_FORMAT_RGBA);
 	sprite = Sprite::createSprite(glm::ivec2(32, 32), glm::vec2(0.33, 1.00), &spritesheet, &shaderProgram);
 	sprite->setNumberAnimations(12);
@@ -93,7 +94,7 @@ void BolS2::doShoot(float desplX, float desplY, float dirX, float dirY, float sp
 		if (num == 7) {
 			glm::vec2 pos = glm::vec2(posTurret.x + desplX, posTurret.y + desplY);
 			glm::vec2 dir = glm::vec2(dirX, dirY);
-			sndPlaySound(TEXT("musica/level01-turret-shoot.wav"), SND_ASYNC);
+			if (!game_over) sndPlaySound(TEXT("musica/level01-turret-shoot.wav"), SND_ASYNC);
 			BulletManager::instance().createEnemyBullet(pos, dir, speed, 0);
 			lastShoot = Time::instance().getMili();
 		}
@@ -102,7 +103,7 @@ void BolS2::doShoot(float desplX, float desplY, float dirX, float dirY, float sp
 		if (Time::instance().isAbleToShootEnemyLevel2(lastShoot)) {
 			glm::vec2 pos = glm::vec2(posTurret.x + desplX, posTurret.y + desplY);
 			glm::vec2 dir = glm::vec2(dirX, dirY);
-			sndPlaySound(TEXT("musica/level01-turret-shoot.wav"), SND_ASYNC);
+			if (!game_over) sndPlaySound(TEXT("musica/level01-turret-shoot.wav"), SND_ASYNC);
 			BulletManager::instance().createEnemyBullet(pos, dir, speed, 0);
 			lastShoot = Time::instance().getMili();
 		}

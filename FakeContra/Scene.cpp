@@ -51,7 +51,7 @@ Scene::Scene()
 	menu = NULL;
 	mode = MENU;
 	godMode = false;
-
+	lose = false;
 	godModeTime = 0;
 
 }
@@ -69,13 +69,16 @@ Scene::~Scene()
 void Scene::init()
 {
 	initShaders();
+	
 	if (getMode() == MENU) {
+		lose = false;
 		map = TileMap::createTileMap("levels/fakelevel01.txt", glm::vec2(SCREEN_X, SCREEN_Y), texProgram);
 		menu = new Menu();
 		menu->init(glm::ivec2(SCREEN_X - 640, SCREEN_Y), texProgram);
 		Music::instance().song(0);
 	}
 	else if (getMode() == LEVEL_1) {
+		lose = false;
 		map = TileMap::createTileMap("levels/fakelevel01.txt", glm::vec2(SCREEN_X, SCREEN_Y), texProgram);
 
 		BulletManager::instance().init(glm::ivec2(SCREEN_X, SCREEN_Y), texProgram);
@@ -96,9 +99,13 @@ void Scene::init()
 		spreadGun = new SpreadGun();
 		spreadGun->init(glm::ivec2(SCREEN_X, SCREEN_Y), texProgram, glm::vec2((INIT_SPREADGUN_X_TILES * map->getTileSize()), INIT_SPREADGUN_Y_TILES * map->getTileSize()), player);
 
+		gameOver = new GameOver();
+		gameOver->init(glm::ivec2(SCREEN_X, SCREEN_Y), texProgram, glm::vec2((0 * map->getTileSize()), 0 * map->getTileSize()), player);
+
 		Music::instance().song(1);
 	}
 	else if (getMode() == LEVEL_2) {
+		lose = false;
 		map = TileMap::createTileMap("levels/fakelevel01.txt", glm::vec2(SCREEN_X, SCREEN_Y), texProgram);
 		lvl2 = new MapLevel2();
 		lvl2->init(glm::ivec2(SCREEN_X, SCREEN_Y), texProgram);
@@ -112,13 +119,20 @@ void Scene::init()
 		playerLevel2->setPosition(glm::vec2((INIT_PLAYER2_X_TILES * map->getTileSize()), INIT_PLAYER2_Y_TILES * map->getTileSize()));
 		playerLevel2->setTileMap(map);
 
+		powerUp = new PowerUp();
+		powerUp->init(glm::ivec2(SCREEN_X, SCREEN_Y), texProgram, glm::vec2((INIT_POWERUP_X_TILES * map->getTileSize()), INIT_POWERUP_Y_TILES * map->getTileSize()), player);
+
 		lifeIcon = new LifeIcon();
 		lifeIcon->init(glm::ivec2(SCREEN_X, SCREEN_Y), texProgram);
 		lifeIcon->changeLife(playerLevel2->getLifes());
 
+		gameOver = new GameOver();
+		gameOver->init(glm::ivec2(SCREEN_X, SCREEN_Y), texProgram, glm::vec2((0 * map->getTileSize()), 50+0 * map->getTileSize()), player);
+
 		Music::instance().song(1);
 	}
 	else if (getMode() == LEVEL_3) {
+		lose = false;
 		map = TileMap::createTileMap("levels/fakelevel01.txt", glm::vec2(SCREEN_X, SCREEN_Y), texProgram);
 		lvl3 = new MapLevel3();
 		lvl3->init(glm::ivec2(SCREEN_X, SCREEN_Y), texProgram);
@@ -126,6 +140,9 @@ void Scene::init()
 
 		BulletManager::instance().init(glm::ivec2(SCREEN_X, SCREEN_Y), texProgram);
 		/*EnemyManager::instance().init(map, texProgram, 6);*/
+
+		powerUp = new PowerUp();
+		powerUp->init(glm::ivec2(SCREEN_X, SCREEN_Y), texProgram, glm::vec2((INIT_POWERUP_X_TILES * map->getTileSize()), INIT_POWERUP_Y_TILES * map->getTileSize()), player);
 
 		playerLevel3 = new PlayerLevel3();
 		playerLevel3->init(glm::ivec2(SCREEN_X, SCREEN_Y), texProgram);
@@ -135,6 +152,9 @@ void Scene::init()
 		lifeIcon = new LifeIcon();
 		lifeIcon->init(glm::ivec2(SCREEN_X, SCREEN_Y), texProgram);
 		lifeIcon->changeLife(playerLevel3->getLifes());
+
+		gameOver = new GameOver();
+		gameOver->init(glm::ivec2(SCREEN_X, SCREEN_Y), texProgram, glm::vec2((0 * map->getTileSize()), 0 * map->getTileSize()), player);
 
 		Music::instance().song(1);
 	}
@@ -153,7 +173,7 @@ void Scene::update(int deltaTime)
 	}
 
 	currentTime += deltaTime;
-
+	
 	if (getMode() == MENU) {
 		menu->update(deltaTime);
 		if (Game::instance().getKey(13) && menu->canStartGame()) {
@@ -161,9 +181,9 @@ void Scene::update(int deltaTime)
 			init();
 		}
 	}
-
+	
 	else if(getMode() == LEVEL_1){
-
+	
 		if (player->getPosX() > 7475) {
 			setMode(LEVEL_2);
 			init();
@@ -178,10 +198,16 @@ void Scene::update(int deltaTime)
 		else if (player->getDeadState() && player->getLifes() > 0 && player->getDeadTime() < DEAD_TIME) {
 			//do nothing
 		}
-		else if (player->getDeadState() && player->getLifes() == 0) {
-			setMode(MENU);
-			init();
-		}
+		else if (player->getDeadState() && player->getLifes() == 0 && !lose) {
+				sndPlaySound(TEXT("musica/game_over.wav"), SND_ASYNC);
+				glm::vec2 aux = glm::vec2(player->getPosX() - ((SCREEN_WIDTH - 1) / 2), 50);
+				gameOver->setPosition(aux);
+				gameOver->update(deltaTime);
+				segslose = Time::instance().getMili();
+				Music::instance().stop_song();
+				lose = true;
+				Music::instance().gover(lose);
+				}
 		else {
 			if (BulletManager::instance().isEnemyBulletInside(player->getPosition(), player->getBox(), player->getStartP()) ||
 				EnemyManager::instance().isEnemyInside(player->getPosition(), player->getBox())) {
@@ -200,6 +226,14 @@ void Scene::update(int deltaTime)
 				player->setPosition(glm::vec2((INIT_PLAYER_X_TILES * map->getTileSize()), INIT_PLAYER_Y_TILES * map->getTileSize()));
 			}
 		}
+		if (lose) {
+			//Music::instance().game_over();
+
+			if (Time::instance().getMili() - segslose > 3100) {
+				setMode(MENU);
+				init();
+			}
+		}
 
 		player->update(deltaTime);
 
@@ -215,13 +249,15 @@ void Scene::update(int deltaTime)
 	}
 
 	else if (getMode() == LEVEL_2) {
+		
 		if (lvl2->isFaseBoss()) {
 			setMode(LEVEL_3);
 			init();
 		}
 		if (playerLevel2->getDeadState() && playerLevel2->getLifes() > 0 && playerLevel2->getDeadTime() > DEAD_TIME) {
 			glm::vec2 aux = playerLevel2->getPosition();
-			//aux.x = 100.0;
+			BulletManager::instance().cleanBullets();
+			aux.x = (SCREEN_WIDTH - 1) / 2;
 			playerLevel2->setPosition(aux);
 			playerLevel2->setDeadState(false);
 			
@@ -230,15 +266,26 @@ void Scene::update(int deltaTime)
 		else if (playerLevel2->getDeadState() && playerLevel2->getLifes() > 0 && playerLevel2->getDeadTime() < DEAD_TIME) {
 			//do nothing
 		}
-		else if (playerLevel2->getDeadState() && playerLevel2->getLifes() == 0) {
-			setMode(MENU);
-			init();
+		else if (playerLevel2->getDeadState() && playerLevel2->getLifes() == 0 && !lose) {
+			sndPlaySound(TEXT("musica/game_over.wav"), SND_ASYNC);
+			gameOver->update(deltaTime);
+			segslose = Time::instance().getMili();
+			Music::instance().stop_song();
+			lose = true;
+			Music::instance().gover(lose);
 		}
 		else {
 			if (BulletManager::instance().isEnemyBulletInside(playerLevel2->getPosition(), playerLevel2->getBox(), playerLevel2->getStartP())) {
 				if(!godMode) playerLevel2->setDeadState(true);
 			}
 			if (lvl2->isFaseBoss())playerLevel2->setPosition(glm::vec2(INIT_PLAYER3_X_TILES,INIT_PLAYER3_Y_TILES+400));
+		}
+		if (lose) {
+			//Music::instance().game_over();
+			if (Time::instance().getMili() - segslose > 3100) {
+				setMode(MENU);
+				init();
+			}
 		}
 		playerLevel2->update(deltaTime);
 
@@ -252,13 +299,11 @@ void Scene::update(int deltaTime)
 	}
 
 	else if (getMode() == LEVEL_3) {
-		if (lvl3->goMenu()) {
-			setMode(MENU);
-			init();
-		}
+		
 		if (playerLevel3->getDeadState() && playerLevel3->getLifes() > 0 && playerLevel3->getDeadTime() > DEAD_TIME) {
 			glm::vec2 aux = playerLevel3->getPosition();
-			//aux.x = 100.0;
+			BulletManager::instance().cleanBullets();
+			aux.x = (SCREEN_WIDTH-1)/2;
 			playerLevel3->setPosition(aux);
 			playerLevel3->setDeadState(false);
 
@@ -266,15 +311,26 @@ void Scene::update(int deltaTime)
 		else if (playerLevel3->getDeadState() && playerLevel3->getLifes() > 0 && playerLevel3->getDeadTime() < DEAD_TIME) {
 			//do nothing
 		}
-		else if (playerLevel3->getDeadState() && playerLevel3->getLifes() == 0) {
-			setMode(MENU);
-			init();
+		else if (playerLevel3->getDeadState() && playerLevel3->getLifes() == 0 && !lose) {
+			sndPlaySound(TEXT("musica/game_over.wav"), SND_ASYNC);
+			gameOver->update(deltaTime);
+			segslose = Time::instance().getMili();
+			lose = true;
+			Music::instance().stop_song();
+			Music::instance().gover(lose);
 		}
 		else {
 			if (BulletManager::instance().isEnemyBulletInside(playerLevel3->getPosition(), playerLevel3->getBox(), playerLevel3->getStartP())) {
 				if (!godMode) playerLevel3->setDeadState(true);
 			} 
 			if (lvl3->isFaseBoss())playerLevel3->setPosition(glm::vec2(INIT_PLAYER3_X_TILES, INIT_PLAYER3_Y_TILES + 400));
+		}
+		if (lvl3->goMenu() || lose) {
+			//cout << "ENTRO MENU" << endl;
+			if (Time::instance().getMili() - segslose > 2100) {
+				setMode(MENU);
+				init();
+			}
 		}
 		playerLevel3->update(deltaTime);
 
@@ -311,6 +367,7 @@ void Scene::update(int deltaTime)
 
 void Scene::render()
 {
+
 	glm::mat4 modelview;
 	texProgram.use();
 	texProgram.setUniformMatrix4f("projection", projection);
@@ -325,28 +382,42 @@ void Scene::render()
 		menu->render();
 	}
 	else if (getMode() == LEVEL_1) {
-		EnemyManager::instance().render();
-		powerUp->render();
-		spreadGun->render();
-		player->render();
-		BulletManager::instance().render();
-		lifeIcon->render();
-		powerUpIcon->render();
+		if (lose) gameOver->render();
+		else {
+			EnemyManager::instance().render();
+			powerUp->render();
+			spreadGun->render();
+			player->render();
+			BulletManager::instance().render();
+			lifeIcon->render();
+			powerUpIcon->render();
+		}
+	
+		
 		
 	}
 	else if (getMode() == LEVEL_2) {
-		lvl2->render();
-		EnemyManager::instance().render();
-		playerLevel2->render();
-		BulletManager::instance().render();
-		lifeIcon->render();
+		if (lose) gameOver->render();
+		else {
+			lvl2->render();
+			EnemyManager::instance().render();
+			playerLevel2->render();
+			BulletManager::instance().render();
+			lifeIcon->render();
+		}
+		
 	}
 	else if (getMode() == LEVEL_3) {
-		lvl3->render();
-		EnemyManager::instance().render();
-		playerLevel3->render();
-		BulletManager::instance().render();
-		lifeIcon->render();
+
+		if (lose) gameOver->render();
+		{
+			lvl3->render();
+			EnemyManager::instance().render();
+			playerLevel3->render();
+			BulletManager::instance().render();
+			lifeIcon->render();
+		}
+		
 	}
 	
 

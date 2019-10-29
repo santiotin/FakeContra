@@ -554,7 +554,7 @@ void Player::doShoot(float desplX, float desplY, float dirX, float dirY, float s
 
 			glm::vec2 pos = glm::vec2(posPlayer.x + desplX, posPlayer.y + desplY);
 			glm::vec2 dir = glm::vec2(dirX, dirY);
-			sndPlaySound(TEXT("musica/level01-shoot.wav"), SND_ASYNC);
+			sndPlaySound(TEXT("musica/level01-shoot.wav"),NULL | SND_ASYNC);
 			BulletManager::instance().createPlayerBullet(pos, dir, speed, 0);
 		}
 	}
@@ -570,7 +570,7 @@ void Player::doShoot(float desplX, float desplY, float dirX, float dirY, float s
 				lastShoot = Time::instance().getMili();
 				glm::vec2 pos = glm::vec2(posPlayer.x + desplX, posPlayer.y + desplY);
 				glm::vec2 dir = glm::vec2(dirX, dirY);
-				sndPlaySound(TEXT("musica/level01-shoot.wav"), SND_ASYNC);
+				sndPlaySound(TEXT("musica/level01-shoot.wav"),NULL| SND_ASYNC);
 				BulletManager::instance().createPlayerBullet(pos, dir, speed, 0);
 			}
 		}

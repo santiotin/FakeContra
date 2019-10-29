@@ -38,7 +38,6 @@ void MapLevel2::init(const glm::ivec2& tileMapPos, ShaderProgram& shaderProgram)
 	sprite->addKeyframe(FASE_BOSS, glm::vec2(0.666f, 0.50f));
 
 	segs = Time::instance().getMili();
-	cout << "segundos " <<segs << endl;
 	sprite->changeAnimation(0);
 	tileMapDispl = tileMapPos;
 }
@@ -51,7 +50,6 @@ void MapLevel2::update(int deltaTime, ShaderProgram& shaderProgram)
 		if (sprite->animation() != STAGE) sprite->changeAnimation(STAGE);
 	}
 	else {
-		//cout << EnemyManager::instance().getKills() << endl;
 		if (count1 < 30 && fase1) {
 			EnemyManager::instance().transition(false);
 			sprite->changeAnimation(FASE_1);

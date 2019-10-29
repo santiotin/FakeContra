@@ -19,6 +19,7 @@
     <ClInclude Include="Bullet.h" />
     <ClInclude Include="BulletManager.h" />
     <ClInclude Include="Game.h" />
+    <ClInclude Include="GameOver.h" />
     <ClInclude Include="GreenSoldier.h" />
     <ClInclude Include="LifeIcon.h" />
     <ClInclude Include="MapLevel2.h" />
@@ -56,6 +57,7 @@
     <ClCompile Include="Bullet.cpp" />
     <ClCompile Include="BulletManager.cpp" />
     <ClCompile Include="Game.cpp" />
+    <ClCompile Include="GameOver.cpp" />
     <ClCompile Include="GreenSoldier.cpp" />
     <ClCompile Include="LifeIcon.cpp" />
     <ClCompile Include="main.cpp" />

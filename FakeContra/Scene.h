@@ -18,6 +18,7 @@
 #include "PowerUpIcon.h"
 #include "PowerUp.h"
 #include "SpreadGun.h"
+#include "GameOver.h"
 #include "Music.h"
 
 // Scene contains all the entities of our game.
@@ -54,6 +55,7 @@ private:
 	PowerUpIcon* powerUpIcon;
 	PowerUp* powerUp;
 	SpreadGun* spreadGun;
+	GameOver* gameOver;
 
 	MapLevel2 *lvl2;
 	MapLevel3* lvl3;
@@ -64,9 +66,10 @@ private:
 	float currentTime;
 	glm::mat4 projection;
 	int mode;
-	bool godMode;
+	bool godMode, lose;
+	
 
-	long long godModeTime;
+	long long godModeTime, segslose;
 
 };
 

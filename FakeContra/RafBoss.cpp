@@ -15,6 +15,7 @@ enum RafBossAnims
 
 void RafBoss::init(const glm::ivec2& tileMapPos, ShaderProgram& shaderProgram)
 {
+	bool game_over;
 	spritesheet.loadFromFile("images/RafBoss.png", TEXTURE_PIXEL_FORMAT_RGBA);
 	sprite = Sprite::createSprite(glm::ivec2(80, 68), glm::vec2(0.50, 1.00), &spritesheet, &shaderProgram);
 	sprite->setNumberAnimations(2);
@@ -95,7 +96,7 @@ void RafBoss::doShoot(float desplX, float desplY, float dirX, float dirY, float 
 		if (num == 7) {
 			glm::vec2 pos = glm::vec2(posTurret.x + desplX, posTurret.y + desplY);
 			glm::vec2 dir = glm::vec2(dirX, dirY);
-			sndPlaySound(TEXT("musica/level01-turret-shoot.wav"), SND_ASYNC);
+			if (!game_over) sndPlaySound(TEXT("musica/level01-turret-shoot.wav"), SND_ASYNC);
 			BulletManager::instance().createEnemyBullet(pos, dir, speed, 2);
 			lastShoot = Time::instance().getMili();
 		}
@@ -104,7 +105,7 @@ void RafBoss::doShoot(float desplX, float desplY, float dirX, float dirY, float 
 		if (Time::instance().isAbleToShootEnemyLevel3(lastShoot, 50, 3000)) {
 			glm::vec2 pos = glm::vec2(posTurret.x + desplX, posTurret.y + desplY);
 			glm::vec2 dir = glm::vec2(dirX, dirY);
-			sndPlaySound(TEXT("musica/level01-turret-shoot.wav"), SND_ASYNC);
+			if (!game_over) sndPlaySound(TEXT("musica/level01-turret-shoot.wav"), SND_ASYNC);
 			BulletManager::instance().createEnemyBullet(pos, dir, speed, 2);
 			lastShoot = Time::instance().getMili();
 		}
