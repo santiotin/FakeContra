@@ -34,8 +34,8 @@ void GameOver::update(int deltaTime)
 {
 	sprite->update(deltaTime);
 	if (sprite->animation() != GAME_OVER)sprite->changeAnimation(GAME_OVER);
-	cout << "SEGLOSE: " << segslose << endl;
-	cout << "LA RESTA DA: " << Time::instance().getMili() - segslose << endl;
+	//cout << "SEGLOSE: " << segslose << endl;
+	//cout << "LA RESTA DA: " << Time::instance().getMili() - segslose << endl;
 	if (Time::instance().getMili() - segslose < 2100) {
 		if (sprite->animation() != GAME_OVER)sprite->changeAnimation(GAME_OVER);
 		if (Time::instance().getMili() - segslose > 2000) {
