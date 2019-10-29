@@ -102,7 +102,7 @@ void RafBoss::doShoot(float desplX, float desplY, float dirX, float dirY, float 
 		}
 	}
 	else {
-		if (Time::instance().isAbleToShootEnemyLevel3(lastShoot, 50, 2500)) {
+		if (Time::instance().isAbleToShootEnemyLevel3(lastShoot, 50, 3000)) {
 			glm::vec2 pos = glm::vec2(posTurret.x + desplX, posTurret.y + desplY);
 			glm::vec2 dir = glm::vec2(dirX, dirY);
 			if (!game_over) sndPlaySound(TEXT("musica/level01-turret-shoot.wav"), SND_ASYNC);
