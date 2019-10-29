@@ -31,6 +31,7 @@ public:
 
 
 private:
+	bool game_over;
 	long long lastShoot;
 	glm::ivec2 tileMapDispl, posTurret;
 	int startY;

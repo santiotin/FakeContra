@@ -30,6 +30,7 @@ public:
 	void shootFromAnimation();
 
 private:
+	bool game_over;
 	glm::ivec2 tileMapDispl, posTorRafaga;
 	int startY;
 	float distX, distY;

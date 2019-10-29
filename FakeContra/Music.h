@@ -19,11 +19,15 @@ public:
 	}
 	
 	void song(int lvl);
-	void lvl1_song();
+	void stop_song();
 	void soldier_shoot();
 	void turret_shoot();
 	void player_shoot();
+	void game_over();
+	void gover(bool lose);
+	bool isGo();
+	void win();
 
-	bool menu, lvl1;
+	bool menu, lvl1, go;
 };
 

@@ -17,6 +17,7 @@ enum SniperAnims
 
 void Sniper::init(const glm::ivec2& tileMapPos, ShaderProgram& shaderProgram)
 {
+	game_over = false;
 	spritesheet.loadFromFile("images/Sniper.png", TEXTURE_PIXEL_FORMAT_RGBA);
 	sprite = Sprite::createSprite(glm::ivec2(64, 32), glm::vec2(0.33, 0.5), &spritesheet, &shaderProgram);
 	sprite->setNumberAnimations(4);
@@ -56,7 +57,6 @@ void Sniper::update(int deltaTime, float posPlayerX, float posPlayerY, bool isDe
 
 	distY = posSniperY - posPlayerY;
 
-	cout << distX << endl;
 	if (distX >= 300) sprite->changeAnimation(HEAT_L);
 	else if (distX <= 300 && distX > 0)sprite->changeAnimation(SHOOT_L);
 	else if (distX > -300 && distX <= 0) sprite->changeAnimation(SHOOT_R);
@@ -120,7 +120,7 @@ void Sniper::doShoot(float desplX, float desplY, float dirX, float dirY, float s
 	if (lastShoot == 0) {
 		glm::vec2 pos = glm::vec2(posSniper.x + desplX, posSniper.y + desplY);
 		glm::vec2 dir = glm::vec2(dirX, dirY);
-		sndPlaySound(TEXT("musica/level01-sniper-shoot.wav"), SND_ASYNC);
+		if (!game_over) sndPlaySound(TEXT("musica/level01-sniper-shoot.wav"), SND_ASYNC);
 		BulletManager::instance().createEnemyBullet(pos, dir, speed, 0);
 		lastShoot = Time::instance().getMili();
 	}
@@ -128,7 +128,7 @@ void Sniper::doShoot(float desplX, float desplY, float dirX, float dirY, float s
 		if (Time::instance().isAbleToShootEnemy(lastShoot)) {
 			glm::vec2 pos = glm::vec2(posSniper.x + desplX, posSniper.y + desplY);
 			glm::vec2 dir = glm::vec2(dirX, dirY);
-			sndPlaySound(TEXT("musica/level01-sniper-shoot.wav"), SND_ASYNC);
+			if (!game_over) sndPlaySound(TEXT("musica/level01-sniper-shoot.wav"), SND_ASYNC);
 			BulletManager::instance().createEnemyBullet(pos, dir, speed, 0);
 			lastShoot = Time::instance().getMili();
 		}

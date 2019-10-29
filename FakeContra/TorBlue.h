@@ -30,7 +30,7 @@ public:
 	void doShoot(float desplX, float desplY, float dirX, float dirY, float speed);
 
 private:
-	bool shooting;
+	bool shooting, game_over;
 	glm::ivec2 tileMapDispl, posTurret;
 	int startY;
 	float distX, distY;

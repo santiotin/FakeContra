@@ -18,6 +18,7 @@ enum Turret1Anims
 
 void Turret::init(const glm::ivec2& tileMapPos, ShaderProgram& shaderProgram)
 {
+	bool game_over();
 	spritesheet.loadFromFile("images/Torreta.png", TEXTURE_PIXEL_FORMAT_RGBA);
 	sprite = Sprite::createSprite(glm::ivec2(64, 64), glm::vec2(0.25, 0.33), &spritesheet, &shaderProgram);
 	sprite->setNumberAnimations(12);
@@ -166,6 +167,7 @@ void Turret::doShoot(float desplX, float desplY, float dirX, float dirY, float s
 	if (lastShoot == 0) {
 		glm::vec2 pos = glm::vec2(posTurret.x + desplX, posTurret.y + desplY);
 		glm::vec2 dir = glm::vec2(dirX, dirY);
+		if (!game_over) sndPlaySound(TEXT("musica/level01-sniper-shoot.wav"), SND_ASYNC);
 		BulletManager::instance().createEnemyBullet(pos, dir, speed, 0);
 		lastShoot = Time::instance().getMili();
 	}
@@ -173,6 +175,7 @@ void Turret::doShoot(float desplX, float desplY, float dirX, float dirY, float s
 		if (Time::instance().isAbleToShootEnemy(lastShoot)) {
 			glm::vec2 pos = glm::vec2(posTurret.x + desplX, posTurret.y + desplY);
 			glm::vec2 dir = glm::vec2(dirX, dirY);
+			if (!game_over) sndPlaySound(TEXT("musica/level01-sniper-shoot.wav"), SND_ASYNC);
 			BulletManager::instance().createEnemyBullet(pos, dir, speed, 0);
 			lastShoot = Time::instance().getMili();
 		}
